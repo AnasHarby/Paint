@@ -1,73 +1,36 @@
 package paint.gui.test;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /*
- * Found a sample on JavaFX.
- * Used GridPane Layout.
- * Package will be used for feature testing purposes.
+ * Example on using Canvas with
+ * MouseEvent and GraphicsContext.
  */
 public class Test extends Application {
 	@Override
 	public void start(Stage primaryStage) {
-		primaryStage.setTitle("JavaFX Welcome");
+		primaryStage.setTitle("Paint");
         GridPane grid = new GridPane();
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(0, 2.5, 2.5, 2.5));
+        Canvas canvas = new Canvas(750, 750);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        canvas.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> gc.fillOval(15, 15, 15, 15));
+        grid.add(canvas, 4, 4);
+        Scene scene = new Scene(grid, 1000, 1000);
+        scene.setFill(Color.WHITE);
 
-        Text scenetitle = new Text("Welcome");
-        scenetitle.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-        grid.add(scenetitle, 0, 0, 1, 1);
-
-        Label userName = new Label("User Name:");
-        grid.add(userName, 0, 1);
-
-        TextField userTextField = new TextField();
-        grid.add(userTextField, 1, 1);
-
-        Label pw = new Label("Password:");
-        grid.add(pw, 0, 2);
-
-        PasswordField pwBox = new PasswordField();
-        grid.add(pwBox, 1, 2);
-
-        Button btn = new Button("Sign in");
-        HBox hbBtn = new HBox(10);
-        hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
-        hbBtn.getChildren().add(btn);
-        grid.add(hbBtn, 1, 4);
-
-        final Text actiontarget = new Text();
-        grid.add(actiontarget, 1, 6);
-
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-
-            @Override
-            public void handle(ActionEvent e) {
-                actiontarget.setFill(Color.FIREBRICK);
-                actiontarget.setText("Sign in button pressed");
-            }
-        });
-
-        Scene scene = new Scene(grid, 400, 275);
         primaryStage.setScene(scene);
         primaryStage.show();
 	}
