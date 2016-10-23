@@ -2,8 +2,8 @@ package paint.geom;
 
 import javafx.scene.paint.Color;
 
-public abstract class Shape {
-	public void Draw() {
+public abstract class ShapePaint {
+	public void draw() {
 		//Empty.
 	}
 
