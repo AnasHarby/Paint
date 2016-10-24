@@ -1,9 +1,10 @@
 package paint.geom;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public abstract class ShapePaint {
-	public void draw() {
+	public void draw(Pane contentPane) {
 		//Empty.
 	}
 

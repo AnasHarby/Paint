@@ -1,5 +1,6 @@
 package paint.gui.test;
 
+
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -10,6 +11,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import paint.geom.EllipsePaint;
+import paint.geom.Point;
+import paint.geom.PolygonPaint;
+import paint.geom.RectanglePaint;
+import paint.geom.ShapePaint;
+import paint.geom.SquarePaint;
+import paint.geom.TrianglePaint;
 
 /*
  * Example on using Canvas with
@@ -30,7 +38,9 @@ public class Test extends Application {
         grid.add(canvas, 4, 4);
         Scene scene = new Scene(grid, 1000, 1000);
         scene.setFill(Color.WHITE);
-
+        ShapePaint ellipse = new TrianglePaint(new Point(0, 0), new Point(600, 600), new Point(0, 600));
+        ellipse.draw(grid);
+        
         primaryStage.setScene(scene);
         primaryStage.show();
 	}
