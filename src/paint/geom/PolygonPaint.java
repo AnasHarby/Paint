@@ -25,9 +25,12 @@ public class PolygonPaint implements ShapePaint {
 		setColor(Color.BLACK);
 	}
 	
-	public PolygonPaint(Collection<Double> vertices) {
+	public PolygonPaint(Collection<Point> vertices) {
 		polygon = new Polygon();
-		polygon.getPoints().addAll(vertices);
+		for(Point vertex : vertices) {
+			polygon.getPoints().add(vertex.getX());
+			polygon.getPoints().add(vertex.getY());
+		}
 		fill(Color.WHITE);
 		setColor(Color.BLACK);
 	}
