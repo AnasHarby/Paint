@@ -23,4 +23,8 @@ public class RectanglePaint extends PolygonPaint {
 		super(upperLeft, lowerLeft, lowerRight, upperRight);
 	}
 	
+	@Override
+	public String getIconUrl() {
+		return null;
+	}
 }

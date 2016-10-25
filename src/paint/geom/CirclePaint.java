@@ -6,4 +6,8 @@ public class CirclePaint extends EllipsePaint {
 		//Default constructor --> Can't do the math.
 		super(center, radius, radius);
 	}
+	@Override
+	public String getIconUrl() {
+		return null;
+	}
 }

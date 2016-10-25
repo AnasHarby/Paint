@@ -6,7 +6,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 
-public class PolygonPaint extends ShapePaint {
+public class PolygonPaint implements ShapePaint {
 	Polygon polygon;
 	
 	public PolygonPaint(Point... vertices) {
@@ -49,5 +49,15 @@ public class PolygonPaint extends ShapePaint {
 	@Override
 	public void setColor(Color col) {
 		polygon.setStroke(col);
+	}
+
+	@Override
+	public String getIconUrl() {
+		return null;
+	}
+
+	@Override
+	public void setBorderWidth(double width) {
+		polygon.setStrokeWidth(width);		
 	}
 }
