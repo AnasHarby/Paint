@@ -27,6 +27,7 @@ public class FXMLController implements Initializable {
 		Point point = new Point(event.getX(), event.getY());
 		EllipsePaint ellipse = new EllipsePaint(point, 100, 100);
 		ellipse.draw((Pane) canvas.getParent());
+		System.out.println("CLICK!");
 	}
 
 }

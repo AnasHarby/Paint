@@ -5,7 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 
-public class EllipsePaint extends ShapePaint {
+public class EllipsePaint implements ShapePaint {
 	/**
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
@@ -16,6 +16,7 @@ public class EllipsePaint extends ShapePaint {
 		ellipse = new Ellipse(center.getX(), center.getY(), a, b);
 		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
+		ellipse.setStrokeWidth(10);
 	}
 
 	public void rotate(double angle) {
@@ -35,5 +36,15 @@ public class EllipsePaint extends ShapePaint {
 	@Override
 	public void setColor(Color col) {
 		ellipse.setStroke(col);
+	}
+
+	@Override
+	public String getIconUrl() {
+		return null;
+	}
+	
+	@Override
+	public void setBorderWidth(double width) {
+		ellipse.setStrokeWidth(width);		
 	}
 }

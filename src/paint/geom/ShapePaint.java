@@ -3,20 +3,12 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-public abstract class ShapePaint {
-	public void draw(Pane contentPane) {
-		//Empty.
-	}
+public interface ShapePaint {
+	
+	public void draw(Pane contentPane);
+	public void setColor(Color col);
+	public void fill(Color col);
+	public String getIconUrl();
+	public void setBorderWidth(double width);
 
-	public void setColor(Color col) {
-		//Empty.
-	}
-
-	public void fill(Color col) {
-		//Empty.
-	}
-
-	public void setBorders(double width, double height) {
-		//Empty.
-	}
 }

@@ -16,6 +16,7 @@ public class Test extends Application {
         primaryStage.setTitle("Paint");
         primaryStage.setScene(new Scene(root, 1065, 600));
         primaryStage.show();
+
     }
 
     public static void main(String[] args) {
