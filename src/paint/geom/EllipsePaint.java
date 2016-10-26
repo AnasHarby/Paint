@@ -11,17 +11,17 @@ public class EllipsePaint extends ShapePaint {
 	 * class.
 	 */
 	private Ellipse ellipse;
-	
+
 	public EllipsePaint(Point center, double a, double b) {
 		ellipse = new Ellipse(center.getX(), center.getY(), a, b);
-		fill(Color.WHITE);
+		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
 	}
 
 	public void rotate(double angle) {
 		ellipse.setRotate(angle);
 	}
-	
+
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(ellipse);
@@ -31,7 +31,7 @@ public class EllipsePaint extends ShapePaint {
 	public void fill(Color col) {
 		ellipse.setFill(col);
 	}
-	
+
 	@Override
 	public void setColor(Color col) {
 		ellipse.setStroke(col);

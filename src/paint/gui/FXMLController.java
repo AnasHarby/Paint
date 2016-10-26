@@ -8,6 +8,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Pane;
+import paint.geom.EllipsePaint;
+import paint.geom.Point;
 
 public class FXMLController implements Initializable {
 	@FXML private Canvas canvas;
@@ -15,13 +18,15 @@ public class FXMLController implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		canvas.autosize();
 		gc = canvas.getGraphicsContext2D();
 	}
 
 	@FXML
 	public void act(MouseEvent event) {
-		System.out.println("CLICK!");
-		gc.fillOval(event.getX(), event.getY(), 15, 15);
+		Point point = new Point(event.getX(), event.getY());
+		EllipsePaint ellipse = new EllipsePaint(point, 100, 100);
+		ellipse.draw((Pane) canvas.getParent());
 	}
 
 }

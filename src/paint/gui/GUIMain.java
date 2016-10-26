@@ -14,6 +14,8 @@ public class GUIMain extends Application {
     public void start(Stage primaryStage) throws IOException {
         Pane root = FXMLLoader.load(getClass().getResource("FXML.fxml"));
         primaryStage.setTitle("Paint");
+        primaryStage.setMinHeight(700);
+        primaryStage.setMinWidth(600);
         primaryStage.setScene(new Scene(root, 1065, 600));
         primaryStage.show();
     }
