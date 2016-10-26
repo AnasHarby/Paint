@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 public class RectanglePaint extends PolygonPaint {
 	
 	public RectanglePaint(Point upperLeft,
-			double width, double height) {
-		super(upperLeft,
+		double width, double height) {
+			super(upperLeft,
 				new Point(upperLeft.getX() + width
 				, upperLeft.getY()),
 				new Point(upperLeft.getX()

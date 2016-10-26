@@ -21,7 +21,7 @@ public class FXMLController implements Initializable {
 	@FXML
 	public void act(MouseEvent event) {
 		System.out.println("CLICK!");
-		gc.fillOval(0, 0, 15, 15);
+		gc.fillOval(event.getX(), event.getY(), 15, 15);
 	}
 
 }
