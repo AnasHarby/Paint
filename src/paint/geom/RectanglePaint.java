@@ -1,6 +1,5 @@
 package paint.geom;
 
-
 import javafx.scene.paint.Color;
 
 public class RectanglePaint extends PolygonPaint {

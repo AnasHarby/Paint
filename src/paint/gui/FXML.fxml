@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ColorPicker?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -46,12 +48,51 @@
                <top>
                   <ToolBar prefHeight="98.0" prefWidth="1065.0" BorderPane.alignment="CENTER">
                     <items>
-                      <Button maxHeight="35.0" maxWidth="35.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" id="new" stylesheets="@Style.css" >
+                      <Button maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" id="new" stylesheets="@Style.css" >
                       	<tooltip>
                         		<Tooltip text="New Project" />
                         	</tooltip>
                      	</Button>
-                        <ColorPicker fx:id="picker" />
+                        <ColorPicker fx:id="picker" minHeight="50.0"/>
+                        <ButtonBar buttonMinWidth="50.0" nodeOrientation="LEFT_TO_RIGHT" maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="590.0">
+                          <buttons>
+                            <ToggleButton id="line" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Line" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="rectangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+								<tooltip>
+                        			<Tooltip text="Rectangle" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="square" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Square" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="triangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Triangle" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="polygon" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Polygon" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="ellipse" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Ellipse" />
+                        		</tooltip>
+                       		</ToggleButton>
+                            <ToggleButton id="circle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" >
+                            	<tooltip>
+                        			<Tooltip text="Circle" />
+                        		</tooltip>
+                       		</ToggleButton>
+                          </buttons>
+                         </ButtonBar>
                     </items>
                   </ToolBar>
                </top>
@@ -87,36 +128,36 @@
                         <Insets left="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Brush" />
                         	</tooltip>
-                        </Button>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" >
+                        </ToggleButton>
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Eraser" />
                         	</tooltip>
-                        </Button>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" >
+                        </ToggleButton>
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Move" />
                         	</tooltip>
-                        </Button>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" >
+                        </ToggleButton>
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Fill" />
                         	</tooltip>
-                        </Button>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" >
+                        </ToggleButton>
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Pick" />
                         	</tooltip>
-                        </Button>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="5" id="remover" stylesheets="@Style.css" >
+                        </ToggleButton>
+                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="5" id="remover" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Remove" />
                         	</tooltip>
-                       	</Button>
+                       	</ToggleButton>
                      </children>
                   </GridPane>
                </left>

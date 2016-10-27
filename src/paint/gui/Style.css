@@ -39,3 +39,45 @@
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
 }
+
+#line {
+	-fx-background-image: url("File:src/paint/gui/assets/line.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#rectangle {
+	-fx-background-image: url("File:src/paint/gui/assets/rectangle.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#square {
+	-fx-background-image: url("File:src/paint/gui/assets/square.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#triangle {
+	-fx-background-image: url("File:src/paint/gui/assets/triangle.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#polygon {
+	-fx-background-image: url("File:src/paint/gui/assets/polygon.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#ellipse {
+	-fx-background-image: url("File:src/paint/gui/assets/ellipse.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#circle {
+	-fx-background-image: url("File:src/paint/gui/assets/circle.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
