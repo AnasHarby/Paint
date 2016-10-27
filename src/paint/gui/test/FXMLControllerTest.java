@@ -7,28 +7,47 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
+import paint.geom.CirclePaint;
+import paint.geom.Point;
 
 public class FXMLControllerTest implements Initializable {
 
 	@FXML private Canvas canvas;
+	private GraphicsContext gc;
 
-	boolean drawing = true;
+	boolean drawing = false;
 	boolean started = false;
 
 	@FXML private Button test1;
 
-	double initX = 0, initY = 0;
-	double prevX = 0, prevY = 0;
-	private Rectangle rect;
+	Point center = new Point();
+	Point upperLeft = new Point();
+
+	private double getRadius(double x1, double y1, double x2, double y2) {
+		double dX = Math.abs(x1 - x2);
+		double dY = Math.abs(y1 - y2);
+		double radius = Math.sqrt(dX * dX + dY * dY);
+		return radius;
+	}
+
+	private Point getUpperLeft(double x, double y, double w, double h) {
+		double upperLeftX = x - w / 2;
+		double upperLeftY = y - h / 2;
+		return new Point(upperLeftX, upperLeftY);
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
 		System.out.println("Initialized");
+		gc = canvas.getGraphicsContext2D();
+		gc.setFill(Color.BLACK);
+		gc.fill();
+		gc.setStroke(Color.BLACK);
 	}
 
 	@FXML
@@ -39,23 +58,19 @@ public class FXMLControllerTest implements Initializable {
 	@FXML
 	public void act(MouseEvent event) {
 		if (started){
-			//drawing = false;
+			drawing = false;
 			started = false;
-			rect.setWidth(event.getX() - initX);
-			rect.setHeight(event.getY() - initY);
+			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			CirclePaint circle = new CirclePaint(center, radius);
+			Pane pane = (Pane) canvas.getParent();
+			circle.draw(pane);
 		}
 		else if (drawing) {
-			initX = event.getX();
-			initY = event.getY();
-			prevX = initX;
-			prevY = initY;
+			center.setX(event.getX());
+			center.setY(event.getY());
 			started = true;
-			rect = new Rectangle(initX, initY, 0, 0);
-			rect.setFill(Color.TRANSPARENT);
-			rect.setStroke(Color.BLACK);
-			rect.setStrokeWidth(5);
-			Pane pane = (Pane) canvas.getParent();
-			pane.getChildren().add(rect);
+			//gc.moveTo(initX, initY);
 		}
 	}
 
@@ -71,10 +86,10 @@ public class FXMLControllerTest implements Initializable {
 	@FXML
 	public void move(MouseEvent event) {
 		if (started) {
-			rect.setWidth(prevX - initX);
-			rect.setHeight(prevY - initY);
-			prevX = event.getX();
-			prevY = event.getY();
+			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
+			Point upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2, radius * 2);
+			gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
 		}
 	}
 }
