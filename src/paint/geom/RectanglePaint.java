@@ -8,12 +8,12 @@ public class RectanglePaint extends PolygonPaint {
 	public RectanglePaint(Point upperLeft,
 		double width, double height) {
 			super(upperLeft,
+				new Point(upperLeft.getX()
+				, upperLeft.getY() + height),
 				new Point(upperLeft.getX() + width
-				, upperLeft.getY()),
-				new Point(upperLeft.getX() + width
-						, upperLeft.getY() - height),
-				new Point(upperLeft.getX(),
-								upperLeft.getY() - height));
+						, upperLeft.getY() + height),
+				new Point(upperLeft.getX() + width,
+								upperLeft.getY()));
 		super.setColor(Color.BLACK);
 	}
 
