@@ -46,4 +46,10 @@ public class EllipsePaint implements ShapePaint {
 	public void setBorderWidth(double width) {
 		ellipse.setStrokeWidth(width);
 	}
+	
+	@Override
+	public void move(double x, double y) {
+		ellipse.setTranslateX(x);
+		ellipse.setTranslateY(y);
+	}
 }

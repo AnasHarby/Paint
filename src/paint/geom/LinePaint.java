@@ -32,4 +32,10 @@ public class LinePaint implements ShapePaint {
 	public void setBorderWidth(double width) {
 		line.setStrokeWidth(width);
 	}
+	
+	@Override
+	public void move(double x, double y) {
+		line.setTranslateX(x);
+		line.setTranslateY(y);
+	}
 }

@@ -63,4 +63,10 @@ public class PolygonPaint implements ShapePaint {
 	public void setBorderWidth(double width) {
 		polygon.setStrokeWidth(width);
 	}
+
+	@Override
+	public void move(double x, double y) {
+		polygon.setTranslateX(x);
+		polygon.setTranslateY(y);
+	}
 }

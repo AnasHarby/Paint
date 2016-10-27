@@ -10,5 +10,6 @@ public interface ShapePaint {
 	public void fill(Color col);
 	public String getIconUrl();
 	public void setBorderWidth(double width);
-
+	public void move(double x, double y);
+	//public void resize(ResizeHelper helper);
 }
