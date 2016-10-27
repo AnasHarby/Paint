@@ -15,11 +15,12 @@ public class Test extends Application {
         Pane root = FXMLLoader.load(getClass().getResource("FXMLTest.fxml"));
         primaryStage.setTitle("Paint");
         primaryStage.setScene(new Scene(root, 1065, 600));
+        primaryStage.setResizable(false);
         primaryStage.show();
     }
 
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
