@@ -8,37 +8,37 @@ import javafx.scene.shape.Polygon;
 
 public class PolygonPaint implements ShapePaint {
 	Polygon polygon;
-	
+
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
 		for(Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
 		}
-		fill(Color.WHITE);
+		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
 	}
-	
+
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
-		fill(Color.WHITE);
+		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
 	}
-	
+
 	public PolygonPaint(Collection<Point> vertices) {
 		polygon = new Polygon();
 		for(Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
 		}
-		fill(Color.WHITE);
+		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
 	}
-	
+
 	public void rotate(double angle) {
 		polygon.setRotate(angle);
 	}
-	
+
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(polygon);
@@ -48,7 +48,7 @@ public class PolygonPaint implements ShapePaint {
 	public void fill(Color col) {
 		polygon.setFill(col);
 	}
-	
+
 	@Override
 	public void setColor(Color col) {
 		polygon.setStroke(col);
@@ -61,6 +61,6 @@ public class PolygonPaint implements ShapePaint {
 
 	@Override
 	public void setBorderWidth(double width) {
-		polygon.setStrokeWidth(width);		
+		polygon.setStrokeWidth(width);
 	}
 }

@@ -16,7 +16,6 @@ public class EllipsePaint implements ShapePaint {
 		ellipse = new Ellipse(center.getX(), center.getY(), a, b);
 		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
-		ellipse.setStrokeWidth(10);
 	}
 
 	public void rotate(double angle) {
@@ -42,9 +41,9 @@ public class EllipsePaint implements ShapePaint {
 	public String getIconUrl() {
 		return null;
 	}
-	
+
 	@Override
 	public void setBorderWidth(double width) {
-		ellipse.setStrokeWidth(width);		
+		ellipse.setStrokeWidth(width);
 	}
 }
