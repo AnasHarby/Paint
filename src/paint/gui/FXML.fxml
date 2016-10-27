@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ColorPicker?>
@@ -8,6 +9,7 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -44,31 +46,11 @@
                <top>
                   <ToolBar prefHeight="98.0" prefWidth="1065.0" BorderPane.alignment="CENTER">
                     <items>
-                      <Button mnemonicParsing="false" text="Button" />
-                        <ColorPicker />
+                      <Button mnemonicParsing="false" />
+                        <ColorPicker fx:id="picker" />
                     </items>
                   </ToolBar>
                </top>
-               <left>
-                  <GridPane gridLinesVisible="true" maxHeight="260.0" prefHeight="300.0" prefWidth="80.0" style="-fx-scale-shape: false;" BorderPane.alignment="CENTER">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                     <RowConstraints minHeight="40.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                  </GridPane>
-               </left>
                <center>
                   <StackPane style="-fx-background-color: WHITE;" BorderPane.alignment="CENTER">
                      <children>
@@ -76,7 +58,7 @@
                            <children>
                               <ScrollPane layoutX="393.0" layoutY="133.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: LIGHTGREY;" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
                                  <content>
-                                    <Canvas height="890.0" width="1800.0" onMouseClicked="#act" fx:id="canvas"/>
+                                    <Canvas fx:id="canvas" height="890.0" onMouseClicked="#act" width="1800.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -84,6 +66,37 @@
                      </children>
                   </StackPane>
                </center>
+               <left>
+                  <GridPane gridLinesVisible="true" maxHeight="384" maxWidth="64.0" minHeight="384" minWidth="64.0" prefHeight="384" prefWidth="64.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <BorderPane.margin>
+                        <Insets left="15.0" />
+                     </BorderPane.margin>
+                     <children>
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="5" id="remover" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Remover" />
+                        	</tooltip>
+                       	</Button>
+                        
+                     </children>
+                  </GridPane>
+               </left>
             </BorderPane>
          </center>
       </BorderPane>
