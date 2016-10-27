@@ -20,13 +20,14 @@ public class FXMLControllerTest implements Initializable {
 	@FXML private Canvas canvas;
 	private GraphicsContext gc;
 
-	boolean drawing = false;
-	boolean started = false;
+	private boolean drawing = false;
+	private boolean started = false;
 
 	@FXML private Button test1;
 
-	Point center = new Point();
-	Point upperLeft = new Point();
+	private Point center = new Point();
+
+	private double offset = 2;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
@@ -45,9 +46,6 @@ public class FXMLControllerTest implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
-		gc.setFill(Color.BLACK);
-		gc.fill();
-		gc.setStroke(Color.BLACK);
 	}
 
 	@FXML
@@ -88,7 +86,11 @@ public class FXMLControllerTest implements Initializable {
 		if (started) {
 			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
-			Point upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2, radius * 2);
+			Point upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2 + offset, radius * 2 + offset);
+			gc.setFill(Color.BLACK);
+			gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2 + offset, radius * 2 + offset);
+			upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2, radius * 2);
+			gc.setFill(Color.WHITESMOKE);
 			gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
 		}
 	}
