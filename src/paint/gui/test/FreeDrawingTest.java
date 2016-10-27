@@ -11,9 +11,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.Stage;
 
 public class FreeDrawingTest extends Application {
@@ -32,6 +29,7 @@ public class FreeDrawingTest extends Application {
 				drawing = true;
 			}
 		});
+
 		Canvas canvas = new Canvas(800, 600);
 		GraphicsContext gc = canvas.getGraphicsContext2D();
 		gc.setStroke(Color.BLUE);
@@ -58,7 +56,7 @@ public class FreeDrawingTest extends Application {
 //                gc.stroke();
             }
         });
-		
+
 		canvas.setOnMouseDragged(new EventHandler<MouseEvent>() {
 
 			@Override
@@ -70,7 +68,7 @@ public class FreeDrawingTest extends Application {
 //					gc.fillOval(event.getX(), event.getY(), 15, 10);
 //				}
 			}
-			
+
 		});
 		canvas.setOnMouseReleased(new EventHandler<MouseEvent>() {
 
@@ -78,7 +76,7 @@ public class FreeDrawingTest extends Application {
 			public void handle(MouseEvent event) {
 				gc.closePath();
 			}
-			
+
 		});
 		canvas.setOnMouseMoved(new EventHandler<MouseEvent>() {
 
@@ -91,14 +89,14 @@ public class FreeDrawingTest extends Application {
 					prevY = event.getY();
 				}
 			}
-			
+
 		});
 		root.getChildren().addAll(canvas);
 		primaryStage.setTitle("Paint");
         primaryStage.setScene(new Scene(root, 1065, 600));
         primaryStage.show();
 	}
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}

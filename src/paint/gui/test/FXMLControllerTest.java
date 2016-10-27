@@ -16,8 +16,12 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML private Canvas canvas;
 	private GraphicsContext gc;
+
 	boolean drawing = false;
+	boolean started = false;
+
 	@FXML private Button test1;
+
 	double initX = 0, initY = 0;
 	double prevX = 0, prevY = 0;
 
@@ -25,8 +29,11 @@ public class FXMLControllerTest implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
-		gc.setStroke(Color.BLUE);
-		gc.setFill(Color.BLUE);
+		gc.setFill(Color.BLACK);
+		gc.fill();
+		gc.setStroke(Color.BLACK);
+		gc.setLineWidth(5);
+		gc.stroke();
 	}
 
 	@FXML
@@ -36,36 +43,33 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML
 	public void act(MouseEvent event) {
-		if (event.getClickCount() > 1) {
-
+		if (started){
+			drawing = false;
+			started = false;
+			gc.fillRect(initX, initY, event.getX() - initX, event.getY() - initY);
 		}
-
-		if (!drawing) {
+		else if (drawing) {
 			initX = event.getX();
-        	initY = event.getY();
-            gc.moveTo(initX, initY);
-            drawing = true;
-    	} else {
-    		gc.fillRect(initX, initY, event.getX() - initX, event.getY() - initY);
-    		drawing = false;
-    	}
+			initY = event.getY();
+			prevX = initX;
+			prevY = initY;
+			started = true;
+			//gc.moveTo(initX, initY);
+		}
 	}
 
 	@FXML
 	public void drag(MouseEvent event) {
-		if (drawing) {
-			gc.fillRect(initX, initY, event.getX() - initX, event.getY() - initY);
-		}
+
 	}
 
 	@FXML
 	public void release(MouseEvent event) {
-		gc.closePath();
 	}
 
 	@FXML
 	public void move(MouseEvent event) {
-		if (drawing) {
+		if (started) {
 			gc.clearRect(initX, initY, prevX - initX, prevY - initY);
 			gc.fillRect(initX, initY, event.getX() - initX, event.getY() - initY);
 			prevX = event.getX();
