@@ -30,6 +30,7 @@ public class FXMLController implements Initializable {
 		//EllipsePaint obj = new EllipsePaint(point, 100, 100);
 		TrianglePaint obj = new TrianglePaint(point, new Point(point.getX() + 100, point.getY())
 				, new Point(point.getX(), point.getY() - 100));
+
 		obj.draw((Pane) canvas.getParent());
 	}
 }

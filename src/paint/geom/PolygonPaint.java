@@ -18,7 +18,7 @@ public class PolygonPaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setColor(Color.BLACK);
 	}
-
+	
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
 		fill(Color.TRANSPARENT);

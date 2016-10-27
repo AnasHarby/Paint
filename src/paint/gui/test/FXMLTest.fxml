@@ -1,10 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" alignment="center" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.gui.test.FXMLControllerTest">
-	<children>
-		<Canvas height="800" width="700" fx:id="canvas" onMouseClicked="#act"/>
-	</children>
-</StackPane>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: WHITESMOKE;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.gui.test.FXMLControllerTest">
+   <children>
+      <HBox layoutX="2.0" layoutY="6.0" prefHeight="100.0" prefWidth="592.0">
+         <children>
+            <Button mnemonicParsing="false" text="Start Drawing" onAction="#startDraw" fx:id="test1" >
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Test2">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Test3">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" text="Test3">
+               <HBox.margin>
+                  <Insets right="15.0" />
+               </HBox.margin>
+            </Button>
+         </children>
+      </HBox>
+      <Canvas height="2000.0" layoutX="5.0" layoutY="106.0" width="2000.0" fx:id="canvas" onMousePressed="#act" onMouseDragged="#drag" onMouseReleased="#release" onMouseMoved="#move" />
+   </children>
+</AnchorPane>
