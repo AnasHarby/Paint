@@ -1,5 +1,41 @@
-#remover {
-	-fx-background-image: url("File:src/paint/gui/assets/remover.png");
-	-fx-background-position: center;	
+#new {
+	-fx-background-image: url("File:src/paint/gui/assets/new.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
 }
 
+#brush {
+	-fx-background-image: url("File:src/paint/gui/assets/brush.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#eraser {
+	-fx-background-image: url("File:src/paint/gui/assets/eraser.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#dropper {
+	-fx-background-image: url("File:src/paint/gui/assets/dropper.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#mover {
+	-fx-background-image: url("File:src/paint/gui/assets/move.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#bucket {
+	-fx-background-image: url("File:src/paint/gui/assets/bucket.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#remover {
+	-fx-background-image: url("File:src/paint/gui/assets/remover.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}

@@ -46,7 +46,11 @@
                <top>
                   <ToolBar prefHeight="98.0" prefWidth="1065.0" BorderPane.alignment="CENTER">
                     <items>
-                      <Button mnemonicParsing="false" />
+                      <Button maxHeight="35.0" maxWidth="35.0" minHeight="35.0" minWidth="35.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" id="new" stylesheets="@Style.css" >
+                      	<tooltip>
+                        		<Tooltip text="New Project" />
+                        	</tooltip>
+                     	</Button>
                         <ColorPicker fx:id="picker" />
                     </items>
                   </ToolBar>
@@ -83,17 +87,36 @@
                         <Insets left="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" />
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" />
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" />
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" />
-                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" />
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Brush" />
+                        	</tooltip>
+                        </Button>
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Eraser" />
+                        	</tooltip>
+                        </Button>
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Move" />
+                        	</tooltip>
+                        </Button>
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Fill" />
+                        	</tooltip>
+                        </Button>
+                        <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" >
+                        	<tooltip>
+                        		<Tooltip text="Pick" />
+                        	</tooltip>
+                        </Button>
                         <Button maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="5" id="remover" stylesheets="@Style.css" >
                         	<tooltip>
-                        		<Tooltip text="Remover" />
+                        		<Tooltip text="Remove" />
                         	</tooltip>
                        	</Button>
-                        
                      </children>
                   </GridPane>
                </left>
