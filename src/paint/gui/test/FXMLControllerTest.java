@@ -36,7 +36,7 @@ public class FXMLControllerTest implements Initializable {
 	private static final String PENCIL_BUTTON = "Start Pencil Drawing";
 	private static final String BRUSH_BUTTON = "Start Brushing";
 	private Point init = new Point();
-
+	ShapePaint drawingShape = null;
 	private double offset = 2;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {

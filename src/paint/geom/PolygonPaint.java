@@ -5,8 +5,9 @@ import java.util.Collection;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import paint.geom.util.ShapeMovement;
 
-public class PolygonPaint implements ShapePaint {
+public abstract class PolygonPaint implements ShapePaint {
 	Polygon polygon;
 
 	public PolygonPaint(Point... vertices) {
@@ -16,13 +17,15 @@ public class PolygonPaint implements ShapePaint {
 			polygon.getPoints().add(vertex.getY());
 		}
 		fill(Color.TRANSPARENT);
-		setColor(Color.BLACK);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 	
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
 		fill(Color.TRANSPARENT);
-		setColor(Color.BLACK);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 
 	public PolygonPaint(Collection<Point> vertices) {
@@ -32,7 +35,8 @@ public class PolygonPaint implements ShapePaint {
 			polygon.getPoints().add(vertex.getY());
 		}
 		fill(Color.TRANSPARENT);
-		setColor(Color.BLACK);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 
 	public void rotate(double angle) {
@@ -50,7 +54,7 @@ public class PolygonPaint implements ShapePaint {
 	}
 
 	@Override
-	public void setColor(Color col) {
+	public void setBorderColor(Color col) {
 		polygon.setStroke(col);
 	}
 
@@ -78,5 +82,10 @@ public class PolygonPaint implements ShapePaint {
 	@Override
 	public void toFront() {
 		polygon.toFront();
+	}
+	private void setActionHandlers() {
+		ShapeMovement shapeMovement
+		= new ShapeMovement();
+		shapeMovement.addHandlers(polygon);
 	}
 }

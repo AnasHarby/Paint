@@ -3,6 +3,7 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import paint.geom.util.ShapeMovement;
 
 public class LinePaint implements ShapePaint {
 	Line line;
@@ -10,7 +11,8 @@ public class LinePaint implements ShapePaint {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
 		fill(Color.TRANSPARENT);
-		setColor(Color.BLACK);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 	@Override
 	public String getIconUrl() {
@@ -21,7 +23,7 @@ public class LinePaint implements ShapePaint {
 		contentPane.getChildren().add(line);		
 	}
 	@Override
-	public void setColor(Color col) {
+	public void setBorderColor(Color col) {
 		line.setStroke(col);		
 	}
 	@Override
@@ -47,5 +49,10 @@ public class LinePaint implements ShapePaint {
 	@Override
 	public void toFront() {
 		line.toFront();
+	}
+	private void setActionHandlers() {
+		ShapeMovement shapeMovement
+		= new ShapeMovement();
+		shapeMovement.addHandlers(line);
 	}
 }

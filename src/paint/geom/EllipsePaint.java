@@ -4,6 +4,7 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import paint.geom.util.ShapeMovement;
 
 public class EllipsePaint implements ShapePaint {
 	/**
@@ -15,7 +16,8 @@ public class EllipsePaint implements ShapePaint {
 	public EllipsePaint(Point center, double a, double b) {
 		ellipse = new Ellipse(center.getX(), center.getY(), a, b);
 		fill(Color.TRANSPARENT);
-		setColor(Color.BLACK);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 
 	public void rotate(double angle) {
@@ -33,7 +35,7 @@ public class EllipsePaint implements ShapePaint {
 	}
 
 	@Override
-	public void setColor(Color col) {
+	public void setBorderColor(Color col) {
 		ellipse.setStroke(col);
 	}
 
@@ -61,5 +63,10 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void toFront() {
 		ellipse.toFront();
+	}
+	private void setActionHandlers() {
+		ShapeMovement shapeMovement
+		= new ShapeMovement();
+		shapeMovement.addHandlers(ellipse);
 	}
 }
