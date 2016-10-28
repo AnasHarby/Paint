@@ -52,4 +52,14 @@ public class EllipsePaint implements ShapePaint {
 		ellipse.setTranslateX(x);
 		ellipse.setTranslateY(y);
 	}
+
+	@Override
+	public void toBack() {
+		ellipse.toBack();
+	}
+
+	@Override
+	public void toFront() {
+		ellipse.toFront();
+	}
 }

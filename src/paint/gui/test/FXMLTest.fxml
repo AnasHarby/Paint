@@ -2,41 +2,45 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.canvas.Canvas?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-
+<?import javafx.scene.control.ToggleGroup?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1065.0" style="-fx-background-color: WHITESMOKE;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="paint.gui.test.FXMLControllerTest">
    <children>
       <HBox layoutX="2.0" layoutY="6.0" prefHeight="100.0" prefWidth="1065.0" style="-fx-background-color: LIGHTGREY">
+      	 <fx:define>
+       		 <ToggleGroup fx:id="testingToggleGroup"/>
+   		 </fx:define>
          <children>
-            <Button mnemonicParsing="false" text="Start Drawing" onAction="#startDraw" fx:id="test1" >
+            <ToggleButton mnemonicParsing="false" text="Start Drawing Circles" toggleGroup="$testingToggleGroup" onAction="#startDraw"  fx:id="circleButton">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" text="Test2">
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" text="Start Drawing Rectangles" toggleGroup="$testingToggleGroup" onAction="#startDraw" fx:id="rectangleButton">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" text="Test3">
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" text="Start Pencil Drawing" toggleGroup="$testingToggleGroup" onAction="#startSketch" fx:id="pencilDraw">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
-            </Button>
-            <Button mnemonicParsing="false" text="Test3">
+            </ToggleButton>
+            <ToggleButton mnemonicParsing="false" text="Start Brushing" toggleGroup="$testingToggleGroup" onAction="#startSketch" fx:id="brushDraw">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
-            </Button>
+            </ToggleButton>
          </children>
       </HBox>
       	<AnchorPane layoutX="0.0" layoutY="101.0" maxHeight="2000.0" maxWidth="2000.0" minHeight="500.0" minWidth="1065.0" prefHeight="500.0" prefWidth="500.0">
       		<children>
       			<Canvas height="500.0" width="1065.0" fx:id="canvas" onMousePressed="#act" onMouseDragged="#drag" onMouseReleased="#release" onMouseMoved="#move" />
-     			</children>
+     			<Canvas height="500.0" width="1065.0" fx:id="canvas2" onMousePressed="#act" onMouseDragged="#drag" onMouseReleased="#release" onMouseMoved="#move" />
+     		</children>
  		</AnchorPane>
    </children>
 </AnchorPane>

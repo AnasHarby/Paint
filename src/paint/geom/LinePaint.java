@@ -38,4 +38,14 @@ public class LinePaint implements ShapePaint {
 		line.setTranslateX(x);
 		line.setTranslateY(y);
 	}
+
+	@Override
+	public void toBack() {
+		line.toBack();
+	}
+
+	@Override
+	public void toFront() {
+		line.toFront();
+	}
 }

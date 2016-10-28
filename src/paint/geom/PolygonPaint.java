@@ -69,4 +69,14 @@ public class PolygonPaint implements ShapePaint {
 		polygon.setTranslateX(x);
 		polygon.setTranslateY(y);
 	}
+
+	@Override
+	public void toBack() {
+		polygon.toBack();
+	}
+
+	@Override
+	public void toFront() {
+		polygon.toFront();
+	}
 }

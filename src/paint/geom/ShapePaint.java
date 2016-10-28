@@ -11,5 +11,7 @@ public interface ShapePaint {
 	public String getIconUrl();
 	public void setBorderWidth(double width);
 	public void move(double x, double y);
+	public void toBack();
+	public void toFront();
 	//public void resize(ResizeHelper helper);
 }

@@ -9,23 +9,33 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
+import paint.geom.RectanglePaint;
+import paint.geom.ShapePaint;
 
 public class FXMLControllerTest implements Initializable {
 
 	@FXML private Canvas canvas;
+	@FXML private Canvas canvas2;
 	private GraphicsContext gc;
-
-	private boolean drawing = false;
+	private GraphicsContext gc2;
+	@FXML private ToggleGroup testingToggleGroup;
 	private boolean started = false;
-
-	@FXML private Button test1;
-
-	private Point center = new Point();
+	@FXML private ToggleButton circleButton;
+	@FXML private ToggleButton rectangleButton;
+	@FXML private ToggleButton pencilDraw;
+	@FXML private ToggleButton brushDraw;
+	private static final String CIRCLE_BUTTON = "Start Drawing Circles";
+	private static final String RECTANGLE_BUTTON = "Start Drawing Rectangles";
+	private static final String PENCIL_BUTTON = "Start Pencil Drawing";
+	private static final String BRUSH_BUTTON = "Start Brushing";
+	private Point init = new Point();
 
 	private double offset = 2;
 
@@ -41,42 +51,96 @@ public class FXMLControllerTest implements Initializable {
 		double upperLeftY = y - h / 2;
 		return new Point(upperLeftX, upperLeftY);
 	}
-
+	private Point getRectangleUpperLeft(double x1, double y1, double x2, double y2) {
+		return new Point(Math.min(x1, x2), Math.min(y1, y2));
+	}
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
+		gc2 = canvas.getGraphicsContext2D();
 	}
 
 	@FXML
 	public void startDraw(ActionEvent event) {
-		drawing = true;
 		canvas.toFront();
 	}
-
+	@FXML
+	public void startSketch(ActionEvent event) {
+		canvas2.toFront();
+	}
 	@FXML
 	public void act(MouseEvent event) {
-		if (started){
-			drawing = false;
-			started = false;
-			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			CirclePaint circle = new CirclePaint(center, radius);
-			Pane pane = (Pane) canvas.getParent();
-			circle.draw(pane);
+		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
+		if (active == null) {
 			canvas.toBack();
+			canvas2.toBack();
+			return;
 		}
-		else if (drawing) {
-			center.setX(event.getX());
-			center.setY(event.getY());
-			started = true;
-			//gc.moveTo(initX, initY);
+		String name = active.getText();
+		switch (name) {
+		case CIRCLE_BUTTON:
+			//this will be a function call
+			if (started){
+				started = false;
+				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				CirclePaint circle = new CirclePaint(init, radius);
+				Pane pane = (Pane) canvas.getParent();
+				circle.draw(pane);
+				circle.toBack();
+			}
+			else {
+				init.setX(event.getX());
+				init.setY(event.getY());
+				started = true;
+			}
+			break;
+		case RECTANGLE_BUTTON:
+			if (started){
+				started = false;
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				ShapePaint rectangle = new RectanglePaint(init, event.getX() - init.getX(), event.getY() - init.getY());
+				Pane pane = (Pane) canvas.getParent();
+				rectangle.draw(pane);
+				rectangle.toBack();
+			}
+			else {
+				init.setX(event.getX());
+				init.setY(event.getY());
+				started = true;
+			}
+			break;
+		case PENCIL_BUTTON:
+			gc2.moveTo(event.getX(), event.getY());
+			gc2.stroke();
+			break;
+		case BRUSH_BUTTON:
+			gc2.moveTo(event.getX(), event.getY());
+			break;
+		default:
+			break;
 		}
+		
 	}
 
 	@FXML
 	public void drag(MouseEvent event) {
-
+		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
+		if (active == null) {
+			return;
+		}
+		String name = active.getText();
+		switch (name) {
+		case PENCIL_BUTTON:
+			gc2.lineTo(event.getX(), event.getY());
+			gc2.stroke();
+			break;
+		case BRUSH_BUTTON:
+			break;
+		default:
+			break;
+		}
 	}
 
 	@FXML
@@ -85,15 +149,32 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML
 	public void move(MouseEvent event) {
-		if (started) {
-			gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
-			Point upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2 + offset, radius * 2 + offset);
-			gc.setFill(Color.BLACK);
-			//gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2 + offset, radius * 2 + offset);
-			upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2, radius * 2);
-			//gc.setFill(Color.WHITESMOKE);
-			gc.strokeOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
+		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
+		if (active == null) {
+			return;
+		}
+		String name = active.getText();
+		switch (name) {
+		case CIRCLE_BUTTON:
+			if (started) {
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
+				Point upperleft = getUpperLeft(init.getX(), init.getY(), radius * 2 + offset, radius * 2 + offset);
+				upperleft = getUpperLeft(init.getX(), init.getY(), radius * 2, radius * 2);
+				gc.strokeOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
+			}
+			break;
+		case RECTANGLE_BUTTON:
+			if (started) {
+				Point upperLeft = getRectangleUpperLeft(init.getX(), init.getY(), event.getX(), event.getY());
+				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+				gc.strokeRect(upperLeft.getX(), upperLeft.getY(),
+						Math.abs(init.getX() - event.getX()),
+						Math.abs(init.getY() - event.getY()));
+			}
+			break;
+		default:
+			break;
 		}
 	}
 }
