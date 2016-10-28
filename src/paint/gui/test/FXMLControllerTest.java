@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -17,8 +16,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.shape.StrokeLineCap;
-import javafx.scene.shape.StrokeLineJoin;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.RectanglePaint;
@@ -36,10 +33,10 @@ public class FXMLControllerTest implements Initializable {
 	@FXML private ToggleButton rectangleButton;
 	@FXML private ToggleButton pencilDraw;
 	@FXML private ToggleButton brushDraw;
-	private static final String CIRCLE_BUTTON = "Start Drawing Circles";
-	private static final String RECTANGLE_BUTTON = "Start Drawing Rectangles";
-	private static final String PENCIL_BUTTON = "Start Pencil Drawing";
-	private static final String BRUSH_BUTTON = "Start Brushing";
+	private static final String CIRCLE_BUTTON = "circleButton";
+	private static final String RECTANGLE_BUTTON = "rectangleButton";
+	private static final String PENCIL_BUTTON = "pencilDraw";
+	private static final String BRUSH_BUTTON = "brushDraw";
 	private Point init = new Point();
 	Shape drawingShape = null;
 
@@ -76,7 +73,7 @@ public class FXMLControllerTest implements Initializable {
 			freeDrawingCanvas.toBack();
 			return;
 		}
-		String name = active.getText();
+		String name = active.getId();
 		Pane pane = (Pane) canvas.getParent();
 		switch (name) {
 		case CIRCLE_BUTTON:
@@ -136,7 +133,7 @@ public class FXMLControllerTest implements Initializable {
 		default:
 			break;
 		}
-		
+
 	}
 
 	@FXML
@@ -147,7 +144,7 @@ public class FXMLControllerTest implements Initializable {
 			freeDrawingCanvas.toBack();
 			return;
 		}
-		String name = active.getText();
+		String name = active.getId();
 		switch (name) {
 		case PENCIL_BUTTON:
 			gc2.lineTo(event.getX(), event.getY());
@@ -170,7 +167,7 @@ public class FXMLControllerTest implements Initializable {
 		if (active == null) {
 			return;
 		}
-		String name = active.getText();
+		String name = active.getId();
 		switch (name) {
 		case CIRCLE_BUTTON:
 			if (started) {
@@ -188,7 +185,7 @@ public class FXMLControllerTest implements Initializable {
 				rect.setY(upperLeft.getY());
 				rect.setWidth(Math.abs(event.getX() - init.getX()));
 				rect.setHeight(Math.abs(event.getY() - init.getY()));
-				
+
 			}
 			break;
 		default:
