@@ -14,6 +14,11 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import javafx.scene.shape.StrokeLineCap;
+import javafx.scene.shape.StrokeLineJoin;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.RectanglePaint;
@@ -22,7 +27,7 @@ import paint.geom.ShapePaint;
 public class FXMLControllerTest implements Initializable {
 
 	@FXML private Canvas canvas;
-	@FXML private Canvas canvas2;
+	@FXML private Canvas freeDrawingCanvas;
 	private GraphicsContext gc;
 	private GraphicsContext gc2;
 	@FXML private ToggleGroup testingToggleGroup;
@@ -36,8 +41,7 @@ public class FXMLControllerTest implements Initializable {
 	private static final String PENCIL_BUTTON = "Start Pencil Drawing";
 	private static final String BRUSH_BUTTON = "Start Brushing";
 	private Point init = new Point();
-	ShapePaint drawingShape = null;
-	private double offset = 2;
+	Shape drawingShape = null;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
@@ -46,11 +50,6 @@ public class FXMLControllerTest implements Initializable {
 		return radius;
 	}
 
-	private Point getUpperLeft(double x, double y, double w, double h) {
-		double upperLeftX = x - w / 2;
-		double upperLeftY = y - h / 2;
-		return new Point(upperLeftX, upperLeftY);
-	}
 	private Point getRectangleUpperLeft(double x1, double y1, double x2, double y2) {
 		return new Point(Math.min(x1, x2), Math.min(y1, y2));
 	}
@@ -58,7 +57,7 @@ public class FXMLControllerTest implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
-		gc2 = canvas.getGraphicsContext2D();
+		gc2 = freeDrawingCanvas.getGraphicsContext2D();
 	}
 
 	@FXML
@@ -67,17 +66,18 @@ public class FXMLControllerTest implements Initializable {
 	}
 	@FXML
 	public void startSketch(ActionEvent event) {
-		canvas2.toFront();
+		freeDrawingCanvas.toFront();
 	}
 	@FXML
 	public void act(MouseEvent event) {
 		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
 		if (active == null) {
 			canvas.toBack();
-			canvas2.toBack();
+			freeDrawingCanvas.toBack();
 			return;
 		}
 		String name = active.getText();
+		Pane pane = (Pane) canvas.getParent();
 		switch (name) {
 		case CIRCLE_BUTTON:
 			//this will be a function call
@@ -86,28 +86,43 @@ public class FXMLControllerTest implements Initializable {
 				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
 				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				CirclePaint circle = new CirclePaint(init, radius);
-				Pane pane = (Pane) canvas.getParent();
+				pane.getChildren().remove(drawingShape);
+				drawingShape = null;
 				circle.draw(pane);
 				circle.toBack();
 			}
 			else {
 				init.setX(event.getX());
 				init.setY(event.getY());
+				drawingShape = new Circle(event.getX(), event.getY(), 0);
+				pane.getChildren().add(drawingShape);
+				drawingShape.setFill(Color.TRANSPARENT);
+				drawingShape.setStroke(Color.BLACK);
+				drawingShape.toBack();
 				started = true;
 			}
 			break;
 		case RECTANGLE_BUTTON:
 			if (started){
 				started = false;
-				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-				ShapePaint rectangle = new RectanglePaint(init, event.getX() - init.getX(), event.getY() - init.getY());
-				Pane pane = (Pane) canvas.getParent();
+				ShapePaint rectangle
+				= new RectanglePaint(init,
+					event.getX() - init.getX(),
+					event.getY() - init.getY());
+				pane.getChildren().remove(drawingShape);
 				rectangle.draw(pane);
+				drawingShape = null;
 				rectangle.toBack();
 			}
 			else {
 				init.setX(event.getX());
 				init.setY(event.getY());
+				drawingShape = new Rectangle(event.getX(),
+						event.getY(), 0, 0);
+				drawingShape.setFill(Color.TRANSPARENT);
+				drawingShape.setStroke(Color.BLACK);
+				pane.getChildren().add(drawingShape);
+				drawingShape.toBack();
 				started = true;
 			}
 			break;
@@ -128,6 +143,8 @@ public class FXMLControllerTest implements Initializable {
 	public void drag(MouseEvent event) {
 		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
 		if (active == null) {
+			canvas.toBack();
+			freeDrawingCanvas.toBack();
 			return;
 		}
 		String name = active.getText();
@@ -157,20 +174,21 @@ public class FXMLControllerTest implements Initializable {
 		switch (name) {
 		case CIRCLE_BUTTON:
 			if (started) {
-				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
-				Point upperleft = getUpperLeft(init.getX(), init.getY(), radius * 2 + offset, radius * 2 + offset);
-				upperleft = getUpperLeft(init.getX(), init.getY(), radius * 2, radius * 2);
-				gc.strokeOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
+				Circle circle = (Circle) drawingShape;
+				circle.setRadius(radius);
 			}
 			break;
 		case RECTANGLE_BUTTON:
 			if (started) {
-				Point upperLeft = getRectangleUpperLeft(init.getX(), init.getY(), event.getX(), event.getY());
-				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-				gc.strokeRect(upperLeft.getX(), upperLeft.getY(),
-						Math.abs(init.getX() - event.getX()),
-						Math.abs(init.getY() - event.getY()));
+				Rectangle rect = (Rectangle) drawingShape;
+				Point upperLeft = getRectangleUpperLeft(init.getX(),
+					init.getY(), event.getX(), event.getY());
+				rect.setX(upperLeft.getX());
+				rect.setY(upperLeft.getY());
+				rect.setWidth(Math.abs(event.getX() - init.getX()));
+				rect.setHeight(Math.abs(event.getY() - init.getY()));
+				
 			}
 			break;
 		default:
