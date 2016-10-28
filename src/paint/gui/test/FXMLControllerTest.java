@@ -51,6 +51,7 @@ public class FXMLControllerTest implements Initializable {
 	@FXML
 	public void startDraw(ActionEvent event) {
 		drawing = true;
+		canvas.toFront();
 	}
 
 	@FXML
@@ -63,6 +64,7 @@ public class FXMLControllerTest implements Initializable {
 			CirclePaint circle = new CirclePaint(center, radius);
 			Pane pane = (Pane) canvas.getParent();
 			circle.draw(pane);
+			canvas.toBack();
 		}
 		else if (drawing) {
 			center.setX(event.getX());
@@ -88,10 +90,10 @@ public class FXMLControllerTest implements Initializable {
 			double radius = getRadius(center.getX(), center.getY(), event.getX(), event.getY());
 			Point upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2 + offset, radius * 2 + offset);
 			gc.setFill(Color.BLACK);
-			gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2 + offset, radius * 2 + offset);
+			//gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2 + offset, radius * 2 + offset);
 			upperleft = getUpperLeft(center.getX(), center.getY(), radius * 2, radius * 2);
-			gc.setFill(Color.WHITESMOKE);
-			gc.fillOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
+			//gc.setFill(Color.WHITESMOKE);
+			gc.strokeOval(upperleft.getX(), upperleft.getY(), radius * 2, radius * 2);
 		}
 	}
 }
