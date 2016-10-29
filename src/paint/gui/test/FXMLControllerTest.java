@@ -20,25 +20,27 @@ import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.RectanglePaint;
 import paint.geom.ShapePaint;
+import paint.geom.util.ShapeController;
 
 public class FXMLControllerTest implements Initializable {
-
-	@FXML private Canvas canvas;
-	@FXML private Canvas freeDrawingCanvas;
-	private GraphicsContext gc;
-	private GraphicsContext gc2;
-	@FXML private ToggleGroup testingToggleGroup;
-	private boolean started = false;
-	@FXML private ToggleButton circleButton;
-	@FXML private ToggleButton rectangleButton;
-	@FXML private ToggleButton pencilDraw;
-	@FXML private ToggleButton brushDraw;
 	private static final String CIRCLE_BUTTON = "circleButton";
 	private static final String RECTANGLE_BUTTON = "rectangleButton";
 	private static final String PENCIL_BUTTON = "pencilDraw";
 	private static final String BRUSH_BUTTON = "brushDraw";
+
+	@FXML private Canvas canvas;
+	@FXML private Canvas freeDrawingCanvas;
+	@FXML private ToggleGroup testingToggleGroup;
+	@FXML private ToggleButton circleButton;
+	@FXML private ToggleButton rectangleButton;
+	@FXML private ToggleButton pencilDraw;
+	@FXML private ToggleButton brushDraw;
+
+	private GraphicsContext gc;
+	private GraphicsContext gc2;
+	private boolean started = false;
 	private Point init = new Point();
-	Shape drawingShape = null;
+	private Shape drawingShape = null;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
@@ -55,6 +57,13 @@ public class FXMLControllerTest implements Initializable {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
 		gc2 = freeDrawingCanvas.getGraphicsContext2D();
+		Pane pane = (Pane) canvas.getParent();
+		Shape circle1 = new Circle(200, 200, 200, Color.TRANSPARENT);
+		circle1.setStroke(Color.BLACK);
+		Shape circle2 = new Circle(400, 200, 5);
+		ShapeController sc = new ShapeController();
+		sc.addHandlers(circle2);
+		circle1.layoutXProperty();
 	}
 
 	@FXML
@@ -77,7 +86,6 @@ public class FXMLControllerTest implements Initializable {
 		Pane pane = (Pane) canvas.getParent();
 		switch (name) {
 		case CIRCLE_BUTTON:
-			//this will be a function call
 			if (started){
 				started = false;
 				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
@@ -87,8 +95,7 @@ public class FXMLControllerTest implements Initializable {
 				drawingShape = null;
 				circle.draw(pane);
 				circle.toBack();
-			}
-			else {
+			} else {
 				init.setX(event.getX());
 				init.setY(event.getY());
 				drawingShape = new Circle(event.getX(), event.getY(), 0);

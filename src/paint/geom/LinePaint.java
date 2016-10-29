@@ -3,10 +3,11 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
-import paint.geom.util.ShapeMovement;
+import paint.geom.util.ShapeController;
 
 public class LinePaint implements ShapePaint {
-	Line line;
+	private Line line;
+
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
@@ -14,27 +15,32 @@ public class LinePaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 	}
+
 	@Override
 	public String getIconUrl() {
 		return null;
 	}
+
 	@Override
 	public void draw(Pane contentPane) {
-		contentPane.getChildren().add(line);		
+		contentPane.getChildren().add(line);
 	}
+
 	@Override
 	public void setBorderColor(Color col) {
-		line.setStroke(col);		
+		line.setStroke(col);
 	}
+
 	@Override
 	public void fill(Color col) {
 		line.setFill(col);
 	}
+
 	@Override
 	public void setBorderWidth(double width) {
 		line.setStrokeWidth(width);
 	}
-	
+
 	@Override
 	public void move(double x, double y) {
 		line.setTranslateX(x);
@@ -51,8 +57,20 @@ public class LinePaint implements ShapePaint {
 		line.toFront();
 	}
 	private void setActionHandlers() {
-		ShapeMovement shapeMovement
-		= new ShapeMovement();
+		ShapeController shapeMovement
+		= new ShapeController();
 		shapeMovement.addHandlers(line);
+	}
+
+	@Override
+	public void remove(Pane contentPane) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void resize(double x1, double y1, double x2, double y2) {
+		// TODO Auto-generated method stub
+
 	}
 }

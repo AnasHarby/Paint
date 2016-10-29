@@ -4,17 +4,29 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import paint.geom.util.ShapeMovement;
+import paint.geom.util.ShapeController;
 
 public class EllipsePaint implements ShapePaint {
 	/**
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
 	 */
-	private Ellipse ellipse;
+	public Ellipse ellipse;
+	private double aEllipse;
+	private double bEllipse;
+	private Point centerEllipse;
+	private Point up;
+	private Point down;
+	private Point left;
+	private Point right;
 
 	public EllipsePaint(Point center, double a, double b) {
-		ellipse = new Ellipse(center.getX(), center.getY(), a, b);
+		centerEllipse = center;
+		aEllipse = a;
+		bEllipse = b;
+		ellipse = new Ellipse(center.getX(),
+				center.getY(), a, b);
+		setVertices();
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -27,6 +39,11 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(ellipse);
+	}
+
+	@Override
+	public void remove(Pane contentPane) {
+		contentPane.getChildren().remove(ellipse);
 	}
 
 	@Override
@@ -48,7 +65,7 @@ public class EllipsePaint implements ShapePaint {
 	public void setBorderWidth(double width) {
 		ellipse.setStrokeWidth(width);
 	}
-	
+
 	@Override
 	public void move(double x, double y) {
 		ellipse.setTranslateX(x);
@@ -65,8 +82,41 @@ public class EllipsePaint implements ShapePaint {
 		ellipse.toFront();
 	}
 	private void setActionHandlers() {
-		ShapeMovement shapeMovement
-		= new ShapeMovement();
+		ShapeController shapeMovement
+			= new ShapeController();
 		shapeMovement.addHandlers(ellipse);
+	}
+	@Override
+	public void resize(double x1,
+			double y1, double x2, double y2) {
+		Ellipse newEllipse = new Ellipse();
+		Point point = new Point(x1, y1);
+		if (point.equals(up)
+				|| point.equals(down)) {
+			bEllipse += y2 - y1;
+		} else if (point.equals(left)
+				|| point.equals(right)) {
+			aEllipse += x2 - x1;
+		}
+		setVertices();
+		newEllipse.setCenterX(centerEllipse.getX());
+		newEllipse.setCenterY(centerEllipse.getY());
+		newEllipse.setRadiusX(aEllipse);
+		newEllipse.setRadiusY(bEllipse);
+		ellipse = newEllipse;
+	}
+	private void setVertices() {
+		up = new Point(
+				centerEllipse.getX(),
+				centerEllipse.getY() - bEllipse);
+		left = new Point(
+				centerEllipse.getX() - aEllipse,
+				centerEllipse.getY());
+		down = new Point(
+				centerEllipse.getX(),
+				centerEllipse.getY() + bEllipse);
+		right = new Point(
+				centerEllipse.getX() + aEllipse,
+				centerEllipse.getY());
 	}
 }

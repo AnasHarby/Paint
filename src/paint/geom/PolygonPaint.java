@@ -1,28 +1,35 @@
 package paint.geom;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
-import paint.geom.util.ShapeMovement;
+import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
-	Polygon polygon;
+	public Polygon polygon;
+	public ArrayList<Point> polygonVertices;
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
+		polygonVertices = new ArrayList<Point>();
 		for(Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
+			polygonVertices.add(vertex);
 		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 	}
-	
+
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
+		for (double vertix : vertices) {
+			//Add to vertices
+		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -34,6 +41,7 @@ public abstract class PolygonPaint implements ShapePaint {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
 		}
+		polygonVertices = (ArrayList<Point>) vertices;
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -46,6 +54,11 @@ public abstract class PolygonPaint implements ShapePaint {
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(polygon);
+	}
+
+	@Override
+	public void remove(Pane contentPane) {
+		contentPane.getChildren().remove(polygon);
 	}
 
 	@Override
@@ -83,9 +96,25 @@ public abstract class PolygonPaint implements ShapePaint {
 	public void toFront() {
 		polygon.toFront();
 	}
-	private void setActionHandlers() {
-		ShapeMovement shapeMovement
-		= new ShapeMovement();
+	public void setActionHandlers() {
+		ShapeController shapeMovement
+		= new ShapeController();
 		shapeMovement.addHandlers(polygon);
+	}
+	@Override
+	public void resize(double x1, double x2, double y1, double y2) {
+		Polygon newPolygon = new Polygon();
+		for (Point vertix : polygonVertices) {
+			if (vertix.getX() == x1 && vertix.getY() == x2) {
+				vertix.setX(x2);
+				vertix.setY(x2);
+			}
+			newPolygon.getPoints().add(vertix.getX());
+			newPolygon.getPoints().add(vertix.getY());
+		}
+		polygon = newPolygon;
+		fill(Color.TRANSPARENT);
+		setBorderColor(Color.BLACK);
+		setActionHandlers();
 	}
 }

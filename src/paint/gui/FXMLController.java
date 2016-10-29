@@ -10,24 +10,35 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import paint.geom.Point;
-import paint.geom.TrianglePaint;
+import paint.geom.RectanglePaint;
 
 public class FXMLController implements Initializable {
 	@FXML private Canvas canvas;
 	@FXML private ColorPicker picker;
-
+	private boolean start = false;
+	private RectanglePaint rect;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		canvas.autosize();
 		canvas.getGraphicsContext2D();
+
 	}
 
 	@FXML
 	public void act(MouseEvent event) {
-		Point point = new Point(event.getX(), event.getY());
-		TrianglePaint obj = new TrianglePaint(point, new Point(point.getX() + 100, point.getY())
-				, new Point(point.getX(), point.getY() - 100));
-
-		obj.draw((Pane) canvas.getParent());
+		Pane pane = (Pane) canvas.getParent();
+		if(!start) {
+			rect = new RectanglePaint(new Point(200, 200), 200, 200);
+			rect.draw(pane);
+			start = true;
+		} else {
+			double x1 = 400;
+			double y1 = 400;
+			double x2 = 600;
+			double y2 = 600;
+			rect.remove(pane);
+			rect.resize(x1, y1, x2, y2);
+			rect.draw(pane);
+		}
 	}
 }

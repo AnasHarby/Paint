@@ -1,6 +1,7 @@
 package paint.geom;
 
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
 
 public class RectanglePaint extends PolygonPaint {
 	private Point upperLeftPoint;
@@ -29,15 +30,31 @@ public class RectanglePaint extends PolygonPaint {
 		return null;
 	}
 
-	private Point getRectangleUpperLeft(double x1, double y1, double x2, double y2) {
-		return new Point(Math.min(x1, x2), Math.min(y1, y2));
-	}
-
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
 	}
 
 	public void setUpperLeftPoint(Point upperLeftPoint) {
 		this.upperLeftPoint = upperLeftPoint;
+	}
+	@Override
+	public void resize(double x1, double y1, double x2, double y2) {
+		Polygon newPolygon = new Polygon();
+		for (Point vertix : super.polygonVertices) {
+			if (vertix.getX() == x1 && vertix.getY() == y1) {
+				vertix.setX(x2);
+				vertix.setY(y2);
+			} else if (vertix.getX() == x1) {
+				vertix.setX(x2);
+			} else if (vertix.getY() == y1) {
+				vertix.setY(y2);
+			}
+			newPolygon.getPoints().add(vertix.getX());
+			newPolygon.getPoints().add(vertix.getY());
+		}
+		super.polygon = newPolygon;
+		super.fill(Color.TRANSPARENT);
+		super.setBorderColor(Color.BLACK);
+		super.setActionHandlers();
 	}
 }
