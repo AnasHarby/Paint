@@ -27,8 +27,15 @@ public abstract class PolygonPaint implements ShapePaint {
 
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
-		for (double vertix : vertices) {
-			//Add to vertices
+		int counter = 0;
+		double temp = 0;
+		for (double vertex : vertices) {
+			if (counter == 0) {
+				temp = vertex;
+			} else {
+				polygonVertices.add(new Point(temp, vertex));
+			}
+			counter ^= 1;
 		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
