@@ -64,13 +64,23 @@ public class LinePaint implements ShapePaint {
 
 	@Override
 	public void remove(Pane contentPane) {
-		// TODO Auto-generated method stub
-
+		contentPane.getChildren().remove(line);
 	}
 
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
-		// TODO Auto-generated method stub
-
+		double m = (line.getStartY() - line.getEndY())
+				/ (line.getStartX() - line.getEndX());
+		double x = (m / (m * m + 1)) * (m * x1 + x2 / m + y2 - y1);
+		double y = y1 + m * x - m * x1;
+		if (x1 == line.getStartX()
+				&& y1 == line.getStartY()) {
+			line.setStartX(x);
+			line.setStartY(y);
+		} else if (x1 == line.getEndX()
+				&& y1 == line.getEndY()) {
+			line.setEndX(x);
+			line.setEndY(y);
+		}
 	}
 }
