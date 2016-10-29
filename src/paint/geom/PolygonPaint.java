@@ -1,6 +1,5 @@
 package paint.geom;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import javafx.scene.layout.Pane;
@@ -10,16 +9,9 @@ import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
 	public Polygon polygon;
-	public ArrayList<Point> polygonVertices;
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
-		polygonVertices = new ArrayList<Point>();
-		for(Point vertex : vertices) {
-			polygon.getPoints().add(vertex.getX());
-			polygon.getPoints().add(vertex.getY());
-			polygonVertices.add(vertex);
-		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -27,16 +19,6 @@ public abstract class PolygonPaint implements ShapePaint {
 
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
-		int counter = 0;
-		double temp = 0;
-		for (double vertex : vertices) {
-			if (counter == 0) {
-				temp = vertex;
-			} else {
-				polygonVertices.add(new Point(temp, vertex));
-			}
-			counter ^= 1;
-		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -48,7 +30,6 @@ public abstract class PolygonPaint implements ShapePaint {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
 		}
-		polygonVertices = (ArrayList<Point>) vertices;
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -110,18 +91,14 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 	@Override
 	public void resize(double x1, double x2, double y1, double y2) {
-		Polygon newPolygon = new Polygon();
-		for (Point vertix : polygonVertices) {
-			if (vertix.getX() == x1 && vertix.getY() == x2) {
-				vertix.setX(x2);
-				vertix.setY(x2);
+		for (int i = 0;
+				i < polygon.getPoints().size() - 1; i += 2) {
+			double x = polygon.getPoints().get(i);
+			double y = polygon.getPoints().get(i + 1);
+			if (x == x1 && y == y1) {
+				polygon.getPoints().set(i, x2);
+				polygon.getPoints().set(i + 1, y2);
 			}
-			newPolygon.getPoints().add(vertix.getX());
-			newPolygon.getPoints().add(vertix.getY());
 		}
-		polygon = newPolygon;
-		fill(Color.TRANSPARENT);
-		setBorderColor(Color.BLACK);
-		setActionHandlers();
 	}
 }

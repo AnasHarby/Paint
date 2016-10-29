@@ -1,7 +1,5 @@
 package paint.geom;
 
-import javafx.scene.shape.Ellipse;
-
 public class CirclePaint extends EllipsePaint {
 	private Point centerCircle;
 	private double radiusCircle;
@@ -18,13 +16,9 @@ public class CirclePaint extends EllipsePaint {
 	}
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
-		Ellipse newCircle = new Ellipse();
 		radiusCircle = getRadius(x2, y2);
-		newCircle.setCenterX(centerCircle.getX());
-		newCircle.setCenterY(centerCircle.getY());
-		newCircle.setRadiusX(radiusCircle);
-		newCircle.setRadiusY(radiusCircle);
-		super.ellipse = newCircle;
+		super.ellipse.setRadiusX(radiusCircle);
+		super.ellipse.setRadiusY(radiusCircle);
 	}
 	private double getRadius(double x, double y) {
 		double dX = Math.abs(centerCircle.getX() - x);

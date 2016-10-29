@@ -89,7 +89,6 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void resize(double x1,
 			double y1, double x2, double y2) {
-		Ellipse newEllipse = new Ellipse();
 		Point point = new Point(x1, y1);
 		if (point.equals(up)
 				|| point.equals(down)) {
@@ -99,11 +98,8 @@ public class EllipsePaint implements ShapePaint {
 			aEllipse += x2 - x1;
 		}
 		setVertices();
-		newEllipse.setCenterX(centerEllipse.getX());
-		newEllipse.setCenterY(centerEllipse.getY());
-		newEllipse.setRadiusX(aEllipse);
-		newEllipse.setRadiusY(bEllipse);
-		ellipse = newEllipse;
+		ellipse.setRadiusX(aEllipse);
+		ellipse.setRadiusY(bEllipse);
 	}
 	private void setVertices() {
 		up = new Point(

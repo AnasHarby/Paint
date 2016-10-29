@@ -1,7 +1,6 @@
 package paint.geom;
 
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Polygon;
 
 public class RectanglePaint extends PolygonPaint {
 	private Point upperLeftPoint;
@@ -39,22 +38,18 @@ public class RectanglePaint extends PolygonPaint {
 	}
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
-		Polygon newPolygon = new Polygon();
-		for (Point vertix : super.polygonVertices) {
-			if (vertix.getX() == x1 && vertix.getY() == y1) {
-				vertix.setX(x2);
-				vertix.setY(y2);
-			} else if (vertix.getX() == x1) {
-				vertix.setX(x2);
-			} else if (vertix.getY() == y1) {
-				vertix.setY(y2);
+		for (int i = 0;
+				i < super.polygon.getPoints().size() - 1; i += 2) {
+			double x = super.polygon.getPoints().get(i);
+			double y = super.polygon.getPoints().get(i + 1);
+			if (x == x1 && y == y1) {
+				super.polygon.getPoints().set(i, x2);
+				super.polygon.getPoints().set(i + 1, y2);
+			} else if (x == x1) {
+				super.polygon.getPoints().set(i, x2);
+			} else if (y == y1) {
+				super.polygon.getPoints().set(i + 1, y2);
 			}
-			newPolygon.getPoints().add(vertix.getX());
-			newPolygon.getPoints().add(vertix.getY());
 		}
-		super.polygon = newPolygon;
-		super.fill(Color.TRANSPARENT);
-		super.setBorderColor(Color.BLACK);
-		super.setActionHandlers();
 	}
 }
