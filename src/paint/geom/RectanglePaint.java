@@ -6,11 +6,10 @@ import paint.geom.util.ShapeFactory;
 public class RectanglePaint extends PolygonPaint {
 	private Point upperLeftPoint;
 	private static final String KEY = "rectangle";
-	
+
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, RectanglePaint.class);
 	}
-	
 
 	public RectanglePaint(Point upperLeft,
 		double width, double height) {

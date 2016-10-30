@@ -5,10 +5,12 @@ import java.util.Collection;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
+import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
 	public Polygon polygon;
+	private Resizer resizer;
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
@@ -19,6 +21,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		setResizers();
 	}
 
 	public PolygonPaint(double... vertices) {
@@ -26,6 +29,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		setResizers();
 	}
 
 	public PolygonPaint(Collection<Point> vertices) {
@@ -37,6 +41,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		setResizers();
 	}
 
 	public void rotate(double angle) {
@@ -104,5 +109,20 @@ public abstract class PolygonPaint implements ShapePaint {
 				polygon.getPoints().set(i + 1, y2);
 			}
 		}
+	}
+
+	private void setResizers() {
+		resizer = new Resizer(polygon,
+				polygon.getPoints());
+	}
+
+	@Override
+	public void showResizers(Pane contentPane) {
+		resizer.addResizers(contentPane);
+	}
+
+	@Override
+	public void hideResizers(Pane contentPane) {
+		resizer.removeResizers(contentPane);
 	}
 }

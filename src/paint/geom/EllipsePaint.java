@@ -4,6 +4,7 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
@@ -12,6 +13,8 @@ public class EllipsePaint implements ShapePaint {
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
 	 */
+	private static final String KEY = "ellipse";
+	private static final double OFFSET = 5;
 	public Ellipse ellipse;
 	private double aEllipse;
 	private double bEllipse;
@@ -20,12 +23,11 @@ public class EllipsePaint implements ShapePaint {
 	private Point down;
 	private Point left;
 	private Point right;
-	private static final String KEY = "ellipse";
-	
+	private Resizer resizer;
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, EllipsePaint.class);
 	}
-	
+
 
 	public EllipsePaint(Point center, double a, double b) {
 		centerEllipse = center;
@@ -34,6 +36,7 @@ public class EllipsePaint implements ShapePaint {
 		ellipse = new Ellipse(center.getX(),
 				center.getY(), a, b);
 		setVertices();
+		setResizers();
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -111,15 +114,27 @@ public class EllipsePaint implements ShapePaint {
 	private void setVertices() {
 		up = new Point(
 				centerEllipse.getX(),
-				centerEllipse.getY() - bEllipse);
+				centerEllipse.getY() - bEllipse - OFFSET);
 		left = new Point(
-				centerEllipse.getX() - aEllipse,
+				centerEllipse.getX() - aEllipse - OFFSET,
 				centerEllipse.getY());
 		down = new Point(
 				centerEllipse.getX(),
-				centerEllipse.getY() + bEllipse);
+				centerEllipse.getY() + bEllipse - OFFSET);
 		right = new Point(
-				centerEllipse.getX() + aEllipse,
+				centerEllipse.getX() + aEllipse - OFFSET,
 				centerEllipse.getY());
+	}
+	private void setResizers() {
+		resizer = new Resizer(ellipse, up, left, down, right);
+	}
+	@Override
+	public void showResizers(Pane contentPane) {
+		setResizers();
+		resizer.addResizers(contentPane);
+	}
+	@Override
+	public void hideResizers(Pane contentPane) {
+		resizer.removeResizers(contentPane);
 	}
 }

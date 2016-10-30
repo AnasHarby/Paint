@@ -3,23 +3,26 @@ package paint.geom;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
 public class LinePaint implements ShapePaint {
 	private Line line;
+	private Resizer resizer;
 	private static final String KEY = "line";
-	
+
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
 	}
-	
+
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		setResizers();
 	}
 
 	@Override
@@ -88,5 +91,21 @@ public class LinePaint implements ShapePaint {
 			line.setEndX(x);
 			line.setEndY(y);
 		}
+	}
+
+	private void setResizers() {
+		resizer = new Resizer(line,
+				line.getStartX(), line.getStartY(),
+				line.getEndX(), line.getEndY());
+	}
+
+	@Override
+	public void showResizers(Pane contentPane) {
+		resizer.addResizers(contentPane);
+	}
+
+	@Override
+	public void hideResizers(Pane contentPane) {
+		resizer.removeResizers(contentPane);
 	}
 }
