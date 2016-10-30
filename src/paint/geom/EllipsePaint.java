@@ -5,6 +5,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import paint.geom.util.ShapeController;
+import paint.geom.util.ShapeFactory;
 
 public class EllipsePaint implements ShapePaint {
 	/**
@@ -19,6 +20,12 @@ public class EllipsePaint implements ShapePaint {
 	private Point down;
 	private Point left;
 	private Point right;
+	private static final String KEY = "ellipse";
+	
+	static {
+		ShapeFactory.getInstance().registerShape(KEY, EllipsePaint.class);
+	}
+	
 
 	public EllipsePaint(Point center, double a, double b) {
 		centerEllipse = center;
