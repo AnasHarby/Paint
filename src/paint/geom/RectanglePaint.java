@@ -16,6 +16,7 @@ public class RectanglePaint extends PolygonPaint {
 								upperLeft.getY()));
 			setUpperLeftPoint(upperLeft);
 		super.setBorderColor(Color.BLACK);
+		super.fill(Color.TRANSPARENT);
 
 	}
 

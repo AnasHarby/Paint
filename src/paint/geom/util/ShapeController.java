@@ -19,6 +19,7 @@ public class ShapeController {
 					source.getTranslateY());
 			draggingStartPoint = new Point(event.getSceneX(),
 					event.getSceneY());
+			System.out.println(source.toString());
 			source.toFront();
 			source.setCursor(Cursor.MOVE);
 		}

@@ -9,14 +9,17 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import paint.geom.LinePaint;
-import paint.geom.Point;
+import paint.geom.util.ShapeController;
 
 public class FXMLController implements Initializable {
 	@FXML private Canvas canvas;
 	@FXML private ColorPicker picker;
 	private boolean start = false;
-//	private RectanglePaint rect;
+	private Rectangle rect1;
+	private Rectangle rect2;
 //	private CirclePaint circle;
 	private LinePaint line;
 
@@ -31,17 +34,38 @@ public class FXMLController implements Initializable {
 	public void act(MouseEvent event) {
 		Pane pane = (Pane) canvas.getParent();
 		if(!start) {
-//			rect = new RectanglePaint(new Point(200, 200), 200, 200);
-//			rect.draw(pane);
-			line = new LinePaint(new Point(200, 200), new Point(400, 500));
-			line.draw(pane);
+			rect1 = new Rectangle(200, 200, 200, 200);
+			rect2 = new Rectangle(200, 200, 100, 100);
+			ShapeController cont = new ShapeController();
+			cont.addHandlers(rect1);
+//			rect1.xProperty().bind(rect2.xProperty());
+//			rect1.yProperty().bind(rect2.yProperty());
+			rect2.translateXProperty().bind(rect1.translateXProperty());
+			//rect2.set
+			rect2.translateYProperty().bind(rect1.translateYProperty());
+			rect2.onMouseDraggedProperty().bind(rect1.onMouseDraggedProperty());
+			rect2.onMouseReleasedProperty().bind(rect1.onMouseReleasedProperty());
+			rect2.onMousePressedProperty().bind(rect1.onMousePressedProperty());
+//			rect2.layoutXProperty().bind(rect1.layoutXProperty());
+//			rect2.layoutYProperty().bind(rect1.layoutYProperty());
+
+
+
+			rect1.setFill(Color.TRANSPARENT);
+			rect2.setFill(Color.TRANSPARENT);
+			rect1.setStroke(Color.BLACK);
+			rect2.setStroke(Color.BLACK);
+			pane.getChildren().add(rect2);
+			pane.getChildren().add(rect1);
+			rect1.toFront();
 			start = true;
+
 		} else {
-			double x1 = 400;
-			double y1 = 500;
-			double x2 = event.getX();
-			double y2 = event.getY();
-			line.resize(x1, y1, x2, y2);
+//			double x1 = 400;
+//			double y1 = 500;
+//			double x2 = event.getX();
+//			double y2 = event.getY();
+//			line.resize(x1, y1, x2, y2);
 		}
 	}
 }

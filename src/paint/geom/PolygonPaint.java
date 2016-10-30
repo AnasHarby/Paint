@@ -12,6 +12,10 @@ public abstract class PolygonPaint implements ShapePaint {
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
+		for (Point vertex : vertices) {
+			polygon.getPoints().add(vertex.getX());
+			polygon.getPoints().add(vertex.getY());
+		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
