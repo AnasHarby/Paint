@@ -9,7 +9,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import paint.geom.CirclePaint;
+import paint.geom.LinePaint;
 import paint.geom.Point;
 
 public class FXMLController implements Initializable {
@@ -17,7 +17,9 @@ public class FXMLController implements Initializable {
 	@FXML private ColorPicker picker;
 	private boolean start = false;
 //	private RectanglePaint rect;
-	private CirclePaint circle;
+//	private CirclePaint circle;
+	private LinePaint line;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		canvas.autosize();
@@ -31,15 +33,15 @@ public class FXMLController implements Initializable {
 		if(!start) {
 //			rect = new RectanglePaint(new Point(200, 200), 200, 200);
 //			rect.draw(pane);
-			circle = new CirclePaint(new Point(400, 400), 200);
-			circle.draw(pane);
+			line = new LinePaint(new Point(200, 200), new Point(400, 500));
+			line.draw(pane);
 			start = true;
 		} else {
-			double x1 = 200;
-			double y1 = 400;
-			double x2 = 400;
-			double y2 = 800;
-			circle.resize(x1, y1, x2, y2);
+			double x1 = 400;
+			double y1 = 500;
+			double x2 = event.getX();
+			double y2 = event.getY();
+			line.resize(x1, y1, x2, y2);
 		}
 	}
 }
