@@ -1,9 +1,16 @@
 package paint.geom;
 
+import paint.geom.util.ShapeFactory;
+
 public class CirclePaint extends EllipsePaint {
 	private Point centerCircle;
 	private double radiusCircle;
-
+	private static final String KEY = "circle";
+	
+	static {
+		ShapeFactory.getInstance().registerShape(KEY, CirclePaint.class);
+	}
+	
 	public CirclePaint(Point center, double radius) {
 		super(center, radius, radius);
 		centerCircle = center;

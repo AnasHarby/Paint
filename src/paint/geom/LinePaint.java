@@ -4,10 +4,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import paint.geom.util.ShapeController;
+import paint.geom.util.ShapeFactory;
 
 public class LinePaint implements ShapePaint {
 	private Line line;
-
+	private static final String KEY = "line";
+	
+	static {
+		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
+	}
+	
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
