@@ -57,16 +57,6 @@ public interface ShapePaint {
 	 * @param y2 y-axis value of the resizing point
 	 */
 	public void resize(double x1, double y1, double x2, double y2);
-	/**
-	 * Shows the reference resizing points as rectangles
-	 * on shape by adding them to the parent pane.
-	 * @param contentPane Parent pane.
-	 */
-	public void showResizers(Pane contentPane);
-	/**
-	 * Hides the reference resizing points from
-	 * the parent pane.
-	 * @param contentPane Parent pane.
-	 */
-	public void hideResizers(Pane contentPane);
+	public void showResizers();
+	public void hideResizers();
 }

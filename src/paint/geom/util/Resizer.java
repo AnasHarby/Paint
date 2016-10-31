@@ -1,75 +1,56 @@
 package paint.geom.util;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Random;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import paint.geom.Point;
+import paint.geom.ShapePaint;
 
 public class Resizer {
+	private static final double SIZE = 7.5;
+	private Rectangle rect;
 
-	private static final double SIZE = 10;
-	private Shape parentShape;
-
-	ArrayList<Rectangle> rects;
-	public Resizer(Shape shape, double... positions) {
-		rects = new ArrayList<Rectangle>();
-		parentShape = shape;
-		boolean f = false;
-		double temp = 0;
-		for (double position : positions) {
-			if (!f) {
-				temp = position;
-			} else {
-				rects.add(new Rectangle(temp,
-						position, SIZE, SIZE));
-			}
-			f ^= true;
-		}
+	public Resizer(Shape shape, ShapePaint shapePaint, Point point) {
+		rect = new Rectangle(point.getX(),
+				point.getY(), SIZE, SIZE);
+		rect.translateXProperty().bind(
+				shape.translateXProperty());
+		rect.translateYProperty().bind(
+				shape.translateYProperty());
+		rect.xProperty().bind(point.xProperty());
+		rect.yProperty().bind(point.yProperty());
+		setActionHandlers();
+		rect.setUserData(shapePaint);
+		rect.setId("Resizer" + new Random().nextInt());
+		rect.toFront();
 	}
 
-	public Resizer(Shape shape, Point... positions) {
-		rects = new ArrayList<Rectangle>();
-		parentShape = shape;
-		for (Point position : positions) {
-			rects.add(new Rectangle(position.getX(),
-					position.getY(), SIZE, SIZE));
-		}
+	public void draw(Pane contentPane) {
+		contentPane.getChildren().add(rect);
+		hide();
 	}
 
-	public Resizer(Shape shape, Collection<Double> positions) {
-		rects = new ArrayList<Rectangle>();
-		parentShape = shape;
-		boolean f = false;
-		double temp = 0;
-		for (double position : positions) {
-			if (!f) {
-				temp = position;
-			} else {
-				rects.add(new Rectangle(temp,
-						position, SIZE, SIZE));
-			}
-			f ^= true;
-		}
+	public void show() {
+		rect.setVisible(true);
 	}
 
-	public void addResizers(Pane contentPane) {
-		for (Rectangle rect : rects) {
-			rect.translateXProperty().bind(
-					parentShape.translateXProperty());
-			rect.translateYProperty().bind(
-					parentShape.translateYProperty());
-			contentPane.getChildren().add(rect);
-			rect.toFront();
-		}
+	public void hide() {
+		rect.setVisible(false);
 	}
 
+	private void setActionHandlers() {
+		ShapeController controller =
+				new ShapeController();
+		controller.addHandlers(rect);
+	}
 
-	public void removeResizers(Pane contentPane) {
-		for (Rectangle rect : rects) {
-			contentPane.getChildren().remove(rect);
-		}
+	public double getX() {
+		return rect.xProperty().doubleValue();
+	}
+
+	public double getY() {
+		return rect.yProperty().doubleValue();
 	}
 }

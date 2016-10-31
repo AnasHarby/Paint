@@ -1,33 +1,46 @@
 package paint.geom;
 
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+
 public class Point {
-	private double pointX;
-	private double pointY;
-	
+	private DoubleProperty propX;
+	private DoubleProperty propY;
+
 	public Point() {
-		pointX = 0;
-		pointY = 0;
+		propX = new SimpleDoubleProperty(0);
+		propY = new SimpleDoubleProperty(0);
 	}
-	
+
 	public Point(double x, double y) {
-		this.pointX = x;
-		this.pointY = y;
+		propX = new SimpleDoubleProperty(0);
+		propY = new SimpleDoubleProperty(0);
+		propX.set(x);
+		propY.set(y);
 	}
 
 	public void setX(double x) {
-		this.pointX = x;
+		propX.set(x);
 	}
-	
+
 	public void setY(double y) {
-		this.pointY = y;
+		propY.set(y);
 	}
-	
+
 	public double getX() {
-		return pointX;
+		return propX.doubleValue();
 	}
-	
+
 	public double getY() {
-		return pointY;
+		return propY.doubleValue();
+	}
+
+	public DoubleProperty xProperty() {
+		return propX;
+	}
+
+	public DoubleProperty yProperty() {
+		return propY;
 	}
 
 	@Override
@@ -35,9 +48,9 @@ public class Point {
 		final int prime = 31;
 		int result = 1;
 		long temp;
-		temp = Double.doubleToLongBits(pointX);
+		temp = Double.doubleToLongBits(propX.doubleValue());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(pointY);
+		temp = Double.doubleToLongBits(propY.doubleValue());
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
@@ -51,11 +64,12 @@ public class Point {
 		if (getClass() != obj.getClass())
 			return false;
 		Point other = (Point) obj;
-		if (Double.doubleToLongBits(pointX) != Double.doubleToLongBits(other.pointX))
+		if (Double.doubleToLongBits(propX.doubleValue())
+				!= Double.doubleToLongBits(other.propX.doubleValue()))
 			return false;
-		if (Double.doubleToLongBits(pointY) != Double.doubleToLongBits(other.pointY))
+		if (Double.doubleToLongBits(propY.doubleValue())
+				!= Double.doubleToLongBits(other.propY.doubleValue()))
 			return false;
 		return true;
 	}
-	
 }

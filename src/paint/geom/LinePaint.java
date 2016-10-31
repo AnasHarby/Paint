@@ -1,5 +1,7 @@
 package paint.geom;
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -9,7 +11,7 @@ import paint.geom.util.ShapeFactory;
 
 public class LinePaint implements ShapePaint {
 	private Line line;
-	private Resizer resizer;
+	private ArrayList<Resizer> resizers;
 	private static final String KEY = "line";
 
 	static {
@@ -19,6 +21,7 @@ public class LinePaint implements ShapePaint {
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
+		resizers = new ArrayList<Resizer>();
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -94,18 +97,25 @@ public class LinePaint implements ShapePaint {
 	}
 
 	private void setResizers() {
-		resizer = new Resizer(line,
-				line.getStartX(), line.getStartY(),
-				line.getEndX(), line.getEndY());
+		resizers.add(new Resizer(line, this, new Point(
+				line.getStartX(), line.getStartY())));
+		resizers.add(new Resizer(line, this, new Point(
+				line.getEndX(), line.getEndY())));
 	}
 
 	@Override
-	public void showResizers(Pane contentPane) {
-		resizer.addResizers(contentPane);
+	public void showResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.show();
+		}
 	}
 
 	@Override
-	public void hideResizers(Pane contentPane) {
-		resizer.removeResizers(contentPane);
+	public void hideResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.hide();
+		}
 	}
+
+
 }

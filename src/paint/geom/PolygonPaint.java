@@ -1,5 +1,6 @@
 package paint.geom;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javafx.scene.layout.Pane;
@@ -10,10 +11,11 @@ import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
 	public Polygon polygon;
-	private Resizer resizer;
+	private ArrayList<Resizer> resizers;
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
+		resizers = new ArrayList<Resizer>();
 		for (Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
@@ -26,6 +28,7 @@ public abstract class PolygonPaint implements ShapePaint {
 
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
+		resizers = new ArrayList<Resizer>();
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -34,6 +37,7 @@ public abstract class PolygonPaint implements ShapePaint {
 
 	public PolygonPaint(Collection<Point> vertices) {
 		polygon = new Polygon();
+		resizers = new ArrayList<Resizer>();
 		for(Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
@@ -112,17 +116,28 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 
 	private void setResizers() {
-		resizer = new Resizer(polygon,
-				polygon.getPoints());
+		double temp = 0;
+		boolean f = false;
+		for (double pos : polygon.getPoints()) {
+			if (!f) {
+				temp = pos;
+			} else {
+				resizers.add(new Resizer(polygon, this,
+						new Point(temp, pos)));
+			}
+			f ^= true;
+		}
 	}
-
 	@Override
-	public void showResizers(Pane contentPane) {
-		resizer.addResizers(contentPane);
+	public void showResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.show();
+		}
 	}
-
 	@Override
-	public void hideResizers(Pane contentPane) {
-		resizer.removeResizers(contentPane);
+	public void hideResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.hide();
+		}
 	}
 }

@@ -1,6 +1,8 @@
 package paint.geom;
 
 
+import java.util.ArrayList;
+
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -14,7 +16,6 @@ public class EllipsePaint implements ShapePaint {
 	 * class.
 	 */
 	private static final String KEY = "ellipse";
-	private static final double OFFSET = 5;
 	public Ellipse ellipse;
 	private double aEllipse;
 	private double bEllipse;
@@ -23,11 +24,11 @@ public class EllipsePaint implements ShapePaint {
 	private Point down;
 	private Point left;
 	private Point right;
-	private Resizer resizer;
+	private ArrayList<Resizer> resizers;
+
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, EllipsePaint.class);
 	}
-
 
 	public EllipsePaint(Point center, double a, double b) {
 		centerEllipse = center;
@@ -35,6 +36,11 @@ public class EllipsePaint implements ShapePaint {
 		bEllipse = b;
 		ellipse = new Ellipse(center.getX(),
 				center.getY(), a, b);
+		resizers = new ArrayList<Resizer>();
+		up = new Point();
+		down = new Point();
+		left = new Point();
+		right = new Point();
 		setVertices();
 		setResizers();
 		fill(Color.TRANSPARENT);
@@ -49,6 +55,9 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(ellipse);
+		for (Resizer resizer : resizers) {
+			resizer.draw(contentPane);
+		}
 	}
 
 	@Override
@@ -100,41 +109,58 @@ public class EllipsePaint implements ShapePaint {
 	public void resize(double x1,
 			double y1, double x2, double y2) {
 		Point point = new Point(x1, y1);
-		if (point.equals(up)
-				|| point.equals(down)) {
-			bEllipse += y2 - y1;
-		} else if (point.equals(left)
-				|| point.equals(right)) {
-			aEllipse += x2 - x1;
+		if (point.equals(up)) {
+			double dy = y1 - y2;
+			if (bEllipse + dy > 0) {
+				bEllipse += dy;
+			}
+		} else if (point.equals(down)) {
+			double dy = y2 - y1;
+			if (bEllipse + dy > 0) {
+				bEllipse += dy;
+			}
+		} else if (point.equals(left)) {
+			double dx = x1 - x2;
+			if (aEllipse + dx > 0) {
+				aEllipse += dx;
+			}
+		} else if (point.equals(right)) {
+			double dx = x2 - x1;
+			if (aEllipse + dx > 0) {
+				aEllipse += dx;
+			}
 		}
 		setVertices();
 		ellipse.setRadiusX(aEllipse);
 		ellipse.setRadiusY(bEllipse);
 	}
 	private void setVertices() {
-		up = new Point(
-				centerEllipse.getX(),
-				centerEllipse.getY() - bEllipse - OFFSET);
-		left = new Point(
-				centerEllipse.getX() - aEllipse - OFFSET,
-				centerEllipse.getY());
-		down = new Point(
-				centerEllipse.getX(),
-				centerEllipse.getY() + bEllipse - OFFSET);
-		right = new Point(
-				centerEllipse.getX() + aEllipse - OFFSET,
-				centerEllipse.getY());
+		up.setX(centerEllipse.getX());
+		up.setY(centerEllipse.getY() - bEllipse);
+		left.setX(centerEllipse.getX() - aEllipse);
+		left.setY(centerEllipse.getY());
+		down.setX(centerEllipse.getX());
+		down.setY(centerEllipse.getY() + bEllipse);
+		right.setX(centerEllipse.getX() + aEllipse);
+		right.setY(centerEllipse.getY());
 	}
+
 	private void setResizers() {
-		resizer = new Resizer(ellipse, up, left, down, right);
+		resizers.add(new Resizer(ellipse, this, up));
+		resizers.add(new Resizer(ellipse, this, left));
+		resizers.add(new Resizer(ellipse, this, down));
+		resizers.add(new Resizer(ellipse, this, right));
 	}
 	@Override
-	public void showResizers(Pane contentPane) {
-		setResizers();
-		resizer.addResizers(contentPane);
+	public void showResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.show();
+		}
 	}
 	@Override
-	public void hideResizers(Pane contentPane) {
-		resizer.removeResizers(contentPane);
+	public void hideResizers() {
+		for (Resizer resizer : resizers) {
+			resizer.hide();
+		}
 	}
 }

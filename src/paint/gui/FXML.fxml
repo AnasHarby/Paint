@@ -112,48 +112,53 @@
                   </StackPane>
                </center>
                <left>
-                  <GridPane gridLinesVisible="true" maxHeight="384" maxWidth="64.0" minHeight="384" minWidth="64.0" prefHeight="384" prefWidth="64.0" BorderPane.alignment="CENTER">
+                  <GridPane gridLinesVisible="true" maxHeight="390" maxWidth="50.0" minHeight="384" minWidth="50.0" prefHeight="390" prefWidth="50.0" BorderPane.alignment="CENTER">
                     <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="64.0" minWidth="64.0" prefWidth="64.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="50.0" minWidth="50.0" prefWidth="50.0" />
                     </columnConstraints>
                     <rowConstraints>
-                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                      <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="64.0" minHeight="64.0" prefHeight="64.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <BorderPane.margin>
                         <Insets left="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="0" id="brush" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Brush" />
                         	</tooltip>
                         </ToggleButton>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="1" id="eraser" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="2" id="eraser" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Eraser" />
                         	</tooltip>
                         </ToggleButton>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="2" id="mover" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="4" id="mover" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Move" />
                         	</tooltip>
                         </ToggleButton>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="3" id="bucket" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="6" id="bucket" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Fill" />
                         	</tooltip>
                         </ToggleButton>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="4" id="dropper" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="8" id="dropper" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Pick" />
                         	</tooltip>
                         </ToggleButton>
-                        <ToggleButton maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="64.0" GridPane.rowIndex="5" id="remover" stylesheets="@Style.css" >
+                        <ToggleButton maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" GridPane.rowIndex="10" id="remover" stylesheets="@Style.css" >
                         	<tooltip>
                         		<Tooltip text="Remove" />
                         	</tooltip>

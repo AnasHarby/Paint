@@ -33,5 +33,4 @@ public class CirclePaint extends EllipsePaint {
 		double radius = Math.sqrt(dX * dX + dY * dY);
 		return radius;
 	}
-
 }
