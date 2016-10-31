@@ -15,7 +15,7 @@ public class EllipsePaint implements ShapePaint {
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
 	 */
-	private static final String KEY = "ellipse";
+	public static final String KEY = "ellipse";
 	public Ellipse ellipse;
 	private double aEllipse;
 	private double bEllipse;
@@ -25,6 +25,10 @@ public class EllipsePaint implements ShapePaint {
 	private Point left;
 	private Point right;
 	private ArrayList<Resizer> resizers;
+	private static final int TOPMOST_X = 0;
+	private static final int TOPMOST_Y = 1;
+	private static final int RIGHTMOST_X = 2;
+	private static final int RIGHTMOST_Y = 3;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, EllipsePaint.class);
@@ -47,7 +51,13 @@ public class EllipsePaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 	}
-
+	
+	public EllipsePaint(double... properties) {
+		this(new Point(properties[TOPMOST_X], properties[RIGHTMOST_Y]),
+				Math.abs(properties[RIGHTMOST_X] - properties[TOPMOST_X]),
+				Math.abs(properties[TOPMOST_Y] - properties[RIGHTMOST_Y]));
+	}
+	
 	public void rotate(double angle) {
 		ellipse.setRotate(angle);
 	}

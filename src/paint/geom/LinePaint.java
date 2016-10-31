@@ -12,7 +12,11 @@ import paint.geom.util.ShapeFactory;
 public class LinePaint implements ShapePaint {
 	private Line line;
 	private ArrayList<Resizer> resizers;
-	private static final String KEY = "line";
+	public static final String KEY = "line";
+	private static final int FIRST_X = 0;
+	private static final int FIRST_Y = 1;
+	private static final int SECOND_X = 2;
+	private static final int SECOND_Y = 3;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
@@ -27,7 +31,12 @@ public class LinePaint implements ShapePaint {
 		setActionHandlers();
 		setResizers();
 	}
-
+	
+	public LinePaint(double... properties) {
+		this(new Point(properties[FIRST_X], properties[FIRST_Y]),
+				new Point(properties[SECOND_X], properties[SECOND_Y]));
+	}
+	
 	@Override
 	public String getIconUrl() {
 		return null;
