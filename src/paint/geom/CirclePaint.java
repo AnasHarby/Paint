@@ -26,6 +26,7 @@ public class CirclePaint extends EllipsePaint {
 		radiusCircle = getRadius(x2, y2);
 		super.ellipse.setRadiusX(radiusCircle);
 		super.ellipse.setRadiusY(radiusCircle);
+		super.setVertices();
 	}
 	private double getRadius(double x, double y) {
 		double dX = Math.abs(centerCircle.getX() - x);

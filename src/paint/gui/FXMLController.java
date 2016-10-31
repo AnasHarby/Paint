@@ -9,7 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import paint.geom.EllipsePaint;
+import javafx.scene.paint.Color;
+import paint.geom.CirclePaint;
 import paint.geom.Point;
 
 public class FXMLController implements Initializable {
@@ -26,8 +27,28 @@ public class FXMLController implements Initializable {
 	@FXML
 	public void act(MouseEvent event) {
 		Pane pane = (Pane) canvas.getParent();
-		EllipsePaint circle = new EllipsePaint(new Point(400, 400), 200, 100);
+//		EllipsePaint circle = new EllipsePaint(new Point(400, 400), 200, 100);
+//		circle.fill(Color.BEIGE);
+//		circle.draw(pane);
+//		circle.showResizers();
+
+//		ShapePaint rect = new RectanglePaint(new Point(200, 200), 400, 200);
+//		rect.fill(Color.BEIGE);
+//		rect.draw(pane);
+//		rect.showResizers();
+
+		CirclePaint circle = new CirclePaint(new Point(400, 400), 200);
+		circle.fill(Color.BEIGE);
 		circle.draw(pane);
 		circle.showResizers();
+
+//		SquarePaint square = new SquarePaint(new Point(400, 400), 400);
+//		square.fill(Color.BEIGE);
+//		square.draw(pane);
+//		square.showResizers();
+
+//		LinePaint line = new LinePaint(new Point(200, 200), new Point(400, 400));
+//		line.draw(pane);
+//		line.showResizers();
 	}
 }

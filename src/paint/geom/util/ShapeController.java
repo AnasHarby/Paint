@@ -24,8 +24,8 @@ public class ShapeController {
 			} else if (source.getId().startsWith(RESIZER_ID)) {
 				source.setCursor(Cursor.V_RESIZE);
 			}
-			draggingStartPoint = new Point(event.getSceneX(),
-				event.getSceneY());
+			draggingStartPoint = new Point(event.getX(),
+				event.getY());
 		}
 	};
 
@@ -36,9 +36,9 @@ public class ShapeController {
 			Node source = (Node) event.getSource();
 			if (source.getId() == null) {
 				source.setTranslateX(originalTranslate.getX()
-						+ event.getSceneX() - draggingStartPoint.getX());
+						+ event.getX() - draggingStartPoint.getX());
 				source.setTranslateY(originalTranslate.getY()
-						+ event.getSceneY() - draggingStartPoint.getY());
+						+ event.getY() - draggingStartPoint.getY());
 			} else if (source.getId().startsWith(RESIZER_ID)) {
 				ShapePaint parent =
 						(ShapePaint) source.getUserData();
@@ -46,6 +46,11 @@ public class ShapeController {
 				parent.resize(resizer.xProperty().doubleValue(),
 						resizer.yProperty().doubleValue(), event.getX(),
 						event.getY());
+				System.out.println(resizer.xProperty().doubleValue());
+				System.out.println(resizer.yProperty().doubleValue());
+				System.out.println(event.getX());
+				System.out.println(event.getY());
+				System.out.println("");
 			}
 		}
 	};

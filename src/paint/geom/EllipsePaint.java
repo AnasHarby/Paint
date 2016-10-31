@@ -16,9 +16,7 @@ public class EllipsePaint implements ShapePaint {
 	 * class.
 	 */
 	private static final String KEY = "ellipse";
-	public Ellipse ellipse;
-	private double aEllipse;
-	private double bEllipse;
+	protected Ellipse ellipse;
 	private Point centerEllipse;
 	private Point up;
 	private Point down;
@@ -32,8 +30,6 @@ public class EllipsePaint implements ShapePaint {
 
 	public EllipsePaint(Point center, double a, double b) {
 		centerEllipse = center;
-		aEllipse = a;
-		bEllipse = b;
 		ellipse = new Ellipse(center.getX(),
 				center.getY(), a, b);
 		resizers = new ArrayList<Resizer>();
@@ -100,6 +96,7 @@ public class EllipsePaint implements ShapePaint {
 	public void toFront() {
 		ellipse.toFront();
 	}
+
 	private void setActionHandlers() {
 		ShapeController shapeMovement
 			= new ShapeController();
@@ -109,6 +106,8 @@ public class EllipsePaint implements ShapePaint {
 	public void resize(double x1,
 			double y1, double x2, double y2) {
 		Point point = new Point(x1, y1);
+		double aEllipse = ellipse.getRadiusX();
+		double bEllipse = ellipse.getRadiusY();
 		if (point.equals(up)) {
 			double dy = y1 - y2;
 			if (bEllipse + dy > 0) {
@@ -130,18 +129,18 @@ public class EllipsePaint implements ShapePaint {
 				aEllipse += dx;
 			}
 		}
-		setVertices();
 		ellipse.setRadiusX(aEllipse);
 		ellipse.setRadiusY(bEllipse);
+		setVertices();
 	}
-	private void setVertices() {
+	protected void setVertices() {
 		up.setX(centerEllipse.getX());
-		up.setY(centerEllipse.getY() - bEllipse);
-		left.setX(centerEllipse.getX() - aEllipse);
+		up.setY(centerEllipse.getY() - ellipse.getRadiusY());
+		left.setX(centerEllipse.getX() - ellipse.getRadiusX());
 		left.setY(centerEllipse.getY());
 		down.setX(centerEllipse.getX());
-		down.setY(centerEllipse.getY() + bEllipse);
-		right.setX(centerEllipse.getX() + aEllipse);
+		down.setY(centerEllipse.getY() + ellipse.getRadiusY());
+		right.setX(centerEllipse.getX() + ellipse.getRadiusX());
 		right.setY(centerEllipse.getY());
 	}
 

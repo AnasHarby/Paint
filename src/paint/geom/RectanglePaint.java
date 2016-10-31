@@ -23,7 +23,6 @@ public class RectanglePaint extends PolygonPaint {
 			setUpperLeftPoint(upperLeft);
 		super.setBorderColor(Color.BLACK);
 		super.fill(Color.TRANSPARENT);
-
 	}
 
 	public RectanglePaint(Point upperLeft,
@@ -45,18 +44,22 @@ public class RectanglePaint extends PolygonPaint {
 	}
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
-		for (int i = 0;
-				i < super.polygon.getPoints().size() - 1; i += 2) {
-			double x = super.polygon.getPoints().get(i);
-			double y = super.polygon.getPoints().get(i + 1);
-			if (x == x1 && y == y1) {
-				super.polygon.getPoints().set(i, x2);
-				super.polygon.getPoints().set(i + 1, y2);
-			} else if (x == x1) {
-				super.polygon.getPoints().set(i, x2);
-			} else if (y == y1) {
-				super.polygon.getPoints().set(i + 1, y2);
+		int i = 0;
+		for (Point point : super.points) {
+			if (x1 == point.getX()
+					&& y1 == point.getY()) {
+				point.setX(x2);
+				point.setY(y2);
+				super.polygon.getPoints().set(i * 2, x2);
+				super.polygon.getPoints().set(i * 2 + 1, y2);
+			} else if (x1 == point.getX()) {
+				point.setX(x2);
+				super.polygon.getPoints().set(i * 2, x2);
+			} else if (y1 == point.getY()) {
+				point.setY(y2);
+				super.polygon.getPoints().set(i * 2 + 1, y2);
 			}
+			i++;
 		}
 	}
 }

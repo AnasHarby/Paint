@@ -12,6 +12,8 @@ import paint.geom.util.ShapeFactory;
 public class LinePaint implements ShapePaint {
 	private Line line;
 	private ArrayList<Resizer> resizers;
+	private Point start;
+	private Point end;
 	private static final String KEY = "line";
 
 	static {
@@ -21,6 +23,8 @@ public class LinePaint implements ShapePaint {
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
+		start = point1;
+		end = point2;
 		resizers = new ArrayList<Resizer>();
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
@@ -36,6 +40,9 @@ public class LinePaint implements ShapePaint {
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(line);
+		for (Resizer resizer : resizers) {
+			resizer.draw(contentPane);
+		}
 	}
 
 	@Override
@@ -81,26 +88,28 @@ public class LinePaint implements ShapePaint {
 
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
-		double m = (line.getStartY() - line.getEndY())
-				/ (line.getStartX() - line.getEndX());
+		double m = (start.getY() - end.getY())
+				/ (start.getX() - end.getX());
 		double x = (m / (m * m + 1)) * (m * x1 + x2 / m + y2 - y1);
 		double y = y1 + m * x - m * x1;
-		if (x1 == line.getStartX()
-				&& y1 == line.getStartY()) {
-			line.setStartX(x);
-			line.setStartY(y);
+		if (x1 == start.getX()
+				&& y1 == start.getY()) {
+			start.setX(x);
+			start.setY(y);
 		} else if (x1 == line.getEndX()
 				&& y1 == line.getEndY()) {
-			line.setEndX(x);
-			line.setEndY(y);
+			end.setX(x);
+			end.setY(y);
 		}
+		line.setStartX(start.getX());
+		line.setStartY(start.getY());
+		line.setEndX(end.getX());
+		line.setEndY(end.getY());
 	}
 
 	private void setResizers() {
-		resizers.add(new Resizer(line, this, new Point(
-				line.getStartX(), line.getStartY())));
-		resizers.add(new Resizer(line, this, new Point(
-				line.getEndX(), line.getEndY())));
+		resizers.add(new Resizer(line, this, start));
+		resizers.add(new Resizer(line, this, end));
 	}
 
 	@Override

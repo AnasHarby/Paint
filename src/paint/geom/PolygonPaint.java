@@ -10,15 +10,18 @@ import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
-	public Polygon polygon;
+	protected Polygon polygon;
 	private ArrayList<Resizer> resizers;
+	protected ArrayList<Point> points;
 
 	public PolygonPaint(Point... vertices) {
 		polygon = new Polygon();
 		resizers = new ArrayList<Resizer>();
+		points = new ArrayList<Point>();
 		for (Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
+			points.add(vertex);
 		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
@@ -29,6 +32,17 @@ public abstract class PolygonPaint implements ShapePaint {
 	public PolygonPaint(double... vertices) {
 		polygon = new Polygon(vertices);
 		resizers = new ArrayList<Resizer>();
+		points = new ArrayList<Point>();
+		double temp = 0;
+		boolean f = false;
+		for (double vertex : vertices) {
+			if (!f) {
+				temp = vertex;
+			} else {
+				points.add(new Point(temp, vertex));
+			}
+			f ^= true;
+		}
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -38,6 +52,7 @@ public abstract class PolygonPaint implements ShapePaint {
 	public PolygonPaint(Collection<Point> vertices) {
 		polygon = new Polygon();
 		resizers = new ArrayList<Resizer>();
+		points = (ArrayList<Point>) vertices;
 		for(Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
@@ -55,6 +70,9 @@ public abstract class PolygonPaint implements ShapePaint {
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(polygon);
+		for (Resizer resizer : resizers) {
+			resizer.draw(contentPane);
+		}
 	}
 
 	@Override
@@ -104,28 +122,23 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 	@Override
 	public void resize(double x1, double x2, double y1, double y2) {
-		for (int i = 0;
-				i < polygon.getPoints().size() - 1; i += 2) {
-			double x = polygon.getPoints().get(i);
-			double y = polygon.getPoints().get(i + 1);
-			if (x == x1 && y == y1) {
-				polygon.getPoints().set(i, x2);
-				polygon.getPoints().set(i + 1, y2);
+		int i = 0;
+		for (Point point : points) {
+			if (x1 == point.getX()
+					&& y1 == point.getY()) {
+				point.setX(x2);
+				point.setY(y2);
+				polygon.getPoints().set(i * 2, x2);
+				polygon.getPoints().set(i * 2 + 1, y2);
 			}
+			i++;
 		}
 	}
 
-	private void setResizers() {
-		double temp = 0;
-		boolean f = false;
-		for (double pos : polygon.getPoints()) {
-			if (!f) {
-				temp = pos;
-			} else {
-				resizers.add(new Resizer(polygon, this,
-						new Point(temp, pos)));
-			}
-			f ^= true;
+	protected void setResizers() {
+		for (Point point : points) {
+			resizers.add(new Resizer(
+					polygon, this, point));
 		}
 	}
 	@Override

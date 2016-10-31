@@ -9,7 +9,7 @@ import paint.geom.Point;
 import paint.geom.ShapePaint;
 
 public class Resizer {
-	private static final double SIZE = 7.5;
+	private static final double SIZE = 3;
 	private Rectangle rect;
 
 	public Resizer(Shape shape, ShapePaint shapePaint, Point point) {

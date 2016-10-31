@@ -91,9 +91,10 @@ public class FXMLControllerTest implements Initializable {
 				double radius = getRadius(init.getX(), init.getY(), event.getX(), event.getY());
 				gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 				CirclePaint circle = new CirclePaint(init, radius);
+				circle.draw(pane);
+				circle.showResizers();
 				pane.getChildren().remove(drawingShape);
 				drawingShape = null;
-				circle.draw(pane);
 				circle.toBack();
 			} else {
 				init.setX(event.getX());
@@ -115,6 +116,7 @@ public class FXMLControllerTest implements Initializable {
 					event.getY() - init.getY());
 				pane.getChildren().remove(drawingShape);
 				rectangle.draw(pane);
+				rectangle.showResizers();
 				drawingShape = null;
 				rectangle.toBack();
 			}
