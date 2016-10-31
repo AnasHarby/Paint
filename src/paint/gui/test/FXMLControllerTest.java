@@ -96,6 +96,7 @@ public class FXMLControllerTest implements Initializable {
 				pane.getChildren().remove(drawingShape);
 				drawingShape = null;
 				circle.toBack();
+				circle.showResizers();
 			} else {
 				init.setX(event.getX());
 				init.setY(event.getY());
@@ -111,9 +112,7 @@ public class FXMLControllerTest implements Initializable {
 			if (started){
 				started = false;
 				ShapePaint rectangle
-				= new RectanglePaint(init,
-					event.getX() - init.getX(),
-					event.getY() - init.getY());
+				= new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
 				rectangle.draw(pane);
 				rectangle.showResizers();

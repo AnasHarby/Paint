@@ -10,11 +10,15 @@ import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
 public class LinePaint implements ShapePaint {
+	private static final String KEY = "line";
+	private static final int FIRST_X = 0;
+	private static final int FIRST_Y = 1;
+	private static final int SECOND_X = 2;
+	private static final int SECOND_Y = 3;
 	private Line line;
 	private ArrayList<Resizer> resizers;
 	private Point start;
 	private Point end;
-	private static final String KEY = "line";
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
@@ -30,6 +34,11 @@ public class LinePaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+	}
+
+	public LinePaint(double... properties) {
+		this(new Point(properties[FIRST_X], properties[FIRST_Y]),
+				new Point(properties[SECOND_X], properties[SECOND_Y]));
 	}
 
 	@Override

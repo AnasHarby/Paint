@@ -27,7 +27,7 @@ public class FXMLController implements Initializable {
 	@FXML
 	public void act(MouseEvent event) {
 		Pane pane = (Pane) canvas.getParent();
-//		EllipsePaint circle = new EllipsePaint(new Point(400, 400), 200, 100);
+//		//		EllipsePaint circle = new EllipsePaint(new Point(400, 400), 200, 100);
 //		circle.fill(Color.BEIGE);
 //		circle.draw(pane);
 //		circle.showResizers();

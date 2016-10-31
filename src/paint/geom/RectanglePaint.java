@@ -5,7 +5,11 @@ import paint.geom.util.ShapeFactory;
 
 public class RectanglePaint extends PolygonPaint {
 	private Point upperLeftPoint;
-	private static final String KEY = "rectangle";
+	private static final int UPPER_LEFT_X = 0;
+	private static final int UPPER_LEFT_Y = 1;
+	private static final int BOTTOM_RIGHT_X = 2;
+	private static final int BOTTOM_RIGHT_Y = 3;
+	public static final String KEY = "rectangle";
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, RectanglePaint.class);
@@ -24,7 +28,14 @@ public class RectanglePaint extends PolygonPaint {
 		super.setBorderColor(Color.BLACK);
 		super.fill(Color.TRANSPARENT);
 	}
-
+	
+	public RectanglePaint(double... properties) {
+		this(new Point(Math.min(properties[UPPER_LEFT_X], properties[BOTTOM_RIGHT_X]),
+				Math.min(properties[UPPER_LEFT_Y], properties[BOTTOM_RIGHT_Y])),
+				Math.abs(properties[UPPER_LEFT_X] - properties[BOTTOM_RIGHT_X]),
+				Math.abs(properties[UPPER_LEFT_Y] - properties[BOTTOM_RIGHT_Y]));
+	}
+	
 	public RectanglePaint(Point upperLeft,
 			Point lowerLeft, Point lowerRight, Point upperRight) {
 		super(upperLeft, lowerLeft, lowerRight, upperRight);
