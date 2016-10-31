@@ -1,8 +1,10 @@
 package paint.gui.test;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import data.util.History;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -41,7 +43,8 @@ public class FXMLControllerTest implements Initializable {
 	private boolean started = false;
 	private Point init = new Point();
 	private Shape drawingShape = null;
-
+	History history;
+	
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
 		double dY = Math.abs(y1 - y2);
@@ -64,6 +67,7 @@ public class FXMLControllerTest implements Initializable {
 		ShapeController sc = new ShapeController();
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
+		history = new History();
 	}
 
 	@FXML
@@ -80,6 +84,7 @@ public class FXMLControllerTest implements Initializable {
 		if (active == null) {
 			canvas.toBack();
 			freeDrawingCanvas.toBack();
+			history.undo(canvas);
 			return;
 		}
 		String name = active.getId();
@@ -113,6 +118,9 @@ public class FXMLControllerTest implements Initializable {
 				ShapePaint rectangle
 				= new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
+				ArrayList<ShapePaint> shapes = new ArrayList<>();
+				shapes.add(rectangle);
+				history.storeShapeChanges(shapes);
 				rectangle.draw(pane);
 				drawingShape = null;
 				rectangle.toBack();
@@ -165,6 +173,7 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML
 	public void release(MouseEvent event) {
+	
 	}
 
 	@FXML

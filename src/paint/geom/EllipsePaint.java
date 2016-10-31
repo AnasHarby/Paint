@@ -10,7 +10,7 @@ import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
-public class EllipsePaint implements ShapePaint {
+public class EllipsePaint implements ShapePaint, Cloneable {
 	/**
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
@@ -172,5 +172,17 @@ public class EllipsePaint implements ShapePaint {
 		for (Resizer resizer : resizers) {
 			resizer.hide();
 		}
+	}
+	
+	@Override
+	public EllipsePaint clone() throws CloneNotSupportedException {
+		EllipsePaint newObject = new EllipsePaint(centerEllipse.clone(), aEllipse, bEllipse);
+		newObject.ellipse.setTranslateX(ellipse.getTranslateX());
+		newObject.ellipse.setTranslateY(ellipse.getTranslateY());
+		newObject.ellipse.setRotate(ellipse.getRotate());
+		newObject.ellipse.setFill(ellipse.getFill());
+		newObject.ellipse.setStroke(ellipse.getStroke());
+		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
+		return newObject;
 	}
 }

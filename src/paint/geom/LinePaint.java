@@ -9,7 +9,7 @@ import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
-public class LinePaint implements ShapePaint {
+public class LinePaint implements ShapePaint, Cloneable {
 	private Line line;
 	private ArrayList<Resizer> resizers;
 	public static final String KEY = "line";
@@ -17,7 +17,8 @@ public class LinePaint implements ShapePaint {
 	private static final int FIRST_Y = 1;
 	private static final int SECOND_X = 2;
 	private static final int SECOND_Y = 3;
-
+	private Point point1;
+	private Point point2;
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
 	}
@@ -30,6 +31,8 @@ public class LinePaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+		this.point1 = point1;
+		this.point2 = point2;
 	}
 	
 	public LinePaint(double... properties) {
@@ -98,10 +101,12 @@ public class LinePaint implements ShapePaint {
 				&& y1 == line.getStartY()) {
 			line.setStartX(x);
 			line.setStartY(y);
+			point1 = new Point(x, y);
 		} else if (x1 == line.getEndX()
 				&& y1 == line.getEndY()) {
 			line.setEndX(x);
 			line.setEndY(y);
+			point2 = new Point(x, y);
 		}
 	}
 
@@ -126,5 +131,16 @@ public class LinePaint implements ShapePaint {
 		}
 	}
 
+	@Override
+	public LinePaint clone() throws CloneNotSupportedException {
+		LinePaint newObject = new LinePaint(point1.clone(), point2.clone());
+		newObject.line.setTranslateX(line.getTranslateX());
+		newObject.line.setTranslateY(line.getTranslateY());
+		newObject.line.setRotate(line.getRotate());
+		newObject.line.setFill(line.getFill());
+		newObject.line.setStroke(line.getStroke());
+		newObject.line.setStrokeWidth(line.getStrokeWidth());
+		return newObject;
+	}
 
 }

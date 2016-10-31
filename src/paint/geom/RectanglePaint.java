@@ -3,8 +3,10 @@ package paint.geom;
 import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
 
-public class RectanglePaint extends PolygonPaint {
+public class RectanglePaint extends PolygonPaint implements Cloneable {
 	private Point upperLeftPoint;
+	private double width;
+	private double height;
 	private static final int UPPER_LEFT_X = 0;
 	private static final int UPPER_LEFT_Y = 1;
 	private static final int BOTTOM_RIGHT_X = 2;
@@ -27,7 +29,8 @@ public class RectanglePaint extends PolygonPaint {
 			setUpperLeftPoint(upperLeft);
 		super.setBorderColor(Color.BLACK);
 		super.fill(Color.TRANSPARENT);
-
+		this.width = width;
+		this.height = height;
 	}
 	
 	public RectanglePaint(double... properties) {
@@ -35,11 +38,6 @@ public class RectanglePaint extends PolygonPaint {
 				Math.min(properties[UPPER_LEFT_Y], properties[BOTTOM_RIGHT_Y])),
 				Math.abs(properties[UPPER_LEFT_X] - properties[BOTTOM_RIGHT_X]),
 				Math.abs(properties[UPPER_LEFT_Y] - properties[BOTTOM_RIGHT_Y]));
-	}
-	
-	public RectanglePaint(Point upperLeft,
-			Point lowerLeft, Point lowerRight, Point upperRight) {
-		super(upperLeft, lowerLeft, lowerRight, upperRight);
 	}
 
 	@Override
@@ -54,6 +52,7 @@ public class RectanglePaint extends PolygonPaint {
 	public void setUpperLeftPoint(Point upperLeftPoint) {
 		this.upperLeftPoint = upperLeftPoint;
 	}
+	
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		for (int i = 0;
@@ -69,5 +68,17 @@ public class RectanglePaint extends PolygonPaint {
 				super.polygon.getPoints().set(i + 1, y2);
 			}
 		}
+	}
+	
+	@Override
+	public RectanglePaint clone() throws CloneNotSupportedException {
+		RectanglePaint newObject = new RectanglePaint(upperLeftPoint.clone(), width, height);
+		newObject.polygon.setTranslateX(polygon.getTranslateX());
+		newObject.polygon.setTranslateY(polygon.getTranslateY());
+		newObject.polygon.setRotate(polygon.getRotate());
+		newObject.polygon.setFill(polygon.getFill());
+		newObject.polygon.setStroke(polygon.getStroke());
+		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
+		return newObject;
 	}
 }

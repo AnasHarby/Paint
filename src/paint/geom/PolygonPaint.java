@@ -140,4 +140,7 @@ public abstract class PolygonPaint implements ShapePaint {
 			resizer.hide();
 		}
 	}
+	
+	@Override
+	public abstract ShapePaint clone() throws CloneNotSupportedException;
 }

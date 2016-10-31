@@ -2,7 +2,7 @@ package paint.geom;
 
 import paint.geom.util.ShapeFactory;
 
-public class CirclePaint extends EllipsePaint {
+public class CirclePaint extends EllipsePaint implements Cloneable {
 	private Point centerCircle;
 	private double radiusCircle;
 	public static final String KEY = "circle";
@@ -42,5 +42,17 @@ public class CirclePaint extends EllipsePaint {
 		double dY = Math.abs(centerY - y);
 		double radius = Math.sqrt(dX * dX + dY * dY);
 		return radius;
+	}
+
+	@Override
+	public CirclePaint clone() throws CloneNotSupportedException {
+		CirclePaint newObject = new CirclePaint(centerCircle.clone(), radiusCircle);
+		newObject.ellipse.setTranslateX(super.ellipse.getTranslateX());
+		newObject.ellipse.setTranslateY(super.ellipse.getTranslateY());
+		newObject.ellipse.setRotate(super.ellipse.getRotate());
+		newObject.ellipse.setFill(super.ellipse.getFill());
+		newObject.ellipse.setStroke(super.ellipse.getStroke());
+		newObject.ellipse.setStrokeWidth(super.ellipse.getStrokeWidth());
+		return newObject;
 	}
 }

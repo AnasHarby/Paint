@@ -3,7 +3,7 @@ package paint.geom;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 
-public class Point {
+public class Point implements Cloneable {
 	private DoubleProperty propX;
 	private DoubleProperty propY;
 
@@ -72,5 +72,9 @@ public class Point {
 			return false;
 		return true;
 	}
-
+	
+	@Override
+	public Point clone() throws CloneNotSupportedException {
+		return new Point(propX.doubleValue(), propY.doubleValue());
+	}
 }
