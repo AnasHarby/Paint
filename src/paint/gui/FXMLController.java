@@ -10,8 +10,8 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import paint.geom.CirclePaint;
 import paint.geom.Point;
+import paint.geom.SquarePaint;
 
 public class FXMLController implements Initializable {
 	@FXML private Canvas canvas;
@@ -27,25 +27,25 @@ public class FXMLController implements Initializable {
 	@FXML
 	public void act(MouseEvent event) {
 		Pane pane = (Pane) canvas.getParent();
-//		//		EllipsePaint circle = new EllipsePaint(new Point(400, 400), 200, 100);
-//		circle.fill(Color.BEIGE);
-//		circle.draw(pane);
-//		circle.showResizers();
+//		EllipsePaint ellipse = new EllipsePaint(new Point(600, 600), 200, 100);
+//		ellipse.fill(Color.BEIGE);
+//		ellipse.draw(pane);
+//		ellipse.showResizers();
 
 //		ShapePaint rect = new RectanglePaint(new Point(200, 200), 400, 200);
 //		rect.fill(Color.BEIGE);
 //		rect.draw(pane);
 //		rect.showResizers();
 
-		CirclePaint circle = new CirclePaint(new Point(400, 400), 200);
-		circle.fill(Color.BEIGE);
-		circle.draw(pane);
-		circle.showResizers();
+//		CirclePaint circle = new CirclePaint(new Point(800, 800), 100);
+//		circle.fill(Color.BEIGE);
+//		circle.draw(pane);
+//		circle.showResizers();
 
-//		SquarePaint square = new SquarePaint(new Point(400, 400), 400);
-//		square.fill(Color.BEIGE);
-//		square.draw(pane);
-//		square.showResizers();
+		SquarePaint square = new SquarePaint(new Point(400, 400), 400);
+		square.fill(Color.BEIGE);
+		square.draw(pane);
+		square.showResizers();
 
 //		LinePaint line = new LinePaint(new Point(200, 200), new Point(400, 400));
 //		line.draw(pane);

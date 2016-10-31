@@ -31,19 +31,43 @@ public class SquarePaint extends RectanglePaint {
 		return null;
 	}
 	@Override
-	public void resize(double x1, double x2, double y1, double y2) {
-		for (int i = 0;
-				i < super.polygon.getPoints().size(); i += 2) {
-			double x = super.polygon.getPoints().get(i);
-			double y = super.polygon.getPoints().get(i + 1);
-			if (x1 == x && y1 == y) {
-				super.polygon.getPoints().set(i, x2);
-				super.polygon.getPoints().set(i + 1, y2);
-			} else if (x == x1) {
-				super.polygon.getPoints().set(i, x2);
-			} else if (y == y1) {
-				super.polygon.getPoints().set(i + 1, y2);
+	public void resize(double x1, double y1, double x2, double y2) {
+		double xOpposite = 0;
+		double yOpposite = 0;
+		for (Point point : super.points) {
+			if (x1 != point.getX()
+					&& y1 != point.getY()) {
+				xOpposite = point.getX();
+				yOpposite = point.getY();
 			}
+		}
+		double m = (y1 - yOpposite)
+				/ (x1 - xOpposite);
+		double x = (m / (m * m + 1)) * (m * x1 + x2 / m + y2 - y1);
+		double y = y1 + m * x - m * x1;
+		int i = 0;
+		for (Point point : super.points) {
+			if (x1 == point.getX()
+					&& y1 == point.getY()) {
+				point.setX(x);
+				point.setY(y);
+			} else if (x1 == point.getX()) {
+				double dy = y1 - y;
+				point.setX(x);
+				point.setY(point.getY() + dy);
+			} else if (y1 == point.getY()) {
+				double dx = x1 - x;
+				point.setX(point.getX() + dx);
+				point.setY(y);
+			} else {
+				double dx = x1 - x;
+				double dy = y1 - y;
+				point.setX(point.getX() + dx);
+				point.setY(point.getY() + dy);
+			}
+			super.polygon.getPoints().set(i * 2, point.getX());
+			super.polygon.getPoints().set(i * 2 + 1, point.getY());
+			i++;
 		}
 	}
 }
