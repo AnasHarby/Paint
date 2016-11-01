@@ -1,6 +1,5 @@
 package paint.geom;
 
-import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
 
 public class RectanglePaint extends PolygonPaint {
@@ -18,24 +17,22 @@ public class RectanglePaint extends PolygonPaint {
 	public RectanglePaint(Point upperLeft,
 		double width, double height) {
 			super(upperLeft,
-				new Point(upperLeft.getX()
-				, upperLeft.getY() + height),
-				new Point(upperLeft.getX() + width
-						, upperLeft.getY() + height),
+				new Point(upperLeft.getX(),
+						upperLeft.getY() + height),
 				new Point(upperLeft.getX() + width,
-								upperLeft.getY()));
+						upperLeft.getY() + height),
+				new Point(upperLeft.getX() + width,
+						upperLeft.getY()));
 			setUpperLeftPoint(upperLeft);
-		super.setBorderColor(Color.BLACK);
-		super.fill(Color.TRANSPARENT);
 	}
-	
+
 	public RectanglePaint(double... properties) {
 		this(new Point(Math.min(properties[UPPER_LEFT_X], properties[BOTTOM_RIGHT_X]),
 				Math.min(properties[UPPER_LEFT_Y], properties[BOTTOM_RIGHT_Y])),
 				Math.abs(properties[UPPER_LEFT_X] - properties[BOTTOM_RIGHT_X]),
 				Math.abs(properties[UPPER_LEFT_Y] - properties[BOTTOM_RIGHT_Y]));
 	}
-	
+
 	public RectanglePaint(Point upperLeft,
 			Point lowerLeft, Point lowerRight, Point upperRight) {
 		super(upperLeft, lowerLeft, lowerRight, upperRight);
@@ -53,6 +50,7 @@ public class RectanglePaint extends PolygonPaint {
 	public void setUpperLeftPoint(Point upperLeftPoint) {
 		this.upperLeftPoint = upperLeftPoint;
 	}
+
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		int i = 0;
@@ -61,15 +59,13 @@ public class RectanglePaint extends PolygonPaint {
 					&& y1 == point.getY()) {
 				point.setX(x2);
 				point.setY(y2);
-				super.polygon.getPoints().set(i * 2, x2);
-				super.polygon.getPoints().set(i * 2 + 1, y2);
 			} else if (x1 == point.getX()) {
 				point.setX(x2);
-				super.polygon.getPoints().set(i * 2, x2);
 			} else if (y1 == point.getY()) {
 				point.setY(y2);
-				super.polygon.getPoints().set(i * 2 + 1, y2);
 			}
+			super.polygon.getPoints().set(i * 2, point.getX());
+			super.polygon.getPoints().set(i * 2 + 1, point.getY());
 			i++;
 		}
 	}

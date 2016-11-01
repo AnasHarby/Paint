@@ -9,27 +9,27 @@ import paint.geom.ShapePaint;
 public class ShapeFactory {
 	private static ShapeFactory factory = new ShapeFactory();
 	private HashMap<String, Class<? extends ShapePaint>> registeredShapes = null;
-	
+
 	private ShapeFactory() {
 		registeredShapes = new HashMap<>();
 	}
-	
+
 	public static ShapeFactory getInstance() {
 		return factory;
 	}
-	
+
 	public void registerShape(String shapeID,
 		Class<? extends ShapePaint> shapeClass) {
 		registeredShapes.put(shapeID, shapeClass);
 	}
-	
+
 	public ShapePaint createShape(String shapeID, double... properties) {
 		Class<? extends ShapePaint> shapeClass =
 		registeredShapes.get(shapeID);
 		try {
 			Constructor<? extends ShapePaint> shapeConstructor =
-					shapeClass.getConstructor(double.class);
-			ShapePaint shape = (ShapePaint) shapeConstructor.newInstance(properties);
+					shapeClass.getConstructor(double[].class);
+			ShapePaint shape = shapeConstructor.newInstance(properties);
 			return shape;
 		} catch (NoSuchMethodException | SecurityException
 				| InstantiationException
@@ -38,6 +38,5 @@ public class ShapeFactory {
 				| InvocationTargetException e) {
 			return null;
 		}
-		
 	}
 }

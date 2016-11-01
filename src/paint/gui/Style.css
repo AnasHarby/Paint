@@ -4,8 +4,8 @@
 	-fx-background-repeat: no-repeat;
 }
 
-#brush {
-	-fx-background-image: url("File:src/paint/gui/assets/brush.png");
+#pencil {
+	-fx-background-image: url("File:src/paint/gui/assets/pencil.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
 }

@@ -121,21 +121,21 @@ public abstract class PolygonPaint implements ShapePaint {
 		shapeMovement.addHandlers(polygon);
 	}
 	@Override
-	public void resize(double x1, double x2, double y1, double y2) {
+	public void resize(double x1, double y1, double x2, double y2) {
 		int i = 0;
 		for (Point point : points) {
 			if (x1 == point.getX()
 					&& y1 == point.getY()) {
 				point.setX(x2);
 				point.setY(y2);
-				polygon.getPoints().set(i * 2, x2);
-				polygon.getPoints().set(i * 2 + 1, y2);
 			}
+			polygon.getPoints().set(i * 2, point.getX());
+			polygon.getPoints().set(i * 2 + 1, point.getY());
 			i++;
 		}
 	}
 
-	protected void setResizers() {
+	private void setResizers() {
 		for (Point point : points) {
 			resizers.add(new Resizer(
 					polygon, this, point));

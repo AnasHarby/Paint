@@ -10,7 +10,7 @@ import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
 
 public class LinePaint implements ShapePaint {
-	private static final String KEY = "line";
+	public static final String KEY = "line";
 	private static final int FIRST_X = 0;
 	private static final int FIRST_Y = 1;
 	private static final int SECOND_X = 2;

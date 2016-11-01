@@ -111,13 +111,19 @@ public class FXMLControllerTest implements Initializable {
 		case RECTANGLE_BUTTON:
 			if (started){
 				started = false;
-				ShapePaint rectangle
-				= new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
+				try {
+					Class.forName("paint.geom.RectanglePaint");
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+//				ShapePaint rectangle = ShapeFactory.getInstance().createShape(RectanglePaint.KEY, 400, 400, 600 ,600);
+				ShapePaint rectangle = new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
 				rectangle.draw(pane);
+				rectangle.toFront();
 				rectangle.showResizers();
 				drawingShape = null;
-				rectangle.toBack();
 			}
 			else {
 				init.setX(event.getX());

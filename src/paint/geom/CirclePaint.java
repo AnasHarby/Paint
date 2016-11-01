@@ -10,7 +10,7 @@ public class CirclePaint extends EllipsePaint {
 	private static final int CENTER_Y = 1;
 	private static final int CIRCUM_X = 2;
 	private static final int CIRCUM_Y = 3;
-	
+
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, CirclePaint.class);
 	}
@@ -20,7 +20,7 @@ public class CirclePaint extends EllipsePaint {
 		centerCircle = center;
 		radiusCircle = radius;
 	}
-	
+
 	public CirclePaint(double... properties) {
 		this(new Point(properties[CENTER_X], properties[CENTER_Y]),
 				getRadius(properties[CENTER_X], properties[CENTER_Y],
