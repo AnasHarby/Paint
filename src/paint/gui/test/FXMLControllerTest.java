@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import data.util.History;
+import data.util.HistoryEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -44,6 +48,7 @@ public class FXMLControllerTest implements Initializable {
 	private Point init = new Point();
 	private Shape drawingShape = null;
 	History history;
+	HistoryEvent current = new HistoryEvent();
 	
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
@@ -68,6 +73,18 @@ public class FXMLControllerTest implements Initializable {
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
 		history = new History();
+		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.Y) {
+					history.redo(canvas);
+				} else if (event.getCode() == KeyCode.Z) {
+					history.undo(canvas);
+				}
+			}
+			
+		});
 	}
 
 	@FXML
@@ -84,7 +101,6 @@ public class FXMLControllerTest implements Initializable {
 		if (active == null) {
 			canvas.toBack();
 			freeDrawingCanvas.toBack();
-			history.undo(canvas);
 			return;
 		}
 		String name = active.getId();
@@ -120,7 +136,13 @@ public class FXMLControllerTest implements Initializable {
 				pane.getChildren().remove(drawingShape);
 				ArrayList<ShapePaint> shapes = new ArrayList<>();
 				shapes.add(rectangle);
-				history.storeShapeChanges(shapes);
+				try {
+					current.getShapes().add(rectangle.clone());
+				} catch (CloneNotSupportedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				history.storeShapeChanges(current);
 				rectangle.draw(pane);
 				drawingShape = null;
 				rectangle.toBack();
