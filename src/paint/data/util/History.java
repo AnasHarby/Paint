@@ -1,4 +1,4 @@
-package data.util;
+package paint.data.util;
 
 import java.util.Stack;
 

@@ -4,8 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import data.util.History;
-import data.util.HistoryEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -22,6 +20,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import paint.data.util.History;
+import paint.data.util.HistoryEvent;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.RectanglePaint;
