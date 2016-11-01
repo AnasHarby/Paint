@@ -1,5 +1,7 @@
 package paint.geom;
 
+import java.util.Random;
+
 import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
 
@@ -31,6 +33,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		super.fill(Color.TRANSPARENT);
 		this.width = width;
 		this.height = height;
+		polygon.setId(KEY + new Random().nextInt());
 	}
 	
 	public RectanglePaint(double... properties) {
@@ -81,4 +84,5 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
 		return newObject;
 	}
+
 }

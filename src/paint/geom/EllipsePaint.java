@@ -2,6 +2,7 @@ package paint.geom;
 
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -50,6 +51,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		ellipse.setId(KEY + new Random().nextInt());
 	}
 	
 	public EllipsePaint(double... properties) {
@@ -184,5 +186,10 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		newObject.ellipse.setStroke(ellipse.getStroke());
 		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
 		return newObject;
+	}
+
+	@Override
+	public String getId() {
+		return ellipse.getId();
 	}
 }

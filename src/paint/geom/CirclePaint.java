@@ -1,5 +1,7 @@
 package paint.geom;
 
+import java.util.Random;
+
 import paint.geom.util.ShapeFactory;
 
 public class CirclePaint extends EllipsePaint implements Cloneable {
@@ -19,6 +21,7 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		super(center, radius, radius);
 		centerCircle = center;
 		radiusCircle = radius;
+		ellipse.setId(KEY + new Random().nextInt());
 	}
 	
 	public CirclePaint(double... properties) {

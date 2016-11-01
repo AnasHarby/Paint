@@ -18,11 +18,13 @@ public class ShapeController {
 		public void handle(MouseEvent event) {
 			Node source = (Node) event.getSource();
 			if (source.getId() == null) {
+				return;
+			} else if (source.getId().startsWith(RESIZER_ID)) {
+				source.setCursor(Cursor.V_RESIZE);
+			} else {
 				originalTranslate = new Point(source.getTranslateX(),
 						source.getTranslateY());
 				source.setCursor(Cursor.MOVE);
-			} else if (source.getId().startsWith(RESIZER_ID)) {
-				source.setCursor(Cursor.V_RESIZE);
 			}
 			draggingStartPoint = new Point(event.getSceneX(),
 				event.getSceneY());
@@ -35,10 +37,7 @@ public class ShapeController {
 		public void handle(MouseEvent event) {
 			Node source = (Node) event.getSource();
 			if (source.getId() == null) {
-				source.setTranslateX(originalTranslate.getX()
-						+ event.getSceneX() - draggingStartPoint.getX());
-				source.setTranslateY(originalTranslate.getY()
-						+ event.getSceneY() - draggingStartPoint.getY());
+				return;
 			} else if (source.getId().startsWith(RESIZER_ID)) {
 				ShapePaint parent =
 						(ShapePaint) source.getUserData();
@@ -46,6 +45,11 @@ public class ShapeController {
 				parent.resize(resizer.xProperty().doubleValue(),
 						resizer.yProperty().doubleValue(), event.getX(),
 						event.getY());
+			} else {
+				source.setTranslateX(originalTranslate.getX()
+						+ event.getSceneX() - draggingStartPoint.getX());
+				source.setTranslateY(originalTranslate.getY()
+						+ event.getSceneY() - draggingStartPoint.getY());
 			}
 		}
 	};
@@ -67,9 +71,11 @@ public class ShapeController {
 				public void handle(MouseEvent event) {
 					Node source = (Node) event.getSource();
 					if (source.getId() == null) {
-						source.setCursor(Cursor.MOVE);
+						return;
 					} else if (source.getId().startsWith("Resizer")) {
 						source.setCursor(Cursor.V_RESIZE);
+					} else {
+						source.setCursor(Cursor.MOVE);
 					}
 				}
 			};

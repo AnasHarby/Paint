@@ -1,5 +1,7 @@
 package paint.geom;
 
+import java.util.Random;
+
 import paint.geom.util.ShapeFactory;
 
 public class SquarePaint extends RectanglePaint implements Cloneable {
@@ -19,6 +21,7 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 		super(upperLeft, length, length);
 		this.upperLeft = upperLeft;
 		this.sideLength = length;
+		polygon.setId(KEY + new Random().nextInt());
 	}
 	
 	public SquarePaint(double... properties) {

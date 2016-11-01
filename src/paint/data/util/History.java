@@ -25,13 +25,8 @@ public class History {
 			return null;
 		} else {
 			System.out.println("VALID UNDO");
-			Pane pane = (Pane) canvas.getParent();
-			pane.getChildren().clear();
-			pane.getChildren().add(canvas);
 			redoStack.push(currentEvent);
-			for (ShapePaint shape : undoStack.peek().getShapes()) {
-				shape.draw(pane);
-			}
+			undoStack.peek().showEvent(canvas);
 			return currentEvent = undoStack.pop();
 		}
 	}
@@ -41,13 +36,8 @@ public class History {
 		if (redoStack.isEmpty()) {
 			return null;
 		} else {
-			Pane pane = (Pane) canvas.getParent();
-			pane.getChildren().clear();
-			pane.getChildren().add(canvas);
 			undoStack.push(currentEvent);
-			for (ShapePaint shape : redoStack.peek().getShapes()) {
-				shape.draw(pane);
-			}
+			redoStack.peek().showEvent(canvas);
 			return currentEvent = redoStack.pop();
 		}
 	}

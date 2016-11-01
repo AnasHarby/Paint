@@ -143,4 +143,9 @@ public abstract class PolygonPaint implements ShapePaint {
 	
 	@Override
 	public abstract ShapePaint clone() throws CloneNotSupportedException;
+	
+	@Override
+	public String getId() {
+		return polygon.getId();
+	}
 }

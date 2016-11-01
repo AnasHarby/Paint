@@ -1,6 +1,7 @@
 package paint.geom;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -33,6 +34,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 		setResizers();
 		this.point1 = point1;
 		this.point2 = point2;
+		line.setId(KEY + new Random().nextInt());
 	}
 	
 	public LinePaint(double... properties) {
@@ -141,6 +143,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		newObject.line.setStroke(line.getStroke());
 		newObject.line.setStrokeWidth(line.getStrokeWidth());
 		return newObject;
+	}
+
+	@Override
+	public String getId() {
+		return line.getId();
 	}
 
 }

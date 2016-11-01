@@ -1,5 +1,7 @@
 package paint.geom;
 
+import java.util.Random;
+
 import paint.geom.util.ShapeFactory;
 
 public class TrianglePaint  extends PolygonPaint implements Cloneable {
@@ -24,6 +26,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		this.point1 = point1;
 		this.point2 = point2;
 		this.point3 = point3;
+		polygon.setId(KEY + new Random().nextInt());
 	}
 	
 	public TrianglePaint(double... properties) {
@@ -31,6 +34,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		point1 = new Point(properties[FIRST_X], properties[FIRST_Y]);
 		point2 = new Point(properties[SECOND_X], properties[SECOND_Y]);
 		point3 = new Point(properties[THIRD_X], properties[THIRD_Y]);
+		polygon.setId(KEY + new Random().nextInt());
 	}
 	
 	@Override
@@ -50,4 +54,5 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
 		return newObject;
 	}
+
 }

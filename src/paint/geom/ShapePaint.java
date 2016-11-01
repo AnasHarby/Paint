@@ -59,5 +59,6 @@ public interface ShapePaint {
 	public void resize(double x1, double y1, double x2, double y2);
 	public void showResizers();
 	public void hideResizers();
+	public String getId();
 	public ShapePaint clone() throws CloneNotSupportedException;
 }
