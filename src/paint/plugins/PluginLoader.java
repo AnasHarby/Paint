@@ -25,6 +25,9 @@ public class PluginLoader {
 	= ".class";
 
 	public static String loadClass(File file) {
+		if (file == null) {
+			return null;
+		}
 		try {
 			System.out.println(file.getAbsolutePath());
 			String classFile = file.getName();

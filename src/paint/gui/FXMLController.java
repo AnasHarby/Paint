@@ -20,6 +20,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import paint.data.util.CurrentHistoryEvent;
+import paint.data.util.DataHandler;
+import paint.data.util.History;
+import paint.data.util.HistoryEvent;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeFactory;
@@ -67,6 +70,8 @@ public class FXMLController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		state = State.EDITING;
+		CurrentHistoryEvent.getInstance().
+		getHead().updateHistory();
 	}
 
 	@FXML
@@ -220,7 +225,7 @@ public class FXMLController implements Initializable {
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
-		PluginLoader.loadClass(file);
+		String key = PluginLoader.loadClass(file);//may return null
 		/*The .class file, this can be taken to the
 		 * MainGUI... Should be easy to iterate after this
 		 * over the nodes in "buttonBar" and activate the button
@@ -253,29 +258,47 @@ public class FXMLController implements Initializable {
 		chooser.getExtensionFilters().add(
 				new ExtensionFilter("XML Files (*.xml)", "*.xml"));
 		chooser.setTitle("Save");
-		File file = chooser.showOpenDialog(
+		File file = chooser.showSaveDialog(
 				canvas.getScene().getWindow());
+		if (file != null) {
+			DataHandler.getInstance().
+			saveData(file.getAbsolutePath(),
+			CurrentHistoryEvent.getInstance().getHead());
+		}
 	}
 
 	@FXML
 	public void load(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
 		chooser.getExtensionFilters().add(
-				new ExtensionFilter("JSON Files (*.json)", "*.json"));
-		chooser.getExtensionFilters().add(
-				new ExtensionFilter("XML Files (*.xml)", "*.xml"));
+				new ExtensionFilter("Save Files (*.json, *.xml)",
+						"*.json", "*.xml"));
 		chooser.setTitle("Load");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
+		if (file != null) {
+			History.clearHistory();
+			CurrentHistoryEvent.getInstance().
+			setHead(DataHandler.getInstance().
+			loadData(file.getAbsolutePath(), canvas));
+			History.getHistory().storeShapeChanges(CurrentHistoryEvent.
+					getInstance().getHead());
+		}
 	}
 
 	@FXML
 	public void undo(ActionEvent event) {
-
+		HistoryEvent temp = History.getHistory().undo(canvas);
+		if (temp != null) {
+			CurrentHistoryEvent.getInstance().setHead(temp);
+		}
 	}
 
 	@FXML
 	public void redo(ActionEvent event) {
-
+		HistoryEvent temp = History.getHistory().redo(canvas);
+		if (temp != null) {
+			CurrentHistoryEvent.getInstance().setHead(temp);
+		}
 	}
 }

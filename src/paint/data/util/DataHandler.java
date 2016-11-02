@@ -11,10 +11,15 @@ public class DataHandler {
 	private static final String JSON_EXTENSION = ".json";
 	private JsonDataHandler jsonHandler;
 	private XmlDataHandler xmlHandler;
+	private static DataHandler instance = new DataHandler();
 
-	public DataHandler() {
+	private DataHandler() {
 		jsonHandler = new JsonDataHandler();
 		xmlHandler = new XmlDataHandler();
+	}
+
+	public static DataHandler getInstance() {
+		return instance;
 	}
 
 	public void saveData(String path, HistoryEvent head) {
