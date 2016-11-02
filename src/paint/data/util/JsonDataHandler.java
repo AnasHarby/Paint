@@ -11,24 +11,20 @@ import javafx.scene.canvas.Canvas;
 import paint.shapes.util.ShapeProperties;
 
 public class JsonDataHandler {
-	String json;
 
-	public JsonDataHandler() {
-		json = new String();
-
-	}
-
-	public void saveJson(HistoryEvent head) {
+	public String saveJson(HistoryEvent head) {
+		String json = new String();
 		XStream xstream = new XStream(new JettisonMappedXmlDriver());
 		Collection<ShapeProperties> props = head.getShapesProperties();
 		//xstream.alias("head", props.getClass());
 		xstream.setMode(XStream.NO_REFERENCES);
 		json = xstream.toXML(props);
 		System.out.println(json);
+		return json;
 	}
 
 	@SuppressWarnings("unchecked")
-	public HistoryEvent loadJson(Canvas canvas) {
+	public HistoryEvent loadJson(String json, Canvas canvas) {
 		XStream xstream = new XStream(new JettisonMappedXmlDriver());
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(json);

@@ -94,12 +94,12 @@ public class FXMLControllerTest implements Initializable {
 						current = temp;
 					}
 				} else if (event.getCode() == KeyCode.S) {
-					jsonData.saveJson(current);
-					xmlData.saveJson(current);
+					//jsonData.saveJson(current);
+					//xmlData.saveXml(current);
 				} else if (event.getCode() == KeyCode.L) {
-					history = new History();
-					current = xmlData.loadJson(canvas);
-					history.storeShapeChanges(current);
+					//history = new History();
+					//current = xmlData.loadXml(canvas);
+					//history.storeShapeChanges(current);
 				}
 			}
 
