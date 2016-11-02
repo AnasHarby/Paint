@@ -1,9 +1,12 @@
 package paint.gui;
 
+import java.awt.MenuItem;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -12,11 +15,13 @@ import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import paint.data.util.CurrentHistoryEvent;
@@ -34,6 +39,10 @@ public class FXMLController implements Initializable {
 		SHAPING, BIASING, TRIANGLE_BIASING, TRIANGLE_SHAPING,
 		TRIANGLE_DRAWING, REMOVING
 	}
+	private final static ObservableList<String> BORDERS =
+			FXCollections.observableArrayList(
+					"2px", "4px", "6px",
+					"8px", "10px", "12px");
 	private static final String PENCIL_BUTTON = "pencilButton";
 	private static final String ERASER_BUTTON = "eraserButton";
 	private static final String MOVE_BUTTON = "moveButton";
@@ -60,18 +69,38 @@ public class FXMLController implements Initializable {
 	@FXML private ToggleButton triangleButton;
 	@FXML private ToggleButton ellipseButton;
 	@FXML private ToggleButton circleButton;
+	@FXML private ChoiceBox<String> borderWidthPicker;
 	private State state;
-	//	private Color fillColor;
-	//	private Color borderColor;
+	private double borderWidth;
 	private ShapePaint currentShape;
 	private String currShapeID;
 	private Point biasingPoint;
 	private Point triangleSecondPoint;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		state = State.EDITING;
+		picker.setValue(Color.TRANSPARENT);
+		buildBorderChooser();
 		CurrentHistoryEvent.getInstance().
 		getHead().updateHistory();
+	}
+
+	private void buildBorderChooser() {
+//		borderWidthPicker.setItems(BORDERS);
+//		borderWidthPicker.getSelectionModel()
+//			.selectedIndexProperty().addListener(
+//					new ChangeListener<Number>() {
+//
+//						@Override
+//						public void changed(
+//								ObservableValue<? extends Number> observable,
+//								Number oldValue, Number newValue) {
+//							borderWidth = Integer.
+//									parseInt(BORDERS.get(
+//										newValue.intValue()).split("px")[0]);
+//						}
+//					});
 	}
 
 	@FXML
@@ -120,6 +149,8 @@ public class FXMLController implements Initializable {
 			currentShape = ShapeFactory.getInstance().
 			createShape(currShapeID, event.getX(),
 					event.getY(), event.getX(), event.getY());
+			currentShape.fill(picker.getValue());
+			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			biasingPoint = new Point(event.getX(),
 					event.getY());
@@ -132,6 +163,8 @@ public class FXMLController implements Initializable {
 					.createShape(currShapeID, biasingPoint.getX(),
 							biasingPoint.getY(), event.getX(),
 							event.getY());
+			currentShape.fill(picker.getValue());
+			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
 					removeHandler);
@@ -144,6 +177,8 @@ public class FXMLController implements Initializable {
 							biasingPoint.getY(), triangleSecondPoint.getX(),
 							triangleSecondPoint.getY(), event.getX(),
 							event.getY());
+			currentShape.fill(picker.getValue());
+			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
 					removeHandler);
@@ -206,9 +241,7 @@ public class FXMLController implements Initializable {
 	@FXML
 	public void reset(ActionEvent event) {
 		Pane pane = (Pane) canvas.getParent();
-		while (!pane.getChildren().isEmpty()) {
-			pane.getChildren().remove(0);
-		}
+		pane.getChildren().clear();
 		pane.getChildren().add(canvas);
 		ToggleButton active = (ToggleButton)
 				toggleGroup.getSelectedToggle();
@@ -297,5 +330,17 @@ public class FXMLController implements Initializable {
 		if (temp != null) {
 			CurrentHistoryEvent.getInstance().setHead(temp);
 		}
+	}
+
+	@FXML
+	public void close(ActionEvent event) {
+		System.exit(0);
+	}
+
+	@FXML
+	public void changeWidth(ActionEvent event) {
+		MenuItem width = (MenuItem)
+				event.getSource();
+		System.out.print(width.getName());
 	}
 }

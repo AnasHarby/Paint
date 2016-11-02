@@ -13,6 +13,7 @@
 <?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -31,13 +32,20 @@
                     <MenuItem mnemonicParsing="false" text="New Project" accelerator="Ctrl+N"/>
                     <MenuItem mnemonicParsing="false" text="Save" onAction="#save" accelerator="Ctrl+S"/>
                     <MenuItem mnemonicParsing="false" text="Load" onAction="#load" accelerator="Ctrl+L"/>
-                    <MenuItem mnemonicParsing="false" text="Close" />
+                    <MenuItem mnemonicParsing="false" text="Import Shape Class" accelerator="Ctrl+I" onAction="#importClass" />
+                    <MenuItem mnemonicParsing="false" text="Close" onAction="#close"/>
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Project">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Import Shape Class" accelerator="Ctrl+I" onAction="#importClass" />
-                  </items>
+                <Menu mnemonicParsing="false" text="Edit">
+                	<items>
+                	<MenuItem mnemonicParsing="false" text="Undo" accelerator="Ctrl+Z" onAction="#undo" />
+                	<MenuItem mnemonicParsing="false" text="Redo" accelerator="Ctrl+Y" onAction="#redo" />
+                	</items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Draw">
+                	<items>
+                	<MenuItem mnemonicParsing="false" id="line" onAction="#act" text="Line" accelerator="Ctrl+Shift+L"/>
+                	</items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                   <items>
@@ -60,12 +68,13 @@
                         <ColorPicker fx:id="picker" minHeight="50.0" />
                         <ButtonBar fx:id="buttonBar" buttonMinWidth="50.0" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="84.0" prefWidth="720.0">
                           <buttons>
-                              <Button id="undo" onAction="#undo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-250.0" stylesheets="@Style.css">
+                          <ChoiceBox fx:id="borderWidth" maxHeight="50.0" maxWidth="70.0" minHeight="50.0" minWidth="70.0" prefHeight="50.0" prefWidth="70.0" translateX="-155.0" />
+                              <Button id="undo" onAction="#undo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-160.0" stylesheets="@Style.css">
                               <tooltip>
                               	<Tooltip text="Undo" />
                               </tooltip>
                               </Button>
-                              <Button id="redo" onAction="#redo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-255.0" stylesheets="@Style.css">
+                              <Button id="redo" onAction="#redo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-165.0" stylesheets="@Style.css">
                               <tooltip>
                               	<Tooltip text="Redo" />
                               </tooltip>
