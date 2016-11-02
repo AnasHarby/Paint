@@ -4,6 +4,8 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
+import paint.shapes.util.RectangleProperties;
+import paint.shapes.util.ShapeProperties;
 
 public class RectanglePaint extends PolygonPaint implements Cloneable {
 	private Point upperLeftPoint;
@@ -20,27 +22,40 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 	}
 
 	public RectanglePaint(Point upperLeft,
-		double width, double height) {
-			super(upperLeft,
+			double width, double height) {
+		super(upperLeft,
 				new Point(upperLeft.getX()
-				, upperLeft.getY() + height),
+						, upperLeft.getY() + height),
 				new Point(upperLeft.getX() + width
 						, upperLeft.getY() + height),
 				new Point(upperLeft.getX() + width,
-								upperLeft.getY()));
-			setUpperLeftPoint(upperLeft);
+						upperLeft.getY()));
+		setUpperLeftPoint(upperLeft);
 		super.setBorderColor(Color.BLACK);
 		super.fill(Color.TRANSPARENT);
 		this.width = width;
 		this.height = height;
 		polygon.setId(KEY + new Random().nextInt());
 	}
-	
+
 	public RectanglePaint(double... properties) {
 		this(new Point(Math.min(properties[UPPER_LEFT_X], properties[BOTTOM_RIGHT_X]),
 				Math.min(properties[UPPER_LEFT_Y], properties[BOTTOM_RIGHT_Y])),
 				Math.abs(properties[UPPER_LEFT_X] - properties[BOTTOM_RIGHT_X]),
 				Math.abs(properties[UPPER_LEFT_Y] - properties[BOTTOM_RIGHT_Y]));
+	}
+
+	public RectanglePaint(ShapeProperties properties) {
+		this(properties.getPoint1().getX(),
+				properties.getPoint1().getY(),
+				properties.getPoint2().getX(),
+				properties.getPoint2().getY());
+		polygon.setStroke(properties.getStrokeColor());
+		polygon.setFill(properties.getFillColor());
+		polygon.setStrokeWidth(properties.getStrokeWidth());
+		polygon.setRotate(properties.getRotation());
+		polygon.setTranslateX(properties.getTranslateX());
+		polygon.setTranslateY(properties.getTranslateY());
 	}
 
 	@Override
@@ -55,7 +70,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 	public void setUpperLeftPoint(Point upperLeftPoint) {
 		this.upperLeftPoint = upperLeftPoint;
 	}
-	
+
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		for (int i = 0;
@@ -72,17 +87,40 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 			}
 		}
 	}
-	
+
 	@Override
 	public RectanglePaint clone() throws CloneNotSupportedException {
 		RectanglePaint newObject = new RectanglePaint(upperLeftPoint.clone(), width, height);
 		newObject.polygon.setTranslateX(polygon.getTranslateX());
 		newObject.polygon.setTranslateY(polygon.getTranslateY());
 		newObject.polygon.setRotate(polygon.getRotate());
-		newObject.polygon.setFill(polygon.getFill());
-		newObject.polygon.setStroke(polygon.getStroke());
+		Color col = (Color) polygon.getFill();
+		newObject.polygon.setFill(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
+		col = (Color) polygon.getStroke();
+		newObject.polygon.setStroke(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
 		return newObject;
 	}
 
+	@Override
+	public ShapeProperties getShapeProperties() {
+		ShapeProperties prop = new RectangleProperties();
+		prop.setFillColor(polygon.getFill());
+		prop.setStrokeColor(polygon.getStroke());
+		try {
+			prop.setPoint1(upperLeftPoint.clone());
+			prop.setPoint2(new Point(upperLeftPoint.getX() + width,
+					upperLeftPoint.getY() + height));
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		prop.setStrokeWidth(polygon.getStrokeWidth());
+		prop.setRotation(polygon.getRotate());
+		prop.setTranslateX(polygon.getTranslateX());
+		prop.setTranslateY(polygon.getTranslateY());
+		return prop;
+	}
 }

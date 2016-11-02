@@ -22,15 +22,16 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import paint.data.util.History;
 import paint.data.util.HistoryEvent;
+import paint.data.util.JsonDataHandler;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
-import paint.geom.RectanglePaint;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeController;
+import paint.geom.util.ShapeFactory;
 
 public class FXMLControllerTest implements Initializable {
-	private static final String CIRCLE_BUTTON = "circleButton";
-	private static final String RECTANGLE_BUTTON = "rectangleButton";
+	private static final String CIRCLE_BUTTON = "circle";
+	private static final String RECTANGLE_BUTTON = "rectangle";
 	private static final String PENCIL_BUTTON = "pencilDraw";
 	private static final String BRUSH_BUTTON = "brushDraw";
 
@@ -49,7 +50,9 @@ public class FXMLControllerTest implements Initializable {
 	private Shape drawingShape = null;
 	History history;
 	HistoryEvent current = new HistoryEvent();
-	
+	JsonDataHandler jsonData = new JsonDataHandler();
+
+
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
 		double dY = Math.abs(y1 - y2);
@@ -73,17 +76,30 @@ public class FXMLControllerTest implements Initializable {
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
 		history = new History();
+		history.storeShapeChanges(current);
 		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.Y) {
-					history.redo(canvas);
+					HistoryEvent temp = history.redo(canvas);
+					if (temp != null) {
+						current = temp;
+					}
 				} else if (event.getCode() == KeyCode.Z) {
-					history.undo(canvas);
+					HistoryEvent temp = history.undo(canvas);
+					if (temp != null) {
+						current = temp;
+					}
+				} else if (event.getCode() == KeyCode.S) {
+					jsonData.saveJson(current);
+				} else if (event.getCode() == KeyCode.L) {
+					history = new History();
+					current = jsonData.loadJson(canvas);
+					history.storeShapeChanges(current);
 				}
 			}
-			
+
 		});
 	}
 
@@ -132,16 +148,11 @@ public class FXMLControllerTest implements Initializable {
 			if (started){
 				started = false;
 				ShapePaint rectangle
-				= new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
+				= ShapeFactory.getInstance().createShape(RECTANGLE_BUTTON, init.getX(), init.getY(), event.getX(), event.getY());//new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
 				ArrayList<ShapePaint> shapes = new ArrayList<>();
 				shapes.add(rectangle);
-				try {
-					current.getShapes().add(rectangle.clone());
-				} catch (CloneNotSupportedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				current.getShapes().add(rectangle);
 				history.storeShapeChanges(current);
 				rectangle.draw(pane);
 				drawingShape = null;
@@ -195,7 +206,7 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML
 	public void release(MouseEvent event) {
-	
+
 	}
 
 	@FXML
@@ -217,7 +228,7 @@ public class FXMLControllerTest implements Initializable {
 			if (started) {
 				Rectangle rect = (Rectangle) drawingShape;
 				Point upperLeft = getRectangleUpperLeft(init.getX(),
-					init.getY(), event.getX(), event.getY());
+						init.getY(), event.getX(), event.getY());
 				rect.setX(upperLeft.getX());
 				rect.setY(upperLeft.getY());
 				rect.setWidth(Math.abs(event.getX() - init.getX()));

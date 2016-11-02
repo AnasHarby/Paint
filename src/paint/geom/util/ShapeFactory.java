@@ -28,7 +28,7 @@ public class ShapeFactory {
 		registeredShapes.get(shapeID);
 		try {
 			Constructor<? extends ShapePaint> shapeConstructor =
-					shapeClass.getConstructor(double.class);
+					shapeClass.getConstructor(double[].class);
 			ShapePaint shape = (ShapePaint) shapeConstructor.newInstance(properties);
 			return shape;
 		} catch (NoSuchMethodException | SecurityException

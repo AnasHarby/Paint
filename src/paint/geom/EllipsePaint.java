@@ -10,6 +10,8 @@ import javafx.scene.shape.Ellipse;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
+import paint.shapes.util.EllipseProperties;
+import paint.shapes.util.ShapeProperties;
 
 public class EllipsePaint implements ShapePaint, Cloneable {
 	/**
@@ -53,13 +55,26 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		setActionHandlers();
 		ellipse.setId(KEY + new Random().nextInt());
 	}
-	
+
+	public EllipsePaint(ShapeProperties properties) {
+		this(properties.getPoint1().getX(),
+				properties.getPoint1().getY(),
+				properties.getPoint2().getX(),
+				properties.getPoint2().getY());
+		ellipse.setStroke(properties.getStrokeColor());
+		ellipse.setFill(properties.getFillColor());
+		ellipse.setStrokeWidth(properties.getStrokeWidth());
+		ellipse.setRotate(properties.getRotation());
+		ellipse.setTranslateX(properties.getTranslateX());
+		ellipse.setTranslateY(properties.getTranslateY());
+	}
+
 	public EllipsePaint(double... properties) {
 		this(new Point(properties[TOPMOST_X], properties[RIGHTMOST_Y]),
 				Math.abs(properties[RIGHTMOST_X] - properties[TOPMOST_X]),
 				Math.abs(properties[TOPMOST_Y] - properties[RIGHTMOST_Y]));
 	}
-	
+
 	public void rotate(double angle) {
 		ellipse.setRotate(angle);
 	}
@@ -114,7 +129,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 	private void setActionHandlers() {
 		ShapeController shapeMovement
-			= new ShapeController();
+		= new ShapeController();
 		shapeMovement.addHandlers(ellipse);
 	}
 	@Override
@@ -175,15 +190,19 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 			resizer.hide();
 		}
 	}
-	
+
 	@Override
 	public EllipsePaint clone() throws CloneNotSupportedException {
 		EllipsePaint newObject = new EllipsePaint(centerEllipse.clone(), aEllipse, bEllipse);
 		newObject.ellipse.setTranslateX(ellipse.getTranslateX());
 		newObject.ellipse.setTranslateY(ellipse.getTranslateY());
 		newObject.ellipse.setRotate(ellipse.getRotate());
-		newObject.ellipse.setFill(ellipse.getFill());
-		newObject.ellipse.setStroke(ellipse.getStroke());
+		Color col = (Color) ellipse.getFill();
+		newObject.ellipse.setFill(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
+		col = (Color) ellipse.getStroke();
+		newObject.ellipse.setStroke(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
 		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
 		return newObject;
 	}
@@ -191,5 +210,24 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	@Override
 	public String getId() {
 		return ellipse.getId();
+	}
+
+	@Override
+	public ShapeProperties getShapeProperties() {
+		ShapeProperties prop = new EllipseProperties();
+		prop.setFillColor(ellipse.getFill());
+		prop.setStrokeColor(ellipse.getStroke());
+		try {
+			prop.setPoint1(up.clone());
+			prop.setPoint2(right.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		prop.setStrokeWidth(ellipse.getStrokeWidth());
+		prop.setRotation(ellipse.getRotate());
+		prop.setTranslateX(ellipse.getTranslateX());
+		prop.setTranslateY(ellipse.getTranslateY());
+		return prop;
 	}
 }

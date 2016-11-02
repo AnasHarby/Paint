@@ -9,6 +9,8 @@ import javafx.scene.shape.Line;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
+import paint.shapes.util.LineProperties;
+import paint.shapes.util.ShapeProperties;
 
 public class LinePaint implements ShapePaint, Cloneable {
 	private Line line;
@@ -36,12 +38,25 @@ public class LinePaint implements ShapePaint, Cloneable {
 		this.point2 = point2;
 		line.setId(KEY + new Random().nextInt());
 	}
-	
+
 	public LinePaint(double... properties) {
 		this(new Point(properties[FIRST_X], properties[FIRST_Y]),
 				new Point(properties[SECOND_X], properties[SECOND_Y]));
 	}
-	
+
+	public LinePaint(ShapeProperties properties) {
+		this(properties.getPoint1().getX(),
+				properties.getPoint1().getY(),
+				properties.getPoint2().getX(),
+				properties.getPoint2().getY());
+		line.setStroke(properties.getStrokeColor());
+		line.setFill(properties.getFillColor());
+		line.setStrokeWidth(properties.getStrokeWidth());
+		line.setRotate(properties.getRotation());
+		line.setTranslateX(properties.getTranslateX());
+		line.setTranslateY(properties.getTranslateY());
+	}
+
 	@Override
 	public String getIconUrl() {
 		return null;
@@ -139,8 +154,12 @@ public class LinePaint implements ShapePaint, Cloneable {
 		newObject.line.setTranslateX(line.getTranslateX());
 		newObject.line.setTranslateY(line.getTranslateY());
 		newObject.line.setRotate(line.getRotate());
-		newObject.line.setFill(line.getFill());
-		newObject.line.setStroke(line.getStroke());
+		Color col = (Color) line.getFill();
+		newObject.line.setFill(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
+		col = (Color) line.getStroke();
+		newObject.line.setStroke(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
 		newObject.line.setStrokeWidth(line.getStrokeWidth());
 		return newObject;
 	}
@@ -150,4 +169,22 @@ public class LinePaint implements ShapePaint, Cloneable {
 		return line.getId();
 	}
 
+	@Override
+	public ShapeProperties getShapeProperties() {
+		ShapeProperties prop = new LineProperties();
+		prop.setFillColor(line.getFill());
+		prop.setStrokeColor(line.getStroke());
+		try {
+			prop.setPoint1(point1.clone());
+			prop.setPoint2(point2.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		prop.setStrokeWidth(line.getStrokeWidth());
+		prop.setRotation(line.getRotate());
+		prop.setTranslateX(line.getTranslateX());
+		prop.setTranslateY(line.getTranslateY());
+		return prop;
+	}
 }

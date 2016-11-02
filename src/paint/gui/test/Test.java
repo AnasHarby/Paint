@@ -9,7 +9,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class Test extends Application {
-
+	static {
+		try {
+			Class.forName("paint.geom.RectanglePaint");
+			Class.forName("paint.geom.CirclePaint");
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	@Override
     public void start(Stage primaryStage) throws IOException {
         Pane root = FXMLLoader.load(getClass().getResource("FXMLTest.fxml"));
