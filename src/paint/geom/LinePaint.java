@@ -2,6 +2,8 @@ package paint.geom;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -34,6 +36,7 @@ public class LinePaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+		line.setUserData(this);
 	}
 
 	public LinePaint(double... properties) {
@@ -93,6 +96,9 @@ public class LinePaint implements ShapePaint {
 	@Override
 	public void remove(Pane contentPane) {
 		contentPane.getChildren().remove(line);
+		for (Resizer resizer : resizers) {
+			resizer.remove(contentPane);
+		}
 	}
 
 	@Override
@@ -135,5 +141,8 @@ public class LinePaint implements ShapePaint {
 		}
 	}
 
-
+	@Override
+	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
+		line.setOnMouseClicked(handler);
+	}
 }

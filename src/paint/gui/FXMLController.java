@@ -5,8 +5,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
@@ -16,6 +18,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeFactory;
@@ -24,14 +27,14 @@ public class FXMLController implements Initializable {
 	private enum State {
 		EDITING, ERASING, FREE_DRAWING,
 		SHAPING, BIASING, TRIANGLE_BIASING, TRIANGLE_SHAPING,
-		TRIANGLE_DRAWING
+		TRIANGLE_DRAWING, REMOVING
 	}
 	private static final String PENCIL_BUTTON = "pencilButton";
 	private static final String ERASER_BUTTON = "eraserButton";
 	private static final String MOVE_BUTTON = "moveButton";
 	private static final String FILL_BUTTON = "fillButton";
 	private static final String PICK_BUTTON = "pickButton";
-	private static final String REMOVE_BUTTON = "removeButton";
+	private static final String REMOVE_BUTTON = "remover";
 	private static final String TRIANGLE_BUTTON = "triangle";
 	private static final String LINE_KEY = "line";
 	private static final String TRIANGLE_KEY = "triangle";
@@ -88,6 +91,8 @@ public class FXMLController implements Initializable {
 		case PICK_BUTTON:
 			break;
 		case REMOVE_BUTTON:
+			state = State.REMOVING;
+			canvas.toBack();
 			break;
 		case TRIANGLE_BUTTON:
 			state = State.TRIANGLE_BIASING;
@@ -121,6 +126,8 @@ public class FXMLController implements Initializable {
 					biasingPoint.getY(), event.getX(),
 					event.getY());
 			currentShape.draw(pane);
+			currentShape.setOnMouseClicked(
+					removeHandler);
 			canvas.toFront();
 			break;
 		case TRIANGLE_DRAWING:
@@ -131,6 +138,8 @@ public class FXMLController implements Initializable {
 						triangleSecondPoint.getY(), event.getX(),
 						event.getY());
 			currentShape.draw(pane);
+			currentShape.setOnMouseClicked(
+					removeHandler);
 			canvas.toFront();
 			break;
 		default:
@@ -185,13 +194,24 @@ public class FXMLController implements Initializable {
 
 	@FXML
 	public void reset(ActionEvent event) {
-
+		Pane pane = (Pane) canvas.getParent();
+		while (!pane.getChildren().isEmpty()) {
+			pane.getChildren().remove(0);
+		}
+		pane.getChildren().add(canvas);
+		ToggleButton active = (ToggleButton)
+				toggleGroup.getSelectedToggle();
+		if (active != null)
+			active.selectedProperty().set(false);
+		state = State.EDITING;
 	}
 
 	@FXML
 	public void importClass(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
-		chooser.setTitle("");
+		chooser.getExtensionFilters().add(
+				new ExtensionFilter(".Class files (*.class)", "*.class"));
+		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
 		/*The .class file, this can be taken to the
@@ -199,4 +219,23 @@ public class FXMLController implements Initializable {
 		 * over the nodes in "buttonBar" and activate the button
 		 * with the key in the .class file*/
 	}
+	private EventHandler<MouseEvent> removeHandler =
+			new EventHandler<MouseEvent>() {
+
+				@Override
+				public void handle(MouseEvent event) {
+					if (state ==
+							State.REMOVING) {
+						Pane pane = (Pane)
+								canvas.getParent();
+						Node source = (Node)
+								event.getSource();
+						if (source.getUserData() != null) {
+							ShapePaint shape = (ShapePaint)
+									source.getUserData();
+							shape.remove(pane);
+						}
+					}
+				}
+			};
 }

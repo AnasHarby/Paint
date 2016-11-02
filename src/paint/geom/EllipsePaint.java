@@ -3,6 +3,8 @@ package paint.geom;
 
 import java.util.ArrayList;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
@@ -46,6 +48,7 @@ public class EllipsePaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		ellipse.setUserData(this);
 	}
 
 	public EllipsePaint(double... properties) {
@@ -69,6 +72,9 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void remove(Pane contentPane) {
 		contentPane.getChildren().remove(ellipse);
+		for (Resizer resizer : resizers) {
+			resizer.remove(contentPane);
+		}
 	}
 
 	@Override
@@ -171,5 +177,10 @@ public class EllipsePaint implements ShapePaint {
 		for (Resizer resizer : resizers) {
 			resizer.hide();
 		}
+	}
+
+	@Override
+	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
+		ellipse.setOnMouseClicked(handler);
 	}
 }

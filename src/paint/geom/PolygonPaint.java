@@ -3,6 +3,8 @@ package paint.geom;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
@@ -27,6 +29,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+		polygon.setUserData(this);
 	}
 
 	public PolygonPaint(double... vertices) {
@@ -47,6 +50,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+		polygon.setUserData(this);
 	}
 
 	public PolygonPaint(Collection<Point> vertices) {
@@ -61,6 +65,7 @@ public abstract class PolygonPaint implements ShapePaint {
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
+		polygon.setUserData(this);
 	}
 
 	public void rotate(double angle) {
@@ -78,6 +83,9 @@ public abstract class PolygonPaint implements ShapePaint {
 	@Override
 	public void remove(Pane contentPane) {
 		contentPane.getChildren().remove(polygon);
+		for (Resizer resizer : resizers) {
+			resizer.remove(contentPane);
+		}
 	}
 
 	@Override
@@ -152,5 +160,9 @@ public abstract class PolygonPaint implements ShapePaint {
 		for (Resizer resizer : resizers) {
 			resizer.hide();
 		}
+	}
+	@Override
+	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
+		polygon.setOnMouseClicked(handler);
 	}
 }

@@ -25,6 +25,8 @@ public class Resizer {
 		rect.setUserData(shapePaint);
 		rect.setId("Resizer" + new Random().nextInt());
 		rect.toFront();
+		rect.onKeyPressedProperty().bind(
+				shape.onKeyPressedProperty());
 	}
 
 	public void draw(Pane contentPane) {
@@ -52,5 +54,10 @@ public class Resizer {
 
 	public double getY() {
 		return rect.yProperty().doubleValue();
+	}
+
+	public void remove(Pane contentPane) {
+		contentPane.getChildren()
+			.remove(rect);
 	}
 }

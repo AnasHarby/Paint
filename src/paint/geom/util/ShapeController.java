@@ -12,7 +12,8 @@ public class ShapeController {
 	private static final String RESIZER_ID = "Resizer";
 	private Point originalTranslate = null;
 	private Point draggingStartPoint = null;
-	EventHandler<MouseEvent> mouseClickHandler =
+
+	EventHandler<MouseEvent> mousePressedHandler =
 			new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent event) {
@@ -80,7 +81,7 @@ public class ShapeController {
 			};
 
 	public void addHandlers(Node node) {
-		node.setOnMousePressed(mouseClickHandler);
+		node.setOnMousePressed(mousePressedHandler);
 		node.setOnMouseDragged(mouseDraggingHandler);
 		node.setOnMouseReleased(mouseReleaseHandler);
 		node.setOnMouseMoved(mouseHoverHandler);
