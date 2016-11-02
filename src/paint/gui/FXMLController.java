@@ -212,8 +212,9 @@ public class FXMLController implements Initializable {
 		pane.getChildren().add(canvas);
 		ToggleButton active = (ToggleButton)
 				toggleGroup.getSelectedToggle();
-		if (active != null)
+		if (active != null) {
 			active.selectedProperty().set(false);
+		}
 		state = State.EDITING;
 	}
 
@@ -226,10 +227,6 @@ public class FXMLController implements Initializable {
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
 		String key = PluginLoader.loadClass(file);//may return null
-		/*The .class file, this can be taken to the
-		 * MainGUI... Should be easy to iterate after this
-		 * over the nodes in "buttonBar" and activate the button
-		 * with the key in the .class file*/
 	}
 	private EventHandler<MouseEvent> removeHandler =
 			new EventHandler<MouseEvent>() {

@@ -74,6 +74,10 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		int i = 0;
+		double minX = Double.MAX_VALUE;
+		double maxX = 0;
+		double minY = Double.MAX_VALUE;
+		double maxY = 0;
 		for (Point point : super.points) {
 			if (x1 == point.getX()
 					&& y1 == point.getY()) {
@@ -86,13 +90,21 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 			}
 			super.polygon.getPoints().set(i * 2, point.getX());
 			super.polygon.getPoints().set(i * 2 + 1, point.getY());
+			minX = Math.min(minX, point.getX());
+			minY = Math.min(minX, point.getY());
+			maxX = Math.max(maxX, point.getX());
+			maxY = Math.max(maxY, point.getY());
 			i++;
 		}
+		this.width = maxX - minX;
+		this.height = maxY - minY;
+		setUpperLeftPoint(new Point(minX, minY));
 	}
 
 	@Override
 	public RectanglePaint clone() throws CloneNotSupportedException {
-		RectanglePaint newObject = new RectanglePaint(upperLeftPoint.clone(), width, height);
+		RectanglePaint newObject = new RectanglePaint(
+				upperLeftPoint.clone(), width, height);
 		newObject.polygon.setTranslateX(polygon.getTranslateX());
 		newObject.polygon.setTranslateY(polygon.getTranslateY());
 		newObject.polygon.setRotate(polygon.getRotate());

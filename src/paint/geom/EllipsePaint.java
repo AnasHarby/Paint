@@ -21,9 +21,6 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	 */
 	public static final String KEY = "ellipse";
 	public Ellipse ellipse;
-	private double aEllipse;
-	private double bEllipse;
-	private Point centerEllipse;
 	private Point up;
 	private Point down;
 	private Point left;
@@ -39,9 +36,6 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	public EllipsePaint(Point center, double a, double b) {
-		centerEllipse = center;
-		aEllipse = a;
-		bEllipse = b;
 		ellipse = new Ellipse(center.getX(),
 				center.getY(), a, b);
 		resizers = new ArrayList<Resizer>();
@@ -138,40 +132,44 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	public void resize(double x1,
 			double y1, double x2, double y2) {
 		Point point = new Point(x1, y1);
+		double x = ellipse.getRadiusX();
+		double y = ellipse.getRadiusY();
 		if (point.equals(up)) {
 			double dy = y1 - y2;
-			if (bEllipse + dy > 0) {
-				bEllipse += dy;
+			if (y + dy > 0) {
+				ellipse.setRadiusY(y + dy);
 			}
 		} else if (point.equals(down)) {
 			double dy = y2 - y1;
-			if (bEllipse + dy > 0) {
-				bEllipse += dy;
+			if (y + dy > 0) {
+				ellipse.setRadiusY(y + dy);
 			}
 		} else if (point.equals(left)) {
 			double dx = x1 - x2;
-			if (aEllipse + dx > 0) {
-				aEllipse += dx;
+			if (x + dx > 0) {
+				ellipse.setRadiusX(x + dx);
 			}
 		} else if (point.equals(right)) {
 			double dx = x2 - x1;
-			if (aEllipse + dx > 0) {
-				aEllipse += dx;
+			if (x + dx > 0) {
+				ellipse.setRadiusX(x + dx);
 			}
 		}
 		setVertices();
-		ellipse.setRadiusX(aEllipse);
-		ellipse.setRadiusY(bEllipse);
 	}
 	protected void setVertices() {
-		up.setX(centerEllipse.getX());
-		up.setY(centerEllipse.getY() - bEllipse);
-		left.setX(centerEllipse.getX() - aEllipse);
-		left.setY(centerEllipse.getY());
-		down.setX(centerEllipse.getX());
-		down.setY(centerEllipse.getY() + bEllipse);
-		right.setX(centerEllipse.getX() + aEllipse);
-		right.setY(centerEllipse.getY());
+		up.setX(ellipse.getCenterX());
+		up.setY(ellipse.getCenterY()
+				- ellipse.getRadiusY());
+		left.setX(ellipse.getCenterX()
+				- ellipse.getRadiusX());
+		left.setY(ellipse.getCenterY());
+		down.setX(ellipse.getCenterX());
+		down.setY(ellipse.getCenterY()
+				+ ellipse.getRadiusY());
+		right.setX(ellipse.getCenterX()
+				+ ellipse.getRadiusX());
+		right.setY(ellipse.getCenterY());
 	}
 
 	private void setResizers() {
@@ -195,7 +193,11 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 
 	@Override
 	public EllipsePaint clone() throws CloneNotSupportedException {
-		EllipsePaint newObject = new EllipsePaint(centerEllipse.clone(), aEllipse, bEllipse);
+		double radX = ellipse.getCenterX();
+		double radY = ellipse.getCenterY();
+		EllipsePaint newObject = new EllipsePaint(
+				new Point(radX, radY), ellipse.getRadiusX(),
+					ellipse.getRadiusY());
 		newObject.ellipse.setTranslateX(ellipse.getTranslateX());
 		newObject.ellipse.setTranslateY(ellipse.getTranslateY());
 		newObject.ellipse.setRotate(ellipse.getRotate());

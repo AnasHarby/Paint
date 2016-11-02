@@ -128,16 +128,14 @@ public class LinePaint implements ShapePaint, Cloneable {
 				&& y1 == start.getY()) {
 			start.setX(x);
 			start.setY(y);
-			start = new Point(x, y);
 		} else if (x1 == end.getX()
 				&& y1 == end.getY()) {
 			end.setX(x);
 			end.setY(y);
-			end = new Point(x, y);
 		}
 		line.setStartX(start.getX());
-		line.setStartY(end.getY());
-		line.setEndX(start.getX());
+		line.setStartY(start.getY());
+		line.setEndX(end.getX());
 		line.setEndY(end.getY());
 	}
 

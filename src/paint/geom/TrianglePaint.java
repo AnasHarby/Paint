@@ -1,7 +1,5 @@
 package paint.geom;
 
-import java.util.Random;
-
 import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.ShapeProperties;
@@ -29,7 +27,6 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		this.point1 = point1;
 		this.point2 = point2;
 		this.point3 = point3;
-		polygon.setId(KEY + new Random().nextInt());
 	}
 
 	public TrianglePaint(double... properties) {
@@ -37,7 +34,6 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		point1 = new Point(properties[FIRST_X], properties[FIRST_Y]);
 		point2 = new Point(properties[SECOND_X], properties[SECOND_Y]);
 		point3 = new Point(properties[THIRD_X], properties[THIRD_Y]);
-		polygon.setId(KEY + new Random().nextInt());
 	}
 
 	public TrianglePaint(ShapeProperties properties) {
@@ -94,5 +90,16 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
 		return prop;
+	}
+	@Override
+	public void resize(double x1, double y1, double x2, double y2) {
+		super.resize(x1, y1, x2, y2);
+		point1.setX(super.polygon.getPoints().get(FIRST_X));
+		point1.setY(super.polygon.getPoints().get(FIRST_Y));
+		point2.setX(super.polygon.getPoints().get(SECOND_X));
+		point2.setY(super.polygon.getPoints().get(SECOND_Y));
+		point3.setX(super.polygon.getPoints().get(THIRD_X));
+		point3.setY(super.polygon.getPoints().get(THIRD_Y));
+
 	}
 }
