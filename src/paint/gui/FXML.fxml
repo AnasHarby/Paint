@@ -28,12 +28,15 @@
               <menus>
                 <Menu mnemonicParsing="false" text="File">
                   <items>
+                    <MenuItem mnemonicParsing="false" text="New Project" accelerator="Ctrl+N"/>
+                    <MenuItem mnemonicParsing="false" text="Save" onAction="#save" accelerator="Ctrl+S"/>
+                    <MenuItem mnemonicParsing="false" text="Load" onAction="#load" accelerator="Ctrl+L"/>
                     <MenuItem mnemonicParsing="false" text="Close" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Project">
                   <items>
-                    <MenuItem mnemonicParsing="false" text="Import Shape Class" onAction="#importClass" />
+                    <MenuItem mnemonicParsing="false" text="Import Shape Class" accelerator="Ctrl+I" onAction="#importClass" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -55,8 +58,18 @@
                           </tooltip>
                       </Button>
                         <ColorPicker fx:id="picker" minHeight="50.0" />
-                        <ButtonBar fx:id="buttonBar" buttonMinWidth="50.0" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="50.0" prefWidth="590.0">
+                        <ButtonBar fx:id="buttonBar" buttonMinWidth="50.0" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="84.0" prefWidth="720.0">
                           <buttons>
+                              <Button id="undo" onAction="#undo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-250.0" stylesheets="@Style.css">
+                              <tooltip>
+                              	<Tooltip text="Undo" />
+                              </tooltip>
+                              </Button>
+                              <Button id="redo" onAction="redo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-255.0" stylesheets="@Style.css">
+                              <tooltip>
+                              	<Tooltip text="Redo" />
+                              </tooltip>
+                              </Button>
                             <ToggleButton id="line" fx:id="line" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css">
                               <tooltip>
                               <Tooltip text="Line" />

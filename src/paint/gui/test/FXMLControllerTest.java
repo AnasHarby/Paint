@@ -2,7 +2,6 @@
 package paint.gui.test;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -31,7 +30,6 @@ import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
-import paint.plugins.PluginLoader;
 
 public class FXMLControllerTest implements Initializable {
 	private static final String CIRCLE_BUTTON = "circle";
@@ -79,7 +77,6 @@ public class FXMLControllerTest implements Initializable {
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
 		CurrentHistoryEvent.getInstance().getHead().updateHistory();
-		PluginLoader.loadClass("");
 		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
@@ -154,8 +151,6 @@ public class FXMLControllerTest implements Initializable {
 				ShapePaint rectangle
 				= ShapeFactory.getInstance().createShape(RECTANGLE_BUTTON, init.getX(), init.getY(), event.getX(), event.getY());//new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
-				ArrayList<ShapePaint> shapes = new ArrayList<>();
-				shapes.add(rectangle);
 				CurrentHistoryEvent.getInstance().getHead().getShapes().add(rectangle);
 				CurrentHistoryEvent.getInstance().getHead().updateHistory();
 				rectangle.draw(pane);

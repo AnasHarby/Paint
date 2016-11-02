@@ -81,3 +81,15 @@
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
 }
+
+#undo {
+	-fx-background-image: url("File:src/paint/gui/assets/undo.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}
+
+#redo {
+	-fx-background-image: url("File:src/paint/gui/assets/redo.png");
+	-fx-background-position: center;
+	-fx-background-repeat: no-repeat;
+}

@@ -28,8 +28,8 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 	}
 
 	public SquarePaint(double... properties) {
-		this(new Point(properties[UPPER_LEFT_X],
-				properties[UPPER_LEFT_Y]),
+		this(new Point(Math.min(properties[UPPER_LEFT_X], properties[BOTTOM_RIGHT_X]),
+				Math.min(properties[UPPER_LEFT_Y], properties[BOTTOM_RIGHT_Y])),
 				Math.abs(properties[UPPER_LEFT_X]
 						- properties[BOTTOM_RIGHT_X]));
 	}

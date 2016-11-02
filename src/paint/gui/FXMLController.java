@@ -215,7 +215,7 @@ public class FXMLController implements Initializable {
 	public void importClass(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
 		chooser.getExtensionFilters().add(
-				new ExtensionFilter(".Class files (*.class)", "*.class"));
+				new ExtensionFilter("Java Class Files (*.class)", "*.class"));
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
@@ -243,4 +243,38 @@ public class FXMLController implements Initializable {
 			}
 		}
 	};
+
+	@FXML
+	public void save(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(
+				new ExtensionFilter("JSON Files (*.json)", "*.json"));
+		chooser.getExtensionFilters().add(
+				new ExtensionFilter("XML Files (*.xml)", "*.xml"));
+		chooser.setTitle("Save");
+		File file = chooser.showOpenDialog(
+				canvas.getScene().getWindow());
+	}
+
+	@FXML
+	public void load(ActionEvent event) {
+		FileChooser chooser = new FileChooser();
+		chooser.getExtensionFilters().add(
+				new ExtensionFilter("JSON Files (*.json)", "*.json"));
+		chooser.getExtensionFilters().add(
+				new ExtensionFilter("XML Files (*.xml)", "*.xml"));
+		chooser.setTitle("Load");
+		File file = chooser.showOpenDialog(
+				canvas.getScene().getWindow());
+	}
+
+	@FXML
+	public void undo(ActionEvent event) {
+
+	}
+
+	@FXML
+	public void redo(ActionEvent event) {
+
+	}
 }
