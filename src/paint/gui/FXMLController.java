@@ -5,6 +5,8 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,8 +41,8 @@ public class FXMLController implements Initializable {
 		SHAPING, BIASING, TRIANGLE_BIASING, TRIANGLE_SHAPING,
 		TRIANGLE_DRAWING, REMOVING
 	}
-	private final static ObservableList<String> BORDERS =
-			FXCollections.observableArrayList(
+	private static final ObservableList<String> BORDERS =
+			FXCollections.observableArrayList( "1px",
 					"2px", "4px", "6px",
 					"8px", "10px", "12px");
 	private static final String PENCIL_BUTTON = "pencilButton";
@@ -81,26 +83,29 @@ public class FXMLController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		state = State.EDITING;
 		picker.setValue(Color.TRANSPARENT);
+		borderWidth = 1;
 		buildBorderChooser();
 		CurrentHistoryEvent.getInstance().
 		getHead().updateHistory();
 	}
 
 	private void buildBorderChooser() {
-//		borderWidthPicker.setItems(BORDERS);
-//		borderWidthPicker.getSelectionModel()
-//			.selectedIndexProperty().addListener(
-//					new ChangeListener<Number>() {
-//
-//						@Override
-//						public void changed(
-//								ObservableValue<? extends Number> observable,
-//								Number oldValue, Number newValue) {
-//							borderWidth = Integer.
-//									parseInt(BORDERS.get(
-//										newValue.intValue()).split("px")[0]);
-//						}
-//					});
+		borderWidthPicker.setItems(BORDERS);
+		borderWidthPicker.setValue(BORDERS.get(0));
+		borderWidthPicker.getSelectionModel()
+			.selectedIndexProperty().addListener(
+					new ChangeListener<Number>() {
+						@Override
+						public void changed(
+							ObservableValue<? extends Number> observable,
+								Number oldValue, Number newValue) {
+									borderWidth = Integer.
+										parseInt(BORDERS.get(
+											newValue.intValue()).split("px")[0]);
+						}
+					}
+		);
+
 	}
 
 	@FXML
