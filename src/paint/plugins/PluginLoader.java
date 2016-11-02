@@ -8,6 +8,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 
 import paint.geom.ShapePaint;
 
@@ -29,7 +30,8 @@ public class PluginLoader {
 			String classFile = file.getName();
 			Path originalClassPath = Paths.get(file.toURI());
 			Path newPath = Paths.get(SHAPE_PATH + classFile);
-			Files.copy(originalClassPath, newPath);
+			Files.copy(originalClassPath, newPath,
+					StandardCopyOption.REPLACE_EXISTING);
 			String className
 			= classFile.replaceAll(CLASS_EXTENSION, "");
 			URLClassLoader loader = URLClassLoader.
