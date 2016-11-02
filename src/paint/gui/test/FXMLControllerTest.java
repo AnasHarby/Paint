@@ -30,6 +30,7 @@ import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
+import paint.plugins.PluginLoader;
 
 public class FXMLControllerTest implements Initializable {
 	private static final String CIRCLE_BUTTON = "circle";
@@ -77,6 +78,7 @@ public class FXMLControllerTest implements Initializable {
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
 		CurrentHistoryEvent.getInstance().getHead().updateHistory();
+		PluginLoader.loadClass("");
 		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
