@@ -2,6 +2,7 @@
 package paint.gui.test;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
@@ -151,6 +152,8 @@ public class FXMLControllerTest implements Initializable {
 				ShapePaint rectangle
 				= ShapeFactory.getInstance().createShape(RECTANGLE_BUTTON, init.getX(), init.getY(), event.getX(), event.getY());//new RectanglePaint(init.getX(), init.getY(), event.getX(), event.getY());
 				pane.getChildren().remove(drawingShape);
+				ArrayList<ShapePaint> shapes = new ArrayList<>();
+				shapes.add(rectangle);
 				CurrentHistoryEvent.getInstance().getHead().getShapes().add(rectangle);
 				CurrentHistoryEvent.getInstance().getHead().updateHistory();
 				rectangle.draw(pane);

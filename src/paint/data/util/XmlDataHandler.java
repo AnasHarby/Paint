@@ -1,5 +1,6 @@
 package paint.data.util;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,11 +25,10 @@ public class XmlDataHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public HistoryEvent loadXml(String xml, Canvas canvas) {
+	public HistoryEvent loadXml(File xml, Canvas canvas) {
 		XStream xstream = new XStream(new DomDriver());
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(xml);
-		System.out.println(props.getClass().getName());
 		HistoryEvent head = new HistoryEvent(props);
 		head.showEvent(canvas);
 		return head;

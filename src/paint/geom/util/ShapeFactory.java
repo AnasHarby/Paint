@@ -31,7 +31,6 @@ public class ShapeFactory {
 			Constructor<? extends ShapePaint> shapeConstructor =
 					shapeClass.getConstructor(double[].class);
 			ShapePaint shape = shapeConstructor.newInstance(properties);
-			System.out.println(shape.getId());
 			return shape;
 		} catch (NoSuchMethodException | SecurityException
 				| InstantiationException
