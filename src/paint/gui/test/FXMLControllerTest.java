@@ -23,6 +23,7 @@ import javafx.scene.shape.Shape;
 import paint.data.util.History;
 import paint.data.util.HistoryEvent;
 import paint.data.util.JsonDataHandler;
+import paint.data.util.XmlDataHandler;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
@@ -51,6 +52,7 @@ public class FXMLControllerTest implements Initializable {
 	History history;
 	HistoryEvent current = new HistoryEvent();
 	JsonDataHandler jsonData = new JsonDataHandler();
+	XmlDataHandler xmlData = new XmlDataHandler();
 
 
 	private double getRadius(double x1, double y1, double x2, double y2) {
@@ -93,9 +95,10 @@ public class FXMLControllerTest implements Initializable {
 					}
 				} else if (event.getCode() == KeyCode.S) {
 					jsonData.saveJson(current);
+					xmlData.saveJson(current);
 				} else if (event.getCode() == KeyCode.L) {
 					history = new History();
-					current = jsonData.loadJson(canvas);
+					current = xmlData.loadJson(canvas);
 					history.storeShapeChanges(current);
 				}
 			}
