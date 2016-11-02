@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
+import paint.data.util.CurrentHistoryEvent;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeFactory;
@@ -158,6 +159,8 @@ public class FXMLController implements Initializable {
 			drawShape(event);
 			state = State.BIASING;
 			currentShape.showResizers();
+			CurrentHistoryEvent.getInstance().getHead().getShapes().add(currentShape);
+			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			break;
 		case TRIANGLE_BIASING:
 			drawShape(event);
@@ -173,6 +176,8 @@ public class FXMLController implements Initializable {
 			drawShape(event);
 			state = State.TRIANGLE_BIASING;
 			currentShape.showResizers();
+			CurrentHistoryEvent.getInstance().getHead().getShapes().add(currentShape);
+			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			break;
 		default:
 			break;
@@ -226,15 +231,15 @@ public class FXMLController implements Initializable {
 		public void handle(MouseEvent event) {
 			if (state ==
 					State.REMOVING) {
-				Pane pane = (Pane)
-						canvas.getParent();
 				Node source = (Node)
 						event.getSource();
-				if (source.getUserData() != null) {
-					ShapePaint shape = (ShapePaint)
-							source.getUserData();
-					shape.remove(pane);
-				}
+				CurrentHistoryEvent.getInstance().
+				getHead().removeShape(source.getId());
+				CurrentHistoryEvent.getInstance().
+				getHead().updateHistory();
+				CurrentHistoryEvent.getInstance().
+				getHead().showEvent(canvas);
+				canvas.toBack();
 			}
 		}
 	};

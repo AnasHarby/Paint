@@ -5,6 +5,7 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Rectangle;
+import paint.data.util.CurrentHistoryEvent;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 
@@ -67,6 +68,7 @@ public class ShapeController {
 		public void handle(MouseEvent event) {
 			Node source = (Node) event.getSource();
 			source.setCursor(Cursor.DEFAULT);
+			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 		}
 	};
 
