@@ -161,8 +161,17 @@ public abstract class PolygonPaint implements ShapePaint {
 			resizer.hide();
 		}
 	}
+
 	@Override
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		polygon.setOnMouseClicked(handler);
+	}
+
+	@Override
+	public abstract ShapePaint clone() throws CloneNotSupportedException;
+
+	@Override
+	public String getId() {
+		return polygon.getId();
 	}
 }

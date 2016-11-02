@@ -19,17 +19,19 @@ public class ShapeFactory {
 	}
 
 	public void registerShape(String shapeID,
-		Class<? extends ShapePaint> shapeClass) {
+			Class<? extends ShapePaint> shapeClass) {
 		registeredShapes.put(shapeID, shapeClass);
+		System.out.println("Shape: " + shapeID + " Registered");
 	}
 
 	public ShapePaint createShape(String shapeID, double... properties) {
 		Class<? extends ShapePaint> shapeClass =
-		registeredShapes.get(shapeID);
+				registeredShapes.get(shapeID);
 		try {
 			Constructor<? extends ShapePaint> shapeConstructor =
 					shapeClass.getConstructor(double[].class);
 			ShapePaint shape = shapeConstructor.newInstance(properties);
+			System.out.println(shape.getId());
 			return shape;
 		} catch (NoSuchMethodException | SecurityException
 				| InstantiationException

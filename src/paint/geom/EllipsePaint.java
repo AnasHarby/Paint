@@ -1,7 +1,7 @@
 package paint.geom;
 
-
 import java.util.ArrayList;
+import java.util.Random;
 
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
@@ -11,14 +11,18 @@ import javafx.scene.shape.Ellipse;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
+import paint.shapes.util.EllipseProperties;
+import paint.shapes.util.ShapeProperties;
 
-public class EllipsePaint implements ShapePaint {
+public class EllipsePaint implements ShapePaint, Cloneable {
 	/**
 	 * Javafx 2D graphics drawing ellipse
 	 * class.
 	 */
 	public static final String KEY = "ellipse";
-	protected Ellipse ellipse;
+	public Ellipse ellipse;
+	private double aEllipse;
+	private double bEllipse;
 	private Point centerEllipse;
 	private Point up;
 	private Point down;
@@ -36,6 +40,8 @@ public class EllipsePaint implements ShapePaint {
 
 	public EllipsePaint(Point center, double a, double b) {
 		centerEllipse = center;
+		aEllipse = a;
+		bEllipse = b;
 		ellipse = new Ellipse(center.getX(),
 				center.getY(), a, b);
 		resizers = new ArrayList<Resizer>();
@@ -48,7 +54,21 @@ public class EllipsePaint implements ShapePaint {
 		fill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
+		ellipse.setId(KEY + new Random().nextInt());
 		ellipse.setUserData(this);
+	}
+
+	public EllipsePaint(ShapeProperties properties) {
+		this(properties.getPoint1().getX(),
+				properties.getPoint1().getY(),
+				properties.getPoint2().getX(),
+				properties.getPoint2().getY());
+		ellipse.setStroke(properties.getStrokeColor());
+		ellipse.setFill(properties.getFillColor());
+		ellipse.setStrokeWidth(properties.getStrokeWidth());
+		ellipse.setRotate(properties.getRotation());
+		ellipse.setTranslateX(properties.getTranslateX());
+		ellipse.setTranslateY(properties.getTranslateY());
 	}
 
 	public EllipsePaint(double... properties) {
@@ -72,9 +92,6 @@ public class EllipsePaint implements ShapePaint {
 	@Override
 	public void remove(Pane contentPane) {
 		contentPane.getChildren().remove(ellipse);
-		for (Resizer resizer : resizers) {
-			resizer.remove(contentPane);
-		}
 	}
 
 	@Override
@@ -112,18 +129,15 @@ public class EllipsePaint implements ShapePaint {
 	public void toFront() {
 		ellipse.toFront();
 	}
-
 	private void setActionHandlers() {
 		ShapeController shapeMovement
-			= new ShapeController();
+		= new ShapeController();
 		shapeMovement.addHandlers(ellipse);
 	}
 	@Override
 	public void resize(double x1,
 			double y1, double x2, double y2) {
 		Point point = new Point(x1, y1);
-		double aEllipse = ellipse.getRadiusX();
-		double bEllipse = ellipse.getRadiusY();
 		if (point.equals(up)) {
 			double dy = y1 - y2;
 			if (bEllipse + dy > 0) {
@@ -145,18 +159,18 @@ public class EllipsePaint implements ShapePaint {
 				aEllipse += dx;
 			}
 		}
+		setVertices();
 		ellipse.setRadiusX(aEllipse);
 		ellipse.setRadiusY(bEllipse);
-		setVertices();
 	}
 	protected void setVertices() {
 		up.setX(centerEllipse.getX());
-		up.setY(centerEllipse.getY() - ellipse.getRadiusY());
-		left.setX(centerEllipse.getX() - ellipse.getRadiusX());
+		up.setY(centerEllipse.getY() - bEllipse);
+		left.setX(centerEllipse.getX() - aEllipse);
 		left.setY(centerEllipse.getY());
 		down.setX(centerEllipse.getX());
-		down.setY(centerEllipse.getY() + ellipse.getRadiusY());
-		right.setX(centerEllipse.getX() + ellipse.getRadiusX());
+		down.setY(centerEllipse.getY() + bEllipse);
+		right.setX(centerEllipse.getX() + aEllipse);
 		right.setY(centerEllipse.getY());
 	}
 
@@ -180,7 +194,49 @@ public class EllipsePaint implements ShapePaint {
 	}
 
 	@Override
+	public EllipsePaint clone() throws CloneNotSupportedException {
+		EllipsePaint newObject = new EllipsePaint(centerEllipse.clone(), aEllipse, bEllipse);
+		newObject.ellipse.setTranslateX(ellipse.getTranslateX());
+		newObject.ellipse.setTranslateY(ellipse.getTranslateY());
+		newObject.ellipse.setRotate(ellipse.getRotate());
+		Color col = (Color) ellipse.getFill();
+		newObject.ellipse.setFill(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
+		col = (Color) ellipse.getStroke();
+		newObject.ellipse.setStroke(new Color(col.getRed(), col.getGreen(),
+				col.getBlue(), col.getOpacity()));
+		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
+		return newObject;
+	}
+
+	@Override
+	public String getId() {
+		return ellipse.getId();
+	}
+
+	@Override
+	public ShapeProperties getShapeProperties() {
+		ShapeProperties prop = new EllipseProperties();
+		prop.setFillColor(ellipse.getFill());
+		prop.setStrokeColor(ellipse.getStroke());
+		try {
+			prop.setPoint1(up.clone());
+			prop.setPoint2(right.clone());
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+
+		prop.setStrokeWidth(ellipse.getStrokeWidth());
+		prop.setRotation(ellipse.getRotate());
+		prop.setTranslateX(ellipse.getTranslateX());
+		prop.setTranslateY(ellipse.getTranslateY());
+		return prop;
+	}
+
+	@Override
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		ellipse.setOnMouseClicked(handler);
 	}
+
+
 }

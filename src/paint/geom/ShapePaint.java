@@ -4,6 +4,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import paint.shapes.util.ShapeProperties;
+
 
 public interface ShapePaint {
 	/**
@@ -62,4 +64,8 @@ public interface ShapePaint {
 	public void showResizers();
 	public void hideResizers();
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler);
+	public String getId();
+	public ShapeProperties getShapeProperties();
+	public ShapePaint clone() throws CloneNotSupportedException;
 }
+

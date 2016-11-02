@@ -14,12 +14,12 @@
        		 <ToggleGroup fx:id="testingToggleGroup"/>
    		 </fx:define>
          <children>
-            <ToggleButton mnemonicParsing="false" text="Start Drawing Circles" toggleGroup="$testingToggleGroup" onAction="#startDraw"  fx:id="circleButton">
+            <ToggleButton mnemonicParsing="false" text="Start Drawing Circles" toggleGroup="$testingToggleGroup" onAction="#startDraw"  fx:id="circle">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>
             </ToggleButton>
-            <ToggleButton mnemonicParsing="false" text="Start Drawing Rectangles" toggleGroup="$testingToggleGroup" onAction="#startDraw" fx:id="rectangleButton">
+            <ToggleButton mnemonicParsing="false" text="Start Drawing Rectangles" toggleGroup="$testingToggleGroup" onAction="#startDraw" fx:id="rectangle">
                <HBox.margin>
                   <Insets right="15.0" />
                </HBox.margin>

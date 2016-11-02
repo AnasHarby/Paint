@@ -56,8 +56,8 @@ public class FXMLController implements Initializable {
 	@FXML private ToggleButton ellipseButton;
 	@FXML private ToggleButton circleButton;
 	private State state;
-//	private Color fillColor;
-//	private Color borderColor;
+	//	private Color fillColor;
+	//	private Color borderColor;
 	private ShapePaint currentShape;
 	private String currShapeID;
 	private Point biasingPoint;
@@ -110,9 +110,9 @@ public class FXMLController implements Initializable {
 		switch (state) {
 		case BIASING:
 		case TRIANGLE_BIASING:
-			currentShape = ShapeFactory.getInstance()
-				.createShape(currShapeID, event.getX(),
-						event.getY(), event.getX(), event.getY());
+			currentShape = ShapeFactory.getInstance().
+			createShape(currShapeID, event.getX(),
+					event.getY(), event.getX(), event.getY());
 			currentShape.draw(pane);
 			biasingPoint = new Point(event.getX(),
 					event.getY());
@@ -122,9 +122,9 @@ public class FXMLController implements Initializable {
 		case TRIANGLE_SHAPING:
 			currentShape.remove(pane);
 			currentShape = ShapeFactory.getInstance()
-				.createShape(currShapeID, biasingPoint.getX(),
-					biasingPoint.getY(), event.getX(),
-					event.getY());
+					.createShape(currShapeID, biasingPoint.getX(),
+							biasingPoint.getY(), event.getX(),
+							event.getY());
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
 					removeHandler);
@@ -133,10 +133,10 @@ public class FXMLController implements Initializable {
 		case TRIANGLE_DRAWING:
 			currentShape.remove(pane);
 			currentShape = ShapeFactory.getInstance()
-				.createShape(TRIANGLE_KEY, biasingPoint.getX(),
-						biasingPoint.getY(), triangleSecondPoint.getX(),
-						triangleSecondPoint.getY(), event.getX(),
-						event.getY());
+					.createShape(TRIANGLE_KEY, biasingPoint.getX(),
+							biasingPoint.getY(), triangleSecondPoint.getX(),
+							triangleSecondPoint.getY(), event.getX(),
+							event.getY());
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
 					removeHandler);
@@ -222,20 +222,20 @@ public class FXMLController implements Initializable {
 	private EventHandler<MouseEvent> removeHandler =
 			new EventHandler<MouseEvent>() {
 
-				@Override
-				public void handle(MouseEvent event) {
-					if (state ==
-							State.REMOVING) {
-						Pane pane = (Pane)
-								canvas.getParent();
-						Node source = (Node)
-								event.getSource();
-						if (source.getUserData() != null) {
-							ShapePaint shape = (ShapePaint)
-									source.getUserData();
-							shape.remove(pane);
-						}
-					}
+		@Override
+		public void handle(MouseEvent event) {
+			if (state ==
+					State.REMOVING) {
+				Pane pane = (Pane)
+						canvas.getParent();
+				Node source = (Node)
+						event.getSource();
+				if (source.getUserData() != null) {
+					ShapePaint shape = (ShapePaint)
+							source.getUserData();
+					shape.remove(pane);
 				}
-			};
+			}
+		}
+	};
 }
