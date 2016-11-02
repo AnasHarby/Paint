@@ -1,6 +1,7 @@
 package paint.data.util;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -24,11 +25,11 @@ public class JsonDataHandler {
 	}
 
 	@SuppressWarnings("unchecked")
-	public HistoryEvent loadJson(String json, Canvas canvas) {
+	public HistoryEvent loadJson(File json, Canvas canvas) {
 		XStream xstream = new XStream(new JettisonMappedXmlDriver());
+		Object propObj = xstream.fromXML(json);
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(json);
-		System.out.println(props.getClass().getName());
 		HistoryEvent head = new HistoryEvent(props);
 		head.showEvent(canvas);
 		return head;

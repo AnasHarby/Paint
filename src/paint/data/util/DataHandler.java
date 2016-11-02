@@ -1,10 +1,7 @@
 package paint.data.util;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.io.PrintWriter;
 
 import javafx.scene.canvas.Canvas;
@@ -38,25 +35,13 @@ public class DataHandler {
 	}
 
 	public HistoryEvent loadData(String path, Canvas canvas) {
-		StringBuilder data = new StringBuilder();
 		HistoryEvent head = null;
-		try {
-			File loadFile = new File(path);
-			FileReader file = new FileReader(loadFile);
-			BufferedReader bufferedReader = new BufferedReader(file);
-			String line = new String();
-			while ((line = bufferedReader.readLine()) != null) {
-				data.append(line);
-			}
-			bufferedReader.close();
-		} catch (IOException ex) {
-			ex.printStackTrace();;
-		} finally {
-			if (path.endsWith(XML_EXTENSION)) {
-				head = xmlHandler.loadXml(data.toString(), canvas);
-			} else if (path.endsWith(JSON_EXTENSION)) {
-				head = jsonHandler.loadJson(data.toString(), canvas);
-			}
+		File loadFile = new File(path);
+		loadFile = new File(path);
+		if (path.endsWith(XML_EXTENSION)) {
+			head = xmlHandler.loadXml(loadFile, canvas);
+		} else if (path.endsWith(JSON_EXTENSION)) {
+			head = jsonHandler.loadJson(loadFile, canvas);
 		}
 		return head;
 	}

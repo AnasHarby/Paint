@@ -23,6 +23,7 @@ import paint.data.util.CurrentHistoryEvent;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 import paint.geom.util.ShapeFactory;
+import paint.plugins.PluginLoader;
 
 public class FXMLController implements Initializable {
 	private enum State {
@@ -219,6 +220,7 @@ public class FXMLController implements Initializable {
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
+		PluginLoader.loadClass(file);
 		/*The .class file, this can be taken to the
 		 * MainGUI... Should be easy to iterate after this
 		 * over the nodes in "buttonBar" and activate the button
