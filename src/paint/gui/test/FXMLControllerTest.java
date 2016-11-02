@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import paint.data.util.CurrentHistoryEvent;
 import paint.data.util.History;
 import paint.data.util.HistoryEvent;
 import paint.data.util.JsonDataHandler;
@@ -49,8 +50,6 @@ public class FXMLControllerTest implements Initializable {
 	private boolean started = false;
 	private Point init = new Point();
 	private Shape drawingShape = null;
-	History history;
-	HistoryEvent current = new HistoryEvent();
 	JsonDataHandler jsonData = new JsonDataHandler();
 	XmlDataHandler xmlData = new XmlDataHandler();
 
@@ -77,21 +76,20 @@ public class FXMLControllerTest implements Initializable {
 		ShapeController sc = new ShapeController();
 		sc.addHandlers(circle2);
 		circle1.layoutXProperty();
-		history = new History();
-		history.storeShapeChanges(current);
+		CurrentHistoryEvent.getInstance().getHead().updateHistory();
 		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
 
 			@Override
 			public void handle(KeyEvent event) {
 				if (event.getCode() == KeyCode.Y) {
-					HistoryEvent temp = history.redo(canvas);
+					HistoryEvent temp = History.getHistory().redo(canvas);
 					if (temp != null) {
-						current = temp;
+						CurrentHistoryEvent.getInstance().setHead(temp);
 					}
 				} else if (event.getCode() == KeyCode.Z) {
-					HistoryEvent temp = history.undo(canvas);
+					HistoryEvent temp = History.getHistory().undo(canvas);
 					if (temp != null) {
-						current = temp;
+						CurrentHistoryEvent.getInstance().setHead(temp);
 					}
 				} else if (event.getCode() == KeyCode.S) {
 					//jsonData.saveJson(current);
@@ -155,8 +153,8 @@ public class FXMLControllerTest implements Initializable {
 				pane.getChildren().remove(drawingShape);
 				ArrayList<ShapePaint> shapes = new ArrayList<>();
 				shapes.add(rectangle);
-				current.getShapes().add(rectangle);
-				history.storeShapeChanges(current);
+				CurrentHistoryEvent.getInstance().getHead().getShapes().add(rectangle);
+				CurrentHistoryEvent.getInstance().getHead().updateHistory();
 				rectangle.draw(pane);
 				drawingShape = null;
 				rectangle.toBack();

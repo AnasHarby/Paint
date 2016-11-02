@@ -49,6 +49,10 @@ public class HistoryEvent implements Cloneable {
 		return shapes;
 	}
 
+	public void updateHistory() {
+		History.getHistory().storeShapeChanges(this);
+	}
+
 	public Collection<ShapeProperties> getShapesProperties() {
 		ArrayList<ShapeProperties> prop = new ArrayList<>();
 		for (ShapePaint shape : shapes) {

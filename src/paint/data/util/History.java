@@ -8,10 +8,19 @@ public class History {
 	private Stack<HistoryEvent> undoStack;
 	private Stack<HistoryEvent> redoStack;
 	private HistoryEvent currentEvent;
+	private static History history = new History();
 
-	public History() {
+	private History() {
 		undoStack = new Stack<>();
 		redoStack = new Stack<>();
+	}
+
+	public static History getHistory() {
+		return history;
+	}
+
+	public static void clearHistory() {
+		history = new History();
 	}
 
 	public HistoryEvent undo(Canvas canvas) {
