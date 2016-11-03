@@ -3,6 +3,8 @@ package paint.geom;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
+import paint.geom.util.Resizer;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.ShapeProperties;
 import paint.shapes.util.TriangleProperties;
@@ -29,6 +31,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		this.point1 = point1;
 		this.point2 = point2;
 		this.point3 = point3;
+		setResizerRotation();
 		polygon.setId(KEY + new Random().nextInt());
 	}
 
@@ -37,6 +40,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		point1 = new Point(properties[FIRST_X], properties[FIRST_Y]);
 		point2 = new Point(properties[SECOND_X], properties[SECOND_Y]);
 		point3 = new Point(properties[THIRD_X], properties[THIRD_Y]);
+		setResizerRotation();
 		polygon.setId(KEY + new Random().nextInt());
 	}
 
@@ -119,6 +123,29 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	}
 
 	private Point getCenter() {
-		return null;
+		double x = 0;
+		double y = 0;
+		for (Point point : super.points) {
+			x = point.getX();
+			y = point.getY();
+		}
+		x /= 3;
+		y /= 3;
+		return new Point(x, y);
+	}
+
+	private void setResizerRotation() {
+		for (Resizer resizer : super.resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
+	}
+
+	@Override
+	public void rotate(double angle) {
+		super.polygon.getTransforms().add(new Rotate(
+				angle, getCenter().getX(), getCenter().getY()));
+		for (Resizer resizer : super.resizers) {
+			resizer.rotate(angle);
+		}
 	}
 }

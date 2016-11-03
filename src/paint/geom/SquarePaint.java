@@ -63,6 +63,9 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 				/ (x1 - xOpposite);
 		double x = (m / (m * m + 1)) * (m * x1 + x2 / m + y2 - y1);
 		double y = y1 + m * x - m * x1;
+		double minX = Double.MAX_VALUE;
+		double minY = Double.MAX_VALUE;
+		double maxX = Double.MIN_VALUE;
 		int i = 0;
 		for (Point point : super.points) {
 			if (x1 == point.getX()
@@ -85,8 +88,14 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 			}
 			super.polygon.getPoints().set(i * 2, point.getX());
 			super.polygon.getPoints().set(i * 2 + 1, point.getY());
+			minX = Math.min(minX, point.getX());
+			minY = Math.min(minY, point.getY());
+			maxX = Math.max(maxX, point.getX());
 			i++;
 		}
+		super.setUpperLeftPoint(new Point(minX, minY));
+		super.setWidth(maxX - minX);
+		super.setHeight(maxX - minX);
 	}
 
 	@Override

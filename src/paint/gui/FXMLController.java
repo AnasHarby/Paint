@@ -275,7 +275,13 @@ public class FXMLController implements Initializable {
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
-		PluginLoader.loadClass(file);
+		String key = PluginLoader.loadClass(file);
+		for (Node shape : buttonBar.getButtons()) {
+			if (shape.getId().equals(key)) {
+				shape.setDisable(false);
+				break;
+			}
+		}
 	}
 	private EventHandler<MouseEvent> toolsHandler =
 			new EventHandler<MouseEvent>() {
@@ -357,13 +363,8 @@ public class FXMLController implements Initializable {
 			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
 		}
-		String key = PluginLoader.loadClass(file);
-		for (Node shape : buttonBar.getButtons()) {
-			if (shape.getId().equals(key)) {
-				shape.setDisable(false);
-				break;
-			}
-		}
+		PluginLoader.loadClass(file);
+
 	}
 
 	@FXML

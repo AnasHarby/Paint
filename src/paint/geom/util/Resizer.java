@@ -13,7 +13,6 @@ public class Resizer {
 	private static final double SIZE = 4;
 	private Circle circ;
 	private Point rotationPivot;
-	private double absoluteAngle = 0;
 
 	public Resizer(Shape shape, ShapePaint shapePaint, Point point) {
 		circ = new Circle(point.getX(),
@@ -71,8 +70,7 @@ public class Resizer {
 	}
 
 	public void rotate(double angle) {
-		circ.getTransforms().add(new Rotate(angle - absoluteAngle,
+		circ.getTransforms().add(new Rotate(angle,
 				rotationPivot.getX(), rotationPivot.getY()));
-		absoluteAngle = angle;
 	}
 }

@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Rotate;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
@@ -24,6 +25,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 	private static final int SECOND_Y = 3;
 	private Point start;
 	private Point end;
+	private Point center;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
@@ -35,6 +37,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 		resizers = new ArrayList<Resizer>();
 		this.start = point1;
 		this.end = point2;
+		center = new Point();
 		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
@@ -99,14 +102,6 @@ public class LinePaint implements ShapePaint, Cloneable {
 	public void move(double x, double y) {
 		line.setTranslateX(x);
 		line.setTranslateY(y);
-	}
-
-	@Override
-	public void rotate(double angle) {
-		line.setRotate(angle);
-		for (Resizer resizer : resizers) {
-			resizer.rotate(angle);
-		}
 	}
 
 	@Override
@@ -230,8 +225,22 @@ public class LinePaint implements ShapePaint, Cloneable {
 	}
 
 	private Point getCenter() {
-		double x = (start.getX() + end.getX()) / 2;
-		double y = (start.getY() + end.getY()) / 2;
-		return new Point(x, y);
+		double x = (line.getStartX()
+				+ line.getEndX()) / 2;
+		double y = (line.getStartY()
+				+ line.getEndY()) / 2;
+		center.setX(x);
+		center.setY(y);
+		return center;
+	}
+
+	@Override
+	public void rotate(double angle) {
+		line.getTransforms().add(new Rotate(
+				angle, getCenter().getX(),
+				getCenter().getY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
 	}
 }

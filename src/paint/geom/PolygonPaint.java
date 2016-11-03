@@ -69,14 +69,6 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 
 	@Override
-	public void rotate(double angle) {
-		polygon.setRotate(angle);
-		for (Resizer resizer : resizers) {
-			resizer.rotate(angle);
-		}
-	}
-
-	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(polygon);
 		for (Resizer resizer : resizers) {

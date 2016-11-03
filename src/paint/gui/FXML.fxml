@@ -107,7 +107,7 @@
                               <Tooltip text="Ellipse" />
                             </tooltip>
                           </ToggleButton>
-                            <ToggleButton id="circle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="circle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                               <tooltip>
                               <Tooltip text="Circle" />
                             </tooltip>

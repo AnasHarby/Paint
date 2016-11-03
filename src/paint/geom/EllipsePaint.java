@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
@@ -70,14 +71,6 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		this(new Point(properties[TOPMOST_X], properties[RIGHTMOST_Y]),
 				Math.abs(properties[RIGHTMOST_X] - properties[TOPMOST_X]),
 				Math.abs(properties[TOPMOST_Y] - properties[RIGHTMOST_Y]));
-	}
-
-	@Override
-	public void rotate(double angle) {
-		ellipse.setRotate(angle);
-		for (Resizer resizer : resizers) {
-			resizer.rotate(angle);
-		}
 	}
 
 	@Override
@@ -188,7 +181,9 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		resizers.add(new Resizer(ellipse, this, down));
 		resizers.add(new Resizer(ellipse, this, right));
 		for (Resizer resizer : resizers) {
-			resizer.setRotationPivot(getCenter());
+			resizer.setRotationPivot(new Point(
+					ellipse.getCenterX(),
+					ellipse.getCenterY()));
 		}
 	}
 	@Override
@@ -263,8 +258,14 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ellipse.setOnMouseClicked(handler);
 	}
 
-	private Point getCenter() {
-		return new Point(ellipse.getCenterX()
-				,ellipse.getCenterY());
+	@Override
+	public void rotate(double angle) {
+		ellipse.getTransforms().add(new Rotate(
+				angle, ellipse.getCenterX(),
+				ellipse.getCenterY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
+
 	}
 }
