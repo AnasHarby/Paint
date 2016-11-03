@@ -208,7 +208,9 @@ public abstract class PolygonPaint implements ShapePaint {
 	public String getId() {
 		return polygon.getId();
 	}
-
+	/**
+	 * Attaches the resizers to the polygon
+	 */
 	private void setResizers() {
 		for (Point point : points) {
 			resizers.add(new Resizer(

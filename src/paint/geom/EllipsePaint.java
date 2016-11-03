@@ -51,7 +51,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	/**
-	 * Default constructor for construction of {@link EllipsePaint}.
+	 * The constructor for construction of {@link EllipsePaint}.
 	 * @param center {@link Point} representing the center of ellipse on {@link Pane}.
 	 * @param xRadius Radius of ellipse on X axis.
 	 * @param yRadius Radius of ellipse on Y axis.
@@ -74,10 +74,11 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	/**
-	 * Default constructor for construction of {@link EllipsePaint}
+	 * The constructor for construction of {@link EllipsePaint}
 	 * by using an equivalent
 	 * <br>
-	 * {@link ShapeProperties} object containing all specifications of the ellipse.
+	 * {@link ShapeProperties} object containing all
+	 * specifications of the ellipse.
 	 * @param properties {@link ShapeProperties} object.
 	 */
 	public EllipsePaint(ShapeProperties properties) {
@@ -95,7 +96,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	/**
-	 * Default constructor for construction of {@link EllipsePaint}
+	 * The constructor for construction of {@link EllipsePaint}
 	 * by using a collection
 	 * <br>
 	 * of double values representing the four ends of ellipse.
