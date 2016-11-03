@@ -2,24 +2,42 @@ package paint.geom;
 
 import java.util.Random;
 
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.CircleProperties;
 import paint.shapes.util.ShapeProperties;
 
+/**
+ * The Ellipse class creates a new circle
+ * with the specified radius and location in pixels.
+ * <br>
+ * Inherits from {@link EllipsePaint}.
+ * Implements {@link Cloneable} interface.
+ */
 public class CirclePaint extends EllipsePaint implements Cloneable {
-	private Point centerCircle;
-	private double radiusCircle;
+
+	/**
+	 * The key of the circle class, used for getting
+	 * {@link ShapePaint} instances from {@link ShapeFactory}.
+	 */
 	public static final String KEY = "circle";
 	private static final int CENTER_X = 0;
 	private static final int CENTER_Y = 1;
 	private static final int CIRCUM_X = 2;
 	private static final int CIRCUM_Y = 3;
+	private Point centerCircle;
+	private double radiusCircle;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, CirclePaint.class);
 	}
 
+	/**
+	 * Default constructor used for construction of {@link CirclePaint}.
+	 * @param center {@link Point} representing the center of ellipse on {@link Pane}.
+	 * @param radius radius of circle.
+	 */
 	public CirclePaint(Point center, double radius) {
 		super(center, radius, radius);
 		centerCircle = center;
@@ -27,12 +45,26 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		ellipse.setId(KEY + new Random().nextInt());
 	}
 
+	/**
+	 * Default constructor for construction of {@link CirclePaint}
+	 * by using an equivalent
+	 * <br>
+	 * {@link ShapeProperties} object containing all specifications of the circle.
+	 * @param properties {@link ShapeProperties} object.
+	 */
 	public CirclePaint(double... properties) {
 		this(new Point(properties[CENTER_X], properties[CENTER_Y]),
 				getRadius(properties[CENTER_X], properties[CENTER_Y],
 						properties[CIRCUM_X], properties[CIRCUM_Y]));
 	}
 
+	/**
+	 * Default constructor for construction of {@link CirclePaint}
+	 * by using a collection
+	 * <br>
+	 * of double values representing center and a point on the circumference of circle.
+	 * @param properties properties of {@link EllipsePaint}
+	 */
 	public CirclePaint(ShapeProperties properties) {
 		this(properties.getPoint1().getX(),
 				properties.getPoint1().getY(),
@@ -54,11 +86,25 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		super.ellipse.setRadiusY(radiusCircle);
 		super.setVertices();
 	}
-	private static double getRadius(double centerX, double centerY, double x, double y) {
-		double dX = Math.abs(centerX - x);
-		double dY = Math.abs(centerY - y);
-		double radius = Math.sqrt(dX * dX + dY * dY);
-		return radius;
+
+	@Override
+	public ShapeProperties getShapeProperties() {
+		ShapeProperties prop = new CircleProperties();
+		prop.setFillColor(ellipse.getFill());
+		prop.setStrokeColor(ellipse.getStroke());
+		try {
+			prop.setPoint1(centerCircle.clone());
+			prop.setPoint2(new Point(centerCircle.getX()
+					+ radiusCircle, centerCircle.getY()));
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+		prop.setStrokeWidth(ellipse.getStrokeWidth());
+		prop.setTranslateX(ellipse.getTranslateX());
+		prop.setTranslateY(ellipse.getTranslateY());
+		prop.setId(ellipse.getId());
+		prop.setRotation(rotation);
+		return prop;
 	}
 
 	@Override
@@ -79,23 +125,10 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		return newObject;
 	}
 
-	@Override
-	public ShapeProperties getShapeProperties() {
-		ShapeProperties prop = new CircleProperties();
-		prop.setFillColor(ellipse.getFill());
-		prop.setStrokeColor(ellipse.getStroke());
-		try {
-			prop.setPoint1(centerCircle.clone());
-			prop.setPoint2(new Point(centerCircle.getX()
-					+ radiusCircle, centerCircle.getY()));
-		} catch (CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-		prop.setStrokeWidth(ellipse.getStrokeWidth());
-		prop.setTranslateX(ellipse.getTranslateX());
-		prop.setTranslateY(ellipse.getTranslateY());
-		prop.setId(ellipse.getId());
-		prop.setRotation(rotation);
-		return prop;
+	private static double getRadius(double centerX, double centerY, double x, double y) {
+		double dX = Math.abs(centerX - x);
+		double dY = Math.abs(centerY - y);
+		double radius = Math.sqrt(dX * dX + dY * dY);
+		return radius;
 	}
 }

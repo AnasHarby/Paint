@@ -15,14 +15,26 @@ import paint.geom.util.ShapeFactory;
 import paint.shapes.util.LineProperties;
 import paint.shapes.util.ShapeProperties;
 
+/**
+ * The Line class creates a new line
+ * with the specified two ends locations in pixels.
+ * <br>
+ * Implements {@link paint.geom.ShapePaint} interface
+ * and {@link Cloneable} interface.
+ */
 public class LinePaint implements ShapePaint, Cloneable {
-	private Line line;
-	private ArrayList<Resizer> resizers;
+
+	/**
+	 * The key of the line class, used for getting
+	 * {@link ShapePaint} instances from {@link ShapeFactory}.
+	 */
 	public static final String KEY = "line";
 	private static final int FIRST_X = 0;
 	private static final int FIRST_Y = 1;
 	private static final int SECOND_X = 2;
 	private static final int SECOND_Y = 3;
+	private Line line;
+	private ArrayList<Resizer> resizers;
 	private Point start;
 	private Point end;
 	private Point center;
@@ -32,6 +44,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
 	}
 
+	/**
+	 * Default constructor for construction of {@link LinePaint}.
+	 * @param point1 {@link Point} representing the start of the line segment.
+	 * @param point2 {@link Point} representing the end of the line segment.
+	 */
 	public LinePaint(Point point1, Point point2) {
 		line = new Line(point1.getX(), point1.getY(),
 				point2.getX(), point2.getY());
@@ -47,11 +64,25 @@ public class LinePaint implements ShapePaint, Cloneable {
 		line.setUserData(this);
 	}
 
+	/**
+	 * Default constructor for construction of {@link LinePaint}
+	 * by using an equivalent
+	 * <br>
+	 * {@link ShapeProperties} object containing all specifications of the line.
+	 * @param properties {@link ShapeProperties} object.
+	 */
 	public LinePaint(double... properties) {
 		this(new Point(properties[FIRST_X], properties[FIRST_Y]),
 				new Point(properties[SECOND_X], properties[SECOND_Y]));
 	}
 
+	/**
+	 * Default constructor for construction of {@link LinePaint}
+	 * by using a collection
+	 * <br>
+	 * of double values representing the two ends of line.
+	 * @param properties properties of {@link LinePaint}
+	 */
 	public LinePaint(ShapeProperties properties) {
 		this(properties.getPoint1().getX(),
 				properties.getPoint1().getY(),
@@ -154,14 +185,6 @@ public class LinePaint implements ShapePaint, Cloneable {
 		line.setEndY(end.getY());
 	}
 
-	private void setResizers() {
-		resizers.add(new Resizer(line, this, start));
-		resizers.add(new Resizer(line, this, end));
-		for (Resizer resizer : resizers) {
-			resizer.setRotationPivot(getCenter());
-		}
-	}
-
 	@Override
 	public void showResizers() {
 		for (Resizer resizer : resizers) {
@@ -238,6 +261,17 @@ public class LinePaint implements ShapePaint, Cloneable {
 		return prop;
 	}
 
+	@Override
+	public void rotate(double angle) {
+		rotation += angle;
+		line.getTransforms().add(new Rotate(
+				angle, getCenter().getX(),
+				getCenter().getY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
+	}
+
 	private Point getCenter() {
 		double x = (line.getStartX()
 				+ line.getEndX()) / 2;
@@ -248,14 +282,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		return center;
 	}
 
-	@Override
-	public void rotate(double angle) {
-		rotation += angle;
-		line.getTransforms().add(new Rotate(
-				angle, getCenter().getX(),
-				getCenter().getY()));
+	private void setResizers() {
+		resizers.add(new Resizer(line, this, start));
+		resizers.add(new Resizer(line, this, end));
 		for (Resizer resizer : resizers) {
-			resizer.rotate(angle);
+			resizer.setRotationPivot(getCenter());
 		}
 	}
 }

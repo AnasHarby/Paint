@@ -9,15 +9,16 @@ import paint.geom.util.ShapeFactory;
 import paint.shapes.util.RectangleProperties;
 import paint.shapes.util.ShapeProperties;
 
+
 public class RectanglePaint extends PolygonPaint implements Cloneable {
-	private Point upperLeftPoint;
-	private double width;
-	private double height;
+	public static final String KEY = "rectangle";
 	private static final int UPPER_LEFT_X = 0;
 	private static final int UPPER_LEFT_Y = 1;
 	private static final int BOTTOM_RIGHT_X = 2;
 	private static final int BOTTOM_RIGHT_Y = 3;
-	public static final String KEY = "rectangle";
+	private Point upperLeftPoint;
+	private double width;
+	private double height;
 	protected double rotation = 0;
 
 	static {
@@ -151,6 +152,17 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		return prop;
 	}
 
+	@Override
+	public void rotate(double angle) {
+		rotation += angle;
+		super.polygon.getTransforms().add(new Rotate(
+				angle, getCenter().getX()
+				, getCenter().getY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
+	}
+
 	private void setResizerRotation() {
 		for (Resizer resizer : super.resizers) {
 			resizer.setRotationPivot(getCenter());
@@ -163,17 +175,6 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		double y = upperLeftPoint.getY()
 				+ height / 2;
 		return new Point(x, y);
-	}
-
-	@Override
-	public void rotate(double angle) {
-		rotation += angle;
-		super.polygon.getTransforms().add(new Rotate(
-				angle, getCenter().getX()
-				, getCenter().getY()));
-		for (Resizer resizer : resizers) {
-			resizer.rotate(angle);
-		}
 	}
 
 	public double getWidth() {

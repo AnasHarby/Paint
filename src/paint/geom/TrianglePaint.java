@@ -120,6 +120,17 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		point3.setY(super.polygon.getPoints().get(THIRD_Y));
 	}
 
+
+	@Override
+	public void rotate(double angle) {
+		rotation += angle;
+		super.polygon.getTransforms().add(new Rotate(
+				angle, getCenter().getX(), getCenter().getY()));
+		for (Resizer resizer : super.resizers) {
+			resizer.rotate(angle);
+		}
+	}
+
 	private Point getCenter() {
 		double x = 0;
 		double y = 0;
@@ -135,16 +146,6 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	private void setResizerRotation() {
 		for (Resizer resizer : super.resizers) {
 			resizer.setRotationPivot(getCenter());
-		}
-	}
-
-	@Override
-	public void rotate(double angle) {
-		rotation += angle;
-		super.polygon.getTransforms().add(new Rotate(
-				angle, getCenter().getX(), getCenter().getY()));
-		for (Resizer resizer : super.resizers) {
-			resizer.rotate(angle);
 		}
 	}
 }

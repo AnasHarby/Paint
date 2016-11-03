@@ -19,12 +19,13 @@ import paint.shapes.util.ShapeProperties;
  * The Ellipse class creates a new ellipse
  * with the specified radiuses and location in pixels.
  * <br>
- * Inherits from {@link paint.geom.ShapePaint} interface.
+ * Implements {@link paint.geom.ShapePaint} interface
+ * and {@link Cloneable} interface.
  */
 public class EllipsePaint implements ShapePaint, Cloneable {
 
 	/**
-	 * The key of the ellipse's class, used for getting
+	 * The key of the ellipse class, used for getting
 	 * {@link ShapePaint} instances from {@link ShapeFactory}.
 	 */
 	public static final String KEY = "ellipse";
