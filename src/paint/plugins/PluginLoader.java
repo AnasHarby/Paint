@@ -5,42 +5,33 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 
 import paint.geom.ShapePaint;
 
 public class PluginLoader {
-	private static final String PATH
-	= "bin/";
-	private static final String SHAPE_PATH
-	= "bin/paint/geom/";
 	private static final String PACKAGE_NAME
 	= "paint.geom.";
 	private static final String KEY_FIELD
 	= "KEY";
 	private static final String CLASS_EXTENSION
 	= ".class";
-
+	private static final String JAR_EXTENSION
+	= ".jar";
 	public static String loadClass(File file) {
 		if (file == null) {
 			return null;
 		}
 		try {
-			System.out.println(file.getAbsolutePath());
 			String classFile = file.getName();
-			Path originalClassPath = Paths.get(file.toURI());
-			Path newPath = Paths.get(SHAPE_PATH + classFile);
-			Files.copy(originalClassPath, newPath,
-					StandardCopyOption.REPLACE_EXISTING);
-			String className
-			= classFile.replaceAll(CLASS_EXTENSION, "");
+			String className = "";
+			if (classFile.endsWith(CLASS_EXTENSION)) {
+				className = classFile.replaceAll(CLASS_EXTENSION, "");
+			} else if (classFile.endsWith(JAR_EXTENSION)) {
+				className = classFile.replaceAll(JAR_EXTENSION, "");
+			}
 			URLClassLoader loader = URLClassLoader.
 			newInstance(new
-			URL[] { new
-			File(PATH).toURI().toURL() });
+			URL[] { file.toURI().toURL() });
 			@SuppressWarnings("unchecked")
 			Class<? extends ShapePaint> shapeClass
 			= (Class<? extends ShapePaint>)

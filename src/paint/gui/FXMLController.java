@@ -263,7 +263,7 @@ public class FXMLController implements Initializable {
 	public void importClass(ActionEvent event) {
 		FileChooser chooser = new FileChooser();
 		chooser.getExtensionFilters().add(
-				new ExtensionFilter(".Class files (*.class)", "*.class"));
+				new ExtensionFilter("Class files (*.class, *.jar)", "*.class", "*.jar"));
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
