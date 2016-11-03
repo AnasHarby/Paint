@@ -238,6 +238,9 @@ public class FXMLController implements Initializable {
 		case TRIANGLE_DRAWING:
 			drawShape(event);
 			break;
+		case EDITING:
+			canvas.toBack();
+			break;
 		default:
 			break;
 		}

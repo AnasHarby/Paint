@@ -41,6 +41,7 @@ public class HistoryEvent implements Cloneable {
 		pane.getChildren().add(canvas);
 		for (ShapePaint shape : shapes) {
 			shape.draw(pane);
+			shape.showResizers();
 			shape.toBack();
 		}
 	}
