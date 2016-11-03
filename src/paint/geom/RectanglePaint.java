@@ -3,6 +3,7 @@ package paint.geom;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
+import paint.geom.util.Resizer;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.RectangleProperties;
 import paint.shapes.util.ShapeProperties;
@@ -35,6 +36,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		super.setFill(Color.TRANSPARENT);
 		this.width = width;
 		this.height = height;
+		setResizerRotation();
 		polygon.setId(KEY + new Random().nextInt());
 	}
 
@@ -111,6 +113,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		this.width = maxX - minX;
 		this.height = maxY - minY;
 		setUpperLeftPoint(new Point(minX, minY));
+		setResizerRotation();
 	}
 
 	@Override
@@ -148,5 +151,19 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
 		return prop;
+	}
+
+	private void setResizerRotation() {
+		for (Resizer resizer : super.resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
+	}
+
+	private Point getCenter() {
+		double x = upperLeftPoint.getX()
+				+ width / 2;
+		double y = upperLeftPoint.getY()
+				+ height / 2;
+		return new Point(x, y);
 	}
 }

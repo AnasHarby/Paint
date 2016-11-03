@@ -13,7 +13,7 @@ import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
 	protected Polygon polygon;
-	private ArrayList<Resizer> resizers;
+	protected ArrayList<Resizer> resizers;
 	protected ArrayList<Point> points;
 
 	public PolygonPaint(Point... vertices) {
@@ -71,13 +71,8 @@ public abstract class PolygonPaint implements ShapePaint {
 	@Override
 	public void rotate(double angle) {
 		polygon.setRotate(angle);
-		int i = 0;
-		for (Point point : points) {
-			point.setX(polygon
-					.getPoints().get(i));
-			point.setX(polygon
-					.getPoints().get(i + 1));
-			i++;
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
 		}
 	}
 

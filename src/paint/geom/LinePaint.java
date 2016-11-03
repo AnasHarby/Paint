@@ -104,6 +104,9 @@ public class LinePaint implements ShapePaint, Cloneable {
 	@Override
 	public void rotate(double angle) {
 		line.setRotate(angle);
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
 	}
 
 	@Override
@@ -163,6 +166,9 @@ public class LinePaint implements ShapePaint, Cloneable {
 	private void setResizers() {
 		resizers.add(new Resizer(line, this, start));
 		resizers.add(new Resizer(line, this, end));
+		for (Resizer resizer : resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
 	}
 
 	@Override
@@ -221,5 +227,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		prop.setTranslateY(line.getTranslateY());
 		prop.setId(line.getId());
 		return prop;
+	}
+
+	private Point getCenter() {
+		double x = (start.getX() + end.getX()) / 2;
+		double y = (start.getY() + end.getY()) / 2;
+		return new Point(x, y);
 	}
 }

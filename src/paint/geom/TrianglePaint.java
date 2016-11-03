@@ -117,4 +117,8 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		point3.setX(super.polygon.getPoints().get(THIRD_X));
 		point3.setY(super.polygon.getPoints().get(THIRD_Y));
 	}
+
+	private Point getCenter() {
+		return null;
+	}
 }

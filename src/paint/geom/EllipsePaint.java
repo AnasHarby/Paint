@@ -75,6 +75,9 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	@Override
 	public void rotate(double angle) {
 		ellipse.setRotate(angle);
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
 	}
 
 	@Override
@@ -184,6 +187,9 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		resizers.add(new Resizer(ellipse, this, left));
 		resizers.add(new Resizer(ellipse, this, down));
 		resizers.add(new Resizer(ellipse, this, right));
+		for (Resizer resizer : resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
 	}
 	@Override
 	public void showResizers() {
@@ -255,5 +261,10 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	@Override
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		ellipse.setOnMouseClicked(handler);
+	}
+
+	private Point getCenter() {
+		return new Point(ellipse.getCenterX()
+				,ellipse.getCenterY());
 	}
 }

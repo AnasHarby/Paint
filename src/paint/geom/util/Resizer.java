@@ -5,12 +5,15 @@ import java.util.Random;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Rotate;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 
 public class Resizer {
 	private static final double SIZE = 4;
 	private Circle circ;
+	private Point rotationPivot;
+	private double absoluteAngle = 0;
 
 	public Resizer(Shape shape, ShapePaint shapePaint, Point point) {
 		circ = new Circle(point.getX(),
@@ -25,6 +28,7 @@ public class Resizer {
 		circ.setUserData(shapePaint);
 		circ.setId("Resizer" + new Random().nextInt());
 		circ.toFront();
+		rotationPivot = new Point();
 	}
 
 	public void draw(Pane contentPane) {
@@ -57,5 +61,18 @@ public class Resizer {
 	public void remove(Pane contentPane) {
 		contentPane.getChildren()
 			.remove(circ);
+	}
+
+	public void setRotationPivot(Point pivot) {
+		rotationPivot.xProperty().bind(
+				pivot.xProperty());
+		rotationPivot.yProperty().bind(
+				pivot.yProperty());
+	}
+
+	public void rotate(double angle) {
+		circ.getTransforms().add(new Rotate(angle - absoluteAngle,
+				rotationPivot.getX(), rotationPivot.getY()));
+		absoluteAngle = angle;
 	}
 }

@@ -307,9 +307,9 @@ public class FXMLController implements Initializable {
 					State.ROTATING) {
 				double angle = getRotationValue();
 				if (!Double.isNaN(angle)) {
-//					CurrentHistoryEvent.getInstance()
-//					.getHead().getShape(source.getId())
-//					.rotate(angle);
+					CurrentHistoryEvent.getInstance()
+					.getHead().getShape(source.getId())
+					.rotate(angle);
 				}
 			}
 		}
@@ -356,6 +356,13 @@ public class FXMLController implements Initializable {
 			}
 			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
+		}
+		String key = PluginLoader.loadClass(file);
+		for (Node shape : buttonBar.getButtons()) {
+			if (shape.getId().equals(key)) {
+				shape.setDisable(false);
+				break;
+			}
 		}
 	}
 
