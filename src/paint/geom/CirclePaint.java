@@ -41,10 +41,10 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		ellipse.setStroke(properties.getStrokeColor());
 		ellipse.setFill(properties.getFillColor());
 		ellipse.setStrokeWidth(properties.getStrokeWidth());
-		ellipse.setRotate(properties.getRotation());
 		ellipse.setTranslateX(properties.getTranslateX());
 		ellipse.setTranslateY(properties.getTranslateY());
 		ellipse.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	@Override
@@ -74,6 +74,8 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		newObject.ellipse.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.ellipse.setStrokeWidth(super.ellipse.getStrokeWidth());
+		newObject.ellipse.setOnMouseClicked(ellipse.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -90,10 +92,10 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 			e.printStackTrace();
 		}
 		prop.setStrokeWidth(ellipse.getStrokeWidth());
-		prop.setRotation(ellipse.getRotate());
 		prop.setTranslateX(ellipse.getTranslateX());
 		prop.setTranslateY(ellipse.getTranslateY());
 		prop.setId(ellipse.getId());
+		prop.setRotation(rotation);
 		return prop;
 	}
 }

@@ -18,6 +18,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 	private static final int BOTTOM_RIGHT_X = 2;
 	private static final int BOTTOM_RIGHT_Y = 3;
 	public static final String KEY = "rectangle";
+	protected double rotation = 0;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, RectanglePaint.class);
@@ -56,11 +57,10 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		polygon.setStroke(properties.getStrokeColor());
 		polygon.setFill(properties.getFillColor());
 		polygon.setStrokeWidth(properties.getStrokeWidth());
-		polygon.setRotate(properties.getRotation());
 		polygon.setTranslateX(properties.getTranslateX());
 		polygon.setTranslateY(properties.getTranslateY());
-		System.out.println(properties.getId());
 		polygon.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	public Point getUpperLeftPoint() {
@@ -126,6 +126,8 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		newObject.polygon.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
+		newObject.polygon.setOnMouseClicked(polygon.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -143,9 +145,9 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		}
 		prop.setId(polygon.getId());
 		prop.setStrokeWidth(polygon.getStrokeWidth());
-		prop.setRotation(polygon.getRotate());
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
+		prop.setRotation(rotation);
 		return prop;
 	}
 
@@ -165,6 +167,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 
 	@Override
 	public void rotate(double angle) {
+		rotation += angle;
 		super.polygon.getTransforms().add(new Rotate(
 				angle, getCenter().getX()
 				, getCenter().getY()));

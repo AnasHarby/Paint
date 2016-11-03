@@ -8,8 +8,8 @@ import paint.geom.ShapePaint;
 import paint.shapes.util.ShapeProperties;
 
 public class ShapeFactory {
-	private static ShapeFactory factory = new ShapeFactory();
 	private HashMap<String, Class<? extends ShapePaint>> registeredShapes = null;
+	private static ShapeFactory factory = new ShapeFactory();
 
 	private ShapeFactory() {
 		registeredShapes = new HashMap<>();

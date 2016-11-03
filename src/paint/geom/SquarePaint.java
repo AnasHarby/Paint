@@ -42,10 +42,10 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 		polygon.setStroke(properties.getStrokeColor());
 		polygon.setFill(properties.getFillColor());
 		polygon.setStrokeWidth(properties.getStrokeWidth());
-		polygon.setRotate(properties.getRotation());
 		polygon.setTranslateX(properties.getTranslateX());
 		polygon.setTranslateY(properties.getTranslateY());
 		polygon.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	@Override
@@ -100,7 +100,8 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 
 	@Override
 	public SquarePaint clone() throws CloneNotSupportedException {
-		SquarePaint newObject = new SquarePaint(upperLeft.clone(), sideLength);
+		SquarePaint newObject
+		= new SquarePaint(upperLeft.clone(), sideLength);
 		newObject.polygon.setTranslateX(polygon.getTranslateX());
 		newObject.polygon.setTranslateY(polygon.getTranslateY());
 		newObject.polygon.setRotate(polygon.getRotate());
@@ -111,6 +112,8 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 		newObject.polygon.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
+		newObject.polygon.setOnMouseClicked(polygon.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -128,10 +131,9 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 		}
 		prop.setId(polygon.getId());
 		prop.setStrokeWidth(polygon.getStrokeWidth());
-		prop.setRotation(polygon.getRotate());
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
+		prop.setRotation(rotation);
 		return prop;
 	}
-
 }

@@ -78,7 +78,7 @@ public class DataHandler {
 		File loadFile = new File(path);
 		loadFile = new File(path);
 		if (path.endsWith(XML_EXTENSION)) {
-			head = xmlHandler.loadXml(loadFile);
+			head = xmlHandler.fromXml(loadFile);
 		} else if (path.endsWith(JSON_EXTENSION)) {
 			head = jsonHandler.fromJson(loadFile);
 		}
