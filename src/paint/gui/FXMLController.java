@@ -431,4 +431,5 @@ public class FXMLController implements Initializable {
 		}
 		return Double.NaN;
 	}
+
 }
