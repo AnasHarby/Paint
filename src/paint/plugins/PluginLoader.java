@@ -17,8 +17,7 @@ public class PluginLoader {
 	= ".class";
 	private static final String JAR_EXTENSION
 	= ".jar";
-	private static final String PACKAGE_PATH
-	= "paint/geom/";
+	private static final String PACKAGE_DIR = "paint\\geom\\";
 	public static String loadClass(File file) {
 		if (file == null) {
 			return null;
@@ -26,18 +25,19 @@ public class PluginLoader {
 		try {
 			String classFile = file.getName();
 			String className = "";
+			String filePath = file.getPath();
 			if (classFile.endsWith(CLASS_EXTENSION)) {
 				className = classFile.replaceAll(CLASS_EXTENSION, "");
-				file = file.getParentFile();
-				file = file.getParentFile();
-				file = file.getParentFile();
+				if (file.getPath().contains(PACKAGE_DIR)) {
+					file = new File(filePath.substring(0, filePath.indexOf(PACKAGE_DIR)));
+				}
+				System.out.println(file.getPath());
 			} else if (classFile.endsWith(JAR_EXTENSION)) {
 				className = classFile.replaceAll(JAR_EXTENSION, "");
 			}
 			URLClassLoader loader = URLClassLoader.
 			newInstance(new
 			URL[] { file.toURI().toURL() });
-			System.out.println(file.toURI().toURL().toString());
 			@SuppressWarnings("unchecked")
 			Class<? extends ShapePaint> shapeClass
 			= (Class<? extends ShapePaint>)

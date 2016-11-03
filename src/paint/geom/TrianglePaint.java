@@ -20,6 +20,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	private Point point1;
 	private Point point2;
 	private Point point3;
+	private double rotation = 0;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, TrianglePaint.class);
@@ -54,10 +55,10 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		polygon.setStroke(properties.getStrokeColor());
 		polygon.setFill(properties.getFillColor());
 		polygon.setStrokeWidth(properties.getStrokeWidth());
-		polygon.setRotate(properties.getRotation());
 		polygon.setTranslateX(properties.getTranslateX());
 		polygon.setTranslateY(properties.getTranslateY());
 		polygon.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	@Override
@@ -90,6 +91,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 				col.getBlue(), col.getOpacity()));
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
 		newObject.polygon.setOnMouseClicked(polygon.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -106,10 +108,10 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 			e.printStackTrace();
 		}
 		prop.setStrokeWidth(polygon.getStrokeWidth());
-		prop.setRotation(polygon.getRotate());
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
 		prop.setId(polygon.getId());
+		prop.setRotation(rotation);
 		return prop;
 	}
 	@Override
@@ -143,6 +145,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 
 	@Override
 	public void rotate(double angle) {
+		rotation += angle;
 		super.polygon.getTransforms().add(new Rotate(
 				angle, getCenter().getX(), getCenter().getY()));
 		for (Resizer resizer : super.resizers) {

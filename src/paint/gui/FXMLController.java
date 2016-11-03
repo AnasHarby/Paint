@@ -242,6 +242,10 @@ public class FXMLController implements Initializable {
 			drawShape(event);
 			break;
 		case EDITING:
+		case FILLING:
+		case COLOR_PICKING:
+		case ROTATING:
+		case REMOVING:
 			canvas.toBack();
 			break;
 		default:
@@ -303,12 +307,16 @@ public class FXMLController implements Initializable {
 				CurrentHistoryEvent.getInstance()
 				.getHead().getShape(source.getId())
 				.setFill(picker.getValue());
+				CurrentHistoryEvent.getInstance().
+				getHead().updateHistory();
 			} else if (state ==
 					State.COLOR_PICKING) {
 				picker.setValue(CurrentHistoryEvent
 						.getInstance().getHead()
 						.getShape(source.getId())
 						.getFill());
+				CurrentHistoryEvent.getInstance().
+				getHead().updateHistory();
 			} else if (state ==
 					State.ROTATING) {
 				double angle = getRotationValue();
@@ -316,6 +324,8 @@ public class FXMLController implements Initializable {
 					CurrentHistoryEvent.getInstance()
 					.getHead().getShape(source.getId())
 					.rotate(angle);
+					CurrentHistoryEvent.getInstance().
+					getHead().updateHistory();
 				}
 			}
 		}
@@ -363,8 +373,6 @@ public class FXMLController implements Initializable {
 			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
 		}
-		PluginLoader.loadClass(file);
-
 	}
 
 	@FXML

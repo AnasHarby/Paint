@@ -26,6 +26,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	private Point down;
 	private Point left;
 	private Point right;
+	protected double rotation = 0;
 	private ArrayList<Resizer> resizers;
 	private static final int TOPMOST_X = 0;
 	private static final int TOPMOST_Y = 1;
@@ -61,10 +62,10 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ellipse.setStroke(properties.getStrokeColor());
 		ellipse.setFill(properties.getFillColor());
 		ellipse.setStrokeWidth(properties.getStrokeWidth());
-		ellipse.setRotate(properties.getRotation());
 		ellipse.setTranslateX(properties.getTranslateX());
 		ellipse.setTranslateY(properties.getTranslateY());
 		ellipse.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	public EllipsePaint(double... properties) {
@@ -227,6 +228,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 				col.getBlue(), col.getOpacity()));
 		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
 		newObject.ellipse.setOnMouseClicked(ellipse.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -248,9 +250,9 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		}
 		prop.setId(ellipse.getId());
 		prop.setStrokeWidth(ellipse.getStrokeWidth());
-		prop.setRotation(ellipse.getRotate());
 		prop.setTranslateX(ellipse.getTranslateX());
 		prop.setTranslateY(ellipse.getTranslateY());
+		prop.setRotation(rotation);
 		return prop;
 	}
 
@@ -261,6 +263,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 
 	@Override
 	public void rotate(double angle) {
+		rotation += angle;
 		ellipse.getTransforms().add(new Rotate(
 				angle, ellipse.getCenterX(),
 				ellipse.getCenterY()));

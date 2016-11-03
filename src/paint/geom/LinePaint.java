@@ -26,6 +26,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 	private Point start;
 	private Point end;
 	private Point center;
+	private double rotation = 0;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
@@ -59,10 +60,10 @@ public class LinePaint implements ShapePaint, Cloneable {
 		line.setStroke(properties.getStrokeColor());
 		line.setFill(properties.getFillColor());
 		line.setStrokeWidth(properties.getStrokeWidth());
-		line.setRotate(properties.getRotation());
 		line.setTranslateX(properties.getTranslateX());
 		line.setTranslateY(properties.getTranslateY());
 		line.setId(properties.getId());
+		rotate(properties.getRotation());
 	}
 
 	@Override
@@ -198,6 +199,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 				col.getBlue(), col.getOpacity()));
 		newObject.line.setStrokeWidth(line.getStrokeWidth());
 		newObject.line.setOnMouseClicked(line.getOnMouseClicked());
+		newObject.rotate(rotation);
 		return newObject;
 	}
 
@@ -218,10 +220,10 @@ public class LinePaint implements ShapePaint, Cloneable {
 			e.printStackTrace();
 		}
 		prop.setStrokeWidth(line.getStrokeWidth());
-		prop.setRotation(line.getRotate());
 		prop.setTranslateX(line.getTranslateX());
 		prop.setTranslateY(line.getTranslateY());
 		prop.setId(line.getId());
+		prop.setRotation(rotation);
 		return prop;
 	}
 
@@ -237,6 +239,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 
 	@Override
 	public void rotate(double angle) {
+		rotation += angle;
 		line.getTransforms().add(new Rotate(
 				angle, getCenter().getX(),
 				getCenter().getY()));

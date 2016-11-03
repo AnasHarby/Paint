@@ -38,7 +38,7 @@ public class XmlDataHandler {
 	 * @return the history event
 	 */
 	@SuppressWarnings("unchecked")
-	public HistoryEvent loadXml(File xml) {
+	public HistoryEvent fromXml(File xml) {
 		XStream xstream = new XStream(new DomDriver());
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(xml);

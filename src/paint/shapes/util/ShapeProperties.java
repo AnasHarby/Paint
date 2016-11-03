@@ -46,8 +46,8 @@ public abstract class ShapeProperties {
 	public double getRotation() {
 		return rotation;
 	}
-	public void setRotation(double rotationX) {
-		this.rotation = rotationX;
+	public void setRotation(double rotation) {
+		this.rotation = rotation;
 	}
 
 	public double getStrokeWidth() {
