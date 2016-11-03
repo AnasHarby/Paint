@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
@@ -14,8 +13,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -23,14 +20,12 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import paint.data.util.CurrentHistoryEvent;
-import paint.data.util.History;
-import paint.data.util.HistoryEvent;
 import paint.data.util.JsonDataHandler;
 import paint.data.util.XmlDataHandler;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
-import paint.geom.util.ShapeController;
+import paint.geom.TrianglePaint;
 import paint.geom.util.ShapeFactory;
 
 public class FXMLControllerTest implements Initializable {
@@ -69,40 +64,45 @@ public class FXMLControllerTest implements Initializable {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
 		Pane pane = (Pane) canvas.getParent();
-		Shape circle1 = new Circle(200, 200, 200, Color.TRANSPARENT);
-		circle1.setStroke(Color.BLACK);
-		Shape circle2 = new Circle(400, 200, 5);
-		ShapeController sc = new ShapeController();
-		sc.addHandlers(circle2);
-		circle1.layoutXProperty();
-		CurrentHistoryEvent.getInstance().getHead().updateHistory();
-		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
-
-			@Override
-			public void handle(KeyEvent event) {
-				if (event.getCode() == KeyCode.Y) {
-					HistoryEvent temp = History.getHistory().redo(canvas);
-					if (temp != null) {
-						CurrentHistoryEvent.getInstance().setHead(temp);
-					}
-				} else if (event.getCode() == KeyCode.Z) {
-					HistoryEvent temp = History.getHistory().undo(canvas);
-					if (temp != null) {
-						CurrentHistoryEvent.getInstance().setHead(temp);
-					}
-				} else if (event.getCode() == KeyCode.S) {
-					x = canvas.snapshot(null, null);
-				} else if (event.getCode() == KeyCode.L) {
-					pane.getChildren().remove(canvas);
-					canvas = new Canvas();
-					pane.getChildren().add(canvas);
-					gc = canvas.getGraphicsContext2D();
-					gc.drawImage(x, 0, 1);
-					canvas.toFront();
-				}
-			}
-
-		});
+//		Shape circle1 = new Circle(200, 200, 200, Color.TRANSPARENT);
+//		circle1.setStroke(Color.BLACK);
+//		Shape circle2 = new Circle(400, 200, 5);
+//		ShapeController sc = new ShapeController();
+//		sc.addHandlers(circle2);
+//		circle1.layoutXProperty();
+//		CurrentHistoryEvent.getInstance().getHead().updateHistory();
+//		pane.getParent().setOnKeyPressed(new EventHandler<KeyEvent>() {
+//
+//			@Override
+//			public void handle(KeyEvent event) {
+//				if (event.getCode() == KeyCode.Y) {
+//					HistoryEvent temp = History.getHistory().redo(canvas);
+//					if (temp != null) {
+//						CurrentHistoryEvent.getInstance().setHead(temp);
+//					}
+//				} else if (event.getCode() == KeyCode.Z) {
+//					HistoryEvent temp = History.getHistory().undo(canvas);
+//					if (temp != null) {
+//						CurrentHistoryEvent.getInstance().setHead(temp);
+//					}
+//				} else if (event.getCode() == KeyCode.S) {
+//					x = canvas.snapshot(null, null);
+//				} else if (event.getCode() == KeyCode.L) {
+//					pane.getChildren().remove(canvas);
+//					canvas = new Canvas();
+//					pane.getChildren().add(canvas);
+//					gc = canvas.getGraphicsContext2D();
+//					gc.drawImage(x, 0, 1);
+//					canvas.toFront();
+//				}
+//			}
+//
+//		});
+		TrianglePaint triangle = new TrianglePaint(100, 100, 300, 300, 200, 300);
+		triangle.showResizers();
+		triangle.rotate(60);
+		triangle.draw(pane);
+		triangle.showResizers();
 	}
 
 	@FXML
@@ -232,7 +232,6 @@ public class FXMLControllerTest implements Initializable {
 				rect.setY(upperLeft.getY());
 				rect.setWidth(Math.abs(event.getX() - init.getX()));
 				rect.setHeight(Math.abs(event.getY() - init.getY()));
-
 			}
 			break;
 		default:

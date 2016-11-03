@@ -58,4 +58,8 @@ public class ShapeFactory {
 			return null;
 		}
 	}
+
+	public HashMap<String, Class<? extends ShapePaint>> getRegisteredShapes() {
+		return registeredShapes;
+	}
 }

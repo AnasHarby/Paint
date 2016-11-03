@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.transform.Rotate;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
@@ -24,6 +25,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 	private static final int SECOND_Y = 3;
 	private Point start;
 	private Point end;
+	private Point center;
 
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, LinePaint.class);
@@ -35,7 +37,8 @@ public class LinePaint implements ShapePaint, Cloneable {
 		resizers = new ArrayList<Resizer>();
 		this.start = point1;
 		this.end = point2;
-		fill(Color.TRANSPARENT);
+		center = new Point();
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
@@ -81,8 +84,13 @@ public class LinePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public void fill(Color col) {
+	public void setFill(Color col) {
 		line.setFill(col);
+	}
+
+	@Override
+	public Color getFill() {
+		return (Color) line.getFill();
 	}
 
 	@Override
@@ -153,6 +161,9 @@ public class LinePaint implements ShapePaint, Cloneable {
 	private void setResizers() {
 		resizers.add(new Resizer(line, this, start));
 		resizers.add(new Resizer(line, this, end));
+		for (Resizer resizer : resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
 	}
 
 	@Override
@@ -212,5 +223,25 @@ public class LinePaint implements ShapePaint, Cloneable {
 		prop.setTranslateY(line.getTranslateY());
 		prop.setId(line.getId());
 		return prop;
+	}
+
+	private Point getCenter() {
+		double x = (line.getStartX()
+				+ line.getEndX()) / 2;
+		double y = (line.getStartY()
+				+ line.getEndY()) / 2;
+		center.setX(x);
+		center.setY(y);
+		return center;
+	}
+
+	@Override
+	public void rotate(double angle) {
+		line.getTransforms().add(new Rotate(
+				angle, getCenter().getX(),
+				getCenter().getY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
 	}
 }

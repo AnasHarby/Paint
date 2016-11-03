@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
+import javafx.scene.transform.Rotate;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
@@ -45,7 +46,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		right = new Point();
 		setVertices();
 		setResizers();
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		ellipse.setId(KEY + new Random().nextInt());
@@ -72,10 +73,6 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 				Math.abs(properties[TOPMOST_Y] - properties[RIGHTMOST_Y]));
 	}
 
-	public void rotate(double angle) {
-		ellipse.setRotate(angle);
-	}
-
 	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(ellipse);
@@ -90,8 +87,13 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public void fill(Color col) {
+	public void setFill(Color col) {
 		ellipse.setFill(col);
+	}
+
+	@Override
+	public Color getFill() {
+		return (Color) ellipse.getFill();
 	}
 
 	@Override
@@ -178,6 +180,11 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		resizers.add(new Resizer(ellipse, this, left));
 		resizers.add(new Resizer(ellipse, this, down));
 		resizers.add(new Resizer(ellipse, this, right));
+		for (Resizer resizer : resizers) {
+			resizer.setRotationPivot(new Point(
+					ellipse.getCenterX(),
+					ellipse.getCenterY()));
+		}
 	}
 	@Override
 	public void showResizers() {
@@ -250,5 +257,16 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	@Override
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		ellipse.setOnMouseClicked(handler);
+	}
+
+	@Override
+	public void rotate(double angle) {
+		ellipse.getTransforms().add(new Rotate(
+				angle, ellipse.getCenterX(),
+				ellipse.getCenterY()));
+		for (Resizer resizer : resizers) {
+			resizer.rotate(angle);
+		}
+
 	}
 }

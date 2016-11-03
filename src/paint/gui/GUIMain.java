@@ -12,12 +12,11 @@ public class GUIMain extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException {
 		try {
-			Class.forName("paint.geom.CirclePaint");
+			Class.forName("paint.geom.EllipsePaint");
 			Class.forName("paint.geom.LinePaint");
+			Class.forName("paint.geom.CirclePaint");
 			Class.forName("paint.geom.SquarePaint");
-			//Class.forName("paint.geom.TrianglePaint");
-			Class.forName("paint.shapes.util.ShapeProperties");
-			Class.forName("paint.shapes.util.TriangleProperties");
+			Class.forName("paint.geom.RectanglePaint");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}

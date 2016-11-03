@@ -13,7 +13,7 @@ import paint.geom.util.ShapeController;
 
 public abstract class PolygonPaint implements ShapePaint {
 	protected Polygon polygon;
-	private ArrayList<Resizer> resizers;
+	protected ArrayList<Resizer> resizers;
 	protected ArrayList<Point> points;
 
 	public PolygonPaint(Point... vertices) {
@@ -25,7 +25,7 @@ public abstract class PolygonPaint implements ShapePaint {
 			polygon.getPoints().add(vertex.getY());
 			points.add(vertex);
 		}
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
@@ -46,7 +46,7 @@ public abstract class PolygonPaint implements ShapePaint {
 			}
 			f ^= true;
 		}
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
@@ -57,19 +57,15 @@ public abstract class PolygonPaint implements ShapePaint {
 		polygon = new Polygon();
 		resizers = new ArrayList<Resizer>();
 		points = (ArrayList<Point>) vertices;
-		for(Point vertex : vertices) {
+		for (Point vertex : vertices) {
 			polygon.getPoints().add(vertex.getX());
 			polygon.getPoints().add(vertex.getY());
 		}
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
 		polygon.setUserData(this);
-	}
-
-	public void rotate(double angle) {
-		polygon.setRotate(angle);
 	}
 
 	@Override
@@ -89,8 +85,13 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 
 	@Override
-	public void fill(Color col) {
+	public void setFill(Color col) {
 		polygon.setFill(col);
+	}
+
+	@Override
+	public Color getFill() {
+		return (Color) polygon.getFill();
 	}
 
 	@Override

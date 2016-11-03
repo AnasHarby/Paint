@@ -68,18 +68,18 @@
                         <ColorPicker fx:id="picker" minHeight="50.0" />
                         <ButtonBar fx:id="buttonBar" buttonMinWidth="50.0" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="84.0" prefWidth="720.0">
                           <buttons>
-                          <ChoiceBox fx:id="borderWidthPicker" maxHeight="50.0" maxWidth="70.0" minHeight="50.0" minWidth="70.0" prefHeight="50.0" prefWidth="70.0" translateX="-155.0" />
-                              <Button id="undo" onAction="#undo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-160.0" stylesheets="@Style.css">
+                          <ChoiceBox fx:id="borderWidthPicker" maxHeight="50.0" maxWidth="70.0" minHeight="50.0" minWidth="70.0" prefHeight="50.0" prefWidth="70.0" translateX="-170.0" />
+                              <Button id="undo" onAction="#undo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-175.0" stylesheets="@Style.css">
                               <tooltip>
                               	<Tooltip text="Undo" />
                               </tooltip>
                               </Button>
-                              <Button id="redo" onAction="#redo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-165.0" stylesheets="@Style.css">
+                              <Button id="redo" onAction="#redo" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="50.0" translateX="-180.0" stylesheets="@Style.css">
                               <tooltip>
                               	<Tooltip text="Redo" />
                               </tooltip>
                               </Button>
-                            <ToggleButton id="line" fx:id="line" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css">
+                            <ToggleButton id="line" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" disable="true">
                               <tooltip>
                               <Tooltip text="Line" />
                             </tooltip>
@@ -87,27 +87,27 @@
                                     <ToggleGroup fx:id="toggleGroup" />
                                  </toggleGroup>
                           </ToggleButton>
-                            <ToggleButton id="rectangle" fx:id="rectangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="rectangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                 			<tooltip>
                               <Tooltip text="Rectangle" />
                             </tooltip>
                           </ToggleButton>
-                            <ToggleButton id="square" fx:id="square" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="square" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                               <tooltip>
                               <Tooltip text="Square" />
                             </tooltip>
                           </ToggleButton>
-                            <ToggleButton id="triangle" fx:id="triangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="triangle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                               <tooltip>
                               <Tooltip text="Triangle" />
                             </tooltip>
                           </ToggleButton>
-                            <ToggleButton id="ellipse" fx:id="ellipse" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="ellipse" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                               <tooltip>
                               <Tooltip text="Ellipse" />
                             </tooltip>
                           </ToggleButton>
-                            <ToggleButton id="circle" fx:id="circle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup">
+                            <ToggleButton id="circle" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" disable="true">
                               <tooltip>
                               <Tooltip text="Circle" />
                             </tooltip>
@@ -154,32 +154,32 @@
                         <Insets left="15.0" />
                      </BorderPane.margin>
                      <children>
-                        <ToggleButton id="pencil" fx:id="pencilButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="0">
+                        <ToggleButton id="pencil" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="0">
                           <tooltip>
                             <Tooltip text="Pencil" />
                           </tooltip>
                         </ToggleButton>
-                        <ToggleButton id="eraser" fx:id="eraserButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="2">
+                        <ToggleButton id="eraser" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="2">
                           <tooltip>
                             <Tooltip text="Eraser" />
                           </tooltip>
                         </ToggleButton>
-                        <ToggleButton id="mover" fx:id="moveButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="4">
+                        <ToggleButton id="rotator" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="4">
                           <tooltip>
                             <Tooltip text="Move" />
                           </tooltip>
                         </ToggleButton>
-                        <ToggleButton id="bucket" fx:id="fillButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="6">
+                        <ToggleButton id="bucket" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="6">
                           <tooltip>
                             <Tooltip text="Fill" />
                           </tooltip>
                         </ToggleButton>
-                        <ToggleButton id="dropper" fx:id="pickButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="8">
+                        <ToggleButton id="dropper" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="8">
                           <tooltip>
                             <Tooltip text="Pick" />
                           </tooltip>
                         </ToggleButton>
-                        <ToggleButton id="remover" fx:id="removeButton" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="10">
+                        <ToggleButton id="remover" maxHeight="50.0" maxWidth="50.0" minHeight="50.0" minWidth="50.0" mnemonicParsing="false" onAction="#act" prefHeight="50.0" prefWidth="50.0" stylesheets="@Style.css" toggleGroup="$toggleGroup" GridPane.rowIndex="10">
                           <tooltip>
                             <Tooltip text="Remove" />
                           </tooltip>
