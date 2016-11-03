@@ -63,11 +63,6 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		polygon.setId(properties.getId());
 	}
 
-	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
 	public Point getUpperLeftPoint() {
 		return upperLeftPoint;
 	}

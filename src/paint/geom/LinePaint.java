@@ -66,11 +66,6 @@ public class LinePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
-	@Override
 	public void draw(Pane contentPane) {
 		contentPane.getChildren().add(line);
 		for (Resizer resizer : resizers) {
@@ -184,6 +179,22 @@ public class LinePaint implements ShapePaint, Cloneable {
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		line.setOnMouseClicked(handler);
 	}
+
+	@Override
+	public void setOnMousePressed(EventHandler<MouseEvent> handler) {
+		line.setOnMousePressed(handler);
+	}
+
+	@Override
+	public void setOnMouseDragged(EventHandler<MouseEvent> handler) {
+		line.setOnMouseDragged(handler);
+	}
+
+	@Override
+	public void setOnMouseReleased(EventHandler<MouseEvent> handler) {
+		line.setOnMouseReleased(handler);
+	}
+
 	@Override
 	public LinePaint clone() throws CloneNotSupportedException {
 		LinePaint newObject = new LinePaint(start.clone(), end.clone());

@@ -61,11 +61,6 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	}
 
 	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
-	@Override
 	public void setTranslateX(double translateX) {
 		polygon.setTranslateX(translateX);
 	}

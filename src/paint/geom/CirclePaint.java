@@ -46,10 +46,7 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		ellipse.setTranslateY(properties.getTranslateY());
 		ellipse.setId(properties.getId());
 	}
-	@Override
-	public String getIconUrl() {
-		return null;
-	}
+
 	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		radiusCircle = getRadius(centerCircle.getX(), centerCircle.getY(), x2, y2);

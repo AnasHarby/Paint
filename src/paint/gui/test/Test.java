@@ -14,7 +14,6 @@ public class Test extends Application {
 			Class.forName("paint.geom.RectanglePaint");
 			Class.forName("paint.geom.CirclePaint");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

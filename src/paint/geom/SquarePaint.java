@@ -99,11 +99,6 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 	}
 
 	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
-	@Override
 	public SquarePaint clone() throws CloneNotSupportedException {
 		SquarePaint newObject = new SquarePaint(upperLeft.clone(), sideLength);
 		newObject.polygon.setTranslateX(polygon.getTranslateX());

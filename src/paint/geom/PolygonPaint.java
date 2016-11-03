@@ -100,11 +100,6 @@ public abstract class PolygonPaint implements ShapePaint {
 	}
 
 	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
-	@Override
 	public void setBorderWidth(double width) {
 		polygon.setStrokeWidth(width);
 	}
@@ -166,6 +161,21 @@ public abstract class PolygonPaint implements ShapePaint {
 	@Override
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		polygon.setOnMouseClicked(handler);
+	}
+
+	@Override
+	public void setOnMousePressed(EventHandler<MouseEvent> handler) {
+		polygon.setOnMousePressed(handler);
+	}
+
+	@Override
+	public void setOnMouseDragged(EventHandler<MouseEvent> handler) {
+		polygon.setOnMouseDragged(handler);
+	}
+
+	@Override
+	public void setOnMouseReleased(EventHandler<MouseEvent> handler) {
+		polygon.setOnMouseReleased(handler);
 	}
 
 	@Override

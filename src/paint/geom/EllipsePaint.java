@@ -15,13 +15,25 @@ import paint.geom.util.ShapeFactory;
 import paint.shapes.util.EllipseProperties;
 import paint.shapes.util.ShapeProperties;
 
+/**
+ * The Ellipse class creates a new ellipse
+ * with the specified radiuses and location in pixels.
+ * <br>
+ * Inherits from {@link paint.geom.ShapePaint} interface.
+ */
 public class EllipsePaint implements ShapePaint, Cloneable {
+
 	/**
-	 * Javafx 2D graphics drawing ellipse
-	 * class.
+	 * The key of the ellipse's class, used for getting
+	 * {@link ShapePaint} instances from {@link ShapeFactory}.
 	 */
 	public static final String KEY = "ellipse";
-	public Ellipse ellipse;
+
+	/**
+	 * The equivalent {@link javafx.scene.shape.Ellipse}
+	 * used for interacting with the {@link javafx} library.
+	 */
+	protected Ellipse ellipse;
 	private Point up;
 	private Point down;
 	private Point left;
@@ -36,9 +48,15 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ShapeFactory.getInstance().registerShape(KEY, EllipsePaint.class);
 	}
 
-	public EllipsePaint(Point center, double a, double b) {
+	/**
+	 * Default constructor for construction of {@link EllipsePaint}.
+	 * @param center {@link Point} representing the center of ellipse on {@link Pane}.
+	 * @param xRadius Radius of ellipse on X axis.
+	 * @param yRadius Radius of ellipse on Y axis.
+	 */
+	public EllipsePaint(Point center, double xRadius, double yRadius) {
 		ellipse = new Ellipse(center.getX(),
-				center.getY(), a, b);
+				center.getY(), xRadius, yRadius);
 		resizers = new ArrayList<Resizer>();
 		up = new Point();
 		down = new Point();
@@ -53,6 +71,13 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ellipse.setUserData(this);
 	}
 
+	/**
+	 * Default constructor for construction of {@link EllipsePaint}
+	 * by using an equivalent
+	 * <br>
+	 * {@link ShapeProperties} object containing all specifications of the ellipse.
+	 * @param properties {@link ShapeProperties} object.
+	 */
 	public EllipsePaint(ShapeProperties properties) {
 		this(properties.getPoint1().getX(),
 				properties.getPoint1().getY(),
@@ -67,6 +92,13 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ellipse.setId(properties.getId());
 	}
 
+	/**
+	 * Default constructor for construction of {@link EllipsePaint}
+	 * by using a collection
+	 * <br>
+	 * of double values representing the four ends of ellipse.
+	 * @param properties properties of {@link EllipsePaint}
+	 */
 	public EllipsePaint(double... properties) {
 		this(new Point(properties[TOPMOST_X], properties[RIGHTMOST_Y]),
 				Math.abs(properties[RIGHTMOST_X] - properties[TOPMOST_X]),
@@ -102,11 +134,6 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public String getIconUrl() {
-		return null;
-	}
-
-	@Override
 	public void setBorderWidth(double width) {
 		ellipse.setStrokeWidth(width);
 	}
@@ -126,11 +153,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	public void toFront() {
 		ellipse.toFront();
 	}
-	private void setActionHandlers() {
-		ShapeController shapeMovement
-		= new ShapeController();
-		shapeMovement.addHandlers(ellipse);
-	}
+
 	@Override
 	public void resize(double x1,
 			double y1, double x2, double y2) {
@@ -160,32 +183,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		}
 		setVertices();
 	}
-	protected void setVertices() {
-		up.setX(ellipse.getCenterX());
-		up.setY(ellipse.getCenterY()
-				- ellipse.getRadiusY());
-		left.setX(ellipse.getCenterX()
-				- ellipse.getRadiusX());
-		left.setY(ellipse.getCenterY());
-		down.setX(ellipse.getCenterX());
-		down.setY(ellipse.getCenterY()
-				+ ellipse.getRadiusY());
-		right.setX(ellipse.getCenterX()
-				+ ellipse.getRadiusX());
-		right.setY(ellipse.getCenterY());
-	}
 
-	private void setResizers() {
-		resizers.add(new Resizer(ellipse, this, up));
-		resizers.add(new Resizer(ellipse, this, left));
-		resizers.add(new Resizer(ellipse, this, down));
-		resizers.add(new Resizer(ellipse, this, right));
-		for (Resizer resizer : resizers) {
-			resizer.setRotationPivot(new Point(
-					ellipse.getCenterX(),
-					ellipse.getCenterY()));
-		}
-	}
 	@Override
 	public void showResizers() {
 		for (Resizer resizer : resizers) {
@@ -259,6 +257,21 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
+	public void setOnMousePressed(EventHandler<MouseEvent> handler) {
+		ellipse.setOnMousePressed(handler);
+	}
+
+	@Override
+	public void setOnMouseDragged(EventHandler<MouseEvent> handler) {
+		ellipse.setOnMouseDragged(handler);
+	}
+
+	@Override
+	public void setOnMouseReleased(EventHandler<MouseEvent> handler) {
+		ellipse.setOnMouseReleased(handler);
+	}
+
+	@Override
 	public void rotate(double angle) {
 		ellipse.getTransforms().add(new Rotate(
 				angle, ellipse.getCenterX(),
@@ -266,6 +279,42 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		for (Resizer resizer : resizers) {
 			resizer.rotate(angle);
 		}
+	}
 
+	/**
+	 * Sets the four vertices of the ellipse (uppermost point,
+	 * leftmost point, downmost point, rightmost point).
+	 */
+	protected void setVertices() {
+		up.setX(ellipse.getCenterX());
+		up.setY(ellipse.getCenterY()
+				- ellipse.getRadiusY());
+		left.setX(ellipse.getCenterX()
+				- ellipse.getRadiusX());
+		left.setY(ellipse.getCenterY());
+		down.setX(ellipse.getCenterX());
+		down.setY(ellipse.getCenterY()
+				+ ellipse.getRadiusY());
+		right.setX(ellipse.getCenterX()
+				+ ellipse.getRadiusX());
+		right.setY(ellipse.getCenterY());
+	}
+
+	private void setResizers() {
+		resizers.add(new Resizer(ellipse, this, up));
+		resizers.add(new Resizer(ellipse, this, left));
+		resizers.add(new Resizer(ellipse, this, down));
+		resizers.add(new Resizer(ellipse, this, right));
+		for (Resizer resizer : resizers) {
+			resizer.setRotationPivot(new Point(
+					ellipse.getCenterX(),
+					ellipse.getCenterY()));
+		}
+	}
+
+	private void setActionHandlers() {
+		ShapeController shapeMovement
+		= new ShapeController();
+		shapeMovement.addHandlers(ellipse);
 	}
 }
