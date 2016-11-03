@@ -13,6 +13,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -39,7 +40,6 @@ public class FXMLControllerTest implements Initializable {
 	private static final String BRUSH_BUTTON = "brushDraw";
 
 	@FXML private Canvas canvas;
-	@FXML private Canvas freeDrawingCanvas;
 	@FXML private ToggleGroup testingToggleGroup;
 	@FXML private ToggleButton circleButton;
 	@FXML private ToggleButton rectangleButton;
@@ -47,13 +47,12 @@ public class FXMLControllerTest implements Initializable {
 	@FXML private ToggleButton brushDraw;
 
 	private GraphicsContext gc;
-	private GraphicsContext gc2;
 	private boolean started = false;
 	private Point init = new Point();
 	private Shape drawingShape = null;
 	JsonDataHandler jsonData = new JsonDataHandler();
 	XmlDataHandler xmlData = new XmlDataHandler();
-
+	WritableImage x;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {
 		double dX = Math.abs(x1 - x2);
@@ -69,7 +68,6 @@ public class FXMLControllerTest implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		System.out.println("Initialized");
 		gc = canvas.getGraphicsContext2D();
-		gc2 = freeDrawingCanvas.getGraphicsContext2D();
 		Pane pane = (Pane) canvas.getParent();
 		Shape circle1 = new Circle(200, 200, 200, Color.TRANSPARENT);
 		circle1.setStroke(Color.BLACK);
@@ -93,12 +91,14 @@ public class FXMLControllerTest implements Initializable {
 						CurrentHistoryEvent.getInstance().setHead(temp);
 					}
 				} else if (event.getCode() == KeyCode.S) {
-					//jsonData.saveJson(current);
-					//xmlData.saveXml(current);
+					x = canvas.snapshot(null, null);
 				} else if (event.getCode() == KeyCode.L) {
-					//history = new History();
-					//current = xmlData.loadXml(canvas);
-					//history.storeShapeChanges(current);
+					pane.getChildren().remove(canvas);
+					canvas = new Canvas();
+					pane.getChildren().add(canvas);
+					gc = canvas.getGraphicsContext2D();
+					gc.drawImage(x, 0, 1);
+					canvas.toFront();
 				}
 			}
 
@@ -111,14 +111,13 @@ public class FXMLControllerTest implements Initializable {
 	}
 	@FXML
 	public void startSketch(ActionEvent event) {
-		freeDrawingCanvas.toFront();
+		canvas.toFront();
 	}
 	@FXML
 	public void act(MouseEvent event) {
 		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
 		if (active == null) {
 			canvas.toBack();
-			freeDrawingCanvas.toBack();
 			return;
 		}
 		String name = active.getId();
@@ -173,11 +172,11 @@ public class FXMLControllerTest implements Initializable {
 			}
 			break;
 		case PENCIL_BUTTON:
-			gc2.moveTo(event.getX(), event.getY());
-			gc2.stroke();
+			gc.moveTo(event.getX(), event.getY());
+			gc.stroke();
 			break;
 		case BRUSH_BUTTON:
-			gc2.moveTo(event.getX(), event.getY());
+			gc.moveTo(event.getX(), event.getY());
 			break;
 		default:
 			break;
@@ -190,14 +189,13 @@ public class FXMLControllerTest implements Initializable {
 		ToggleButton active = (ToggleButton) testingToggleGroup.getSelectedToggle();
 		if (active == null) {
 			canvas.toBack();
-			freeDrawingCanvas.toBack();
 			return;
 		}
 		String name = active.getId();
 		switch (name) {
 		case PENCIL_BUTTON:
-			gc2.lineTo(event.getX(), event.getY());
-			gc2.stroke();
+			gc.lineTo(event.getX(), event.getY());
+			gc.stroke();
 			break;
 		case BRUSH_BUTTON:
 			break;
@@ -208,7 +206,6 @@ public class FXMLControllerTest implements Initializable {
 
 	@FXML
 	public void release(MouseEvent event) {
-
 	}
 
 	@FXML

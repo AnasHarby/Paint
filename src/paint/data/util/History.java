@@ -4,26 +4,56 @@ import java.util.Stack;
 
 import javafx.scene.canvas.Canvas;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The class responsible for
+ * undoing and redoing operations.
+ */
 public class History {
+
+	/** The undo stack. */
 	private Stack<HistoryEvent> undoStack;
+
+	/** The redo stack. */
 	private Stack<HistoryEvent> redoStack;
+
+	/** The current event. */
 	private HistoryEvent currentEvent;
+
+	/** The singleton history object. */
 	private static History history = new History();
 
+	/**
+	 * Instantiates a new singleton
+	 * object.
+	 */
 	private History() {
 		undoStack = new Stack<>();
 		redoStack = new Stack<>();
 		currentEvent = null;
 	}
 
+	/**
+	 * Gets the history object.
+	 * @return the history singleton
+	 */
 	public static History getHistory() {
 		return history;
 	}
 
+	/**
+	 * Clears the history.
+	 */
 	public static void clearHistory() {
 		history = new History();
 	}
 
+	/**
+	 * Undoes the last user operation.
+	 * @param canvas the canvas on which
+	 * the operations are drawn
+	 * @return the previous history event
+	 */
 	public HistoryEvent undo(Canvas canvas) {
 		System.out.println("UNDO: " + undoStack.size());
 
@@ -37,6 +67,12 @@ public class History {
 		}
 	}
 
+	/**
+	 * Redoes the next user operation.
+	 * @param canvas the canvas on which
+	 * the operations are drawn
+	 * @return the previous history event
+	 */
 	public HistoryEvent redo(Canvas canvas) {
 		System.out.println("REDO: " + redoStack.size());
 		if (redoStack.isEmpty()) {
@@ -49,6 +85,10 @@ public class History {
 	}
 
 
+	/**
+	 * Store shape changes to the history.
+	 * @param the current history event
+	 */
 	public void storeShapeChanges(HistoryEvent current) {
 		HistoryEvent head = new HistoryEvent();
 		try {

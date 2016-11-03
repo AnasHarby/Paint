@@ -8,12 +8,21 @@ import java.util.Collection;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
-import javafx.scene.canvas.Canvas;
 import paint.shapes.util.ShapeProperties;
 
+/**
+ * The class responsible for serializing
+ *  data to a json string.
+ */
 public class JsonDataHandler {
 
-	public String saveJson(HistoryEvent head) {
+	/**
+	 * Gets the current state json string.
+	 * @param head the current state
+	 * @return the json string representing
+	 * the current state
+	 */
+	public String getJson(HistoryEvent head) {
 		String json = new String();
 		XStream xstream = new XStream(new JettisonMappedXmlDriver());
 		Collection<ShapeProperties> props = head.getShapesProperties();
@@ -24,10 +33,15 @@ public class JsonDataHandler {
 		return json;
 	}
 
+	/**
+	 * Gets the current state from
+	 * a json file.
+	 * @param json the json file;
+	 * @return the history event
+	 */
 	@SuppressWarnings("unchecked")
-	public HistoryEvent loadJson(File json, Canvas canvas) {
+	public HistoryEvent fromJson(File json) {
 		XStream xstream = new XStream(new JettisonMappedXmlDriver());
-		Object propObj = xstream.fromXML(json);
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(json);
 		HistoryEvent head = new HistoryEvent(props);

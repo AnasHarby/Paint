@@ -322,7 +322,7 @@ public class FXMLController implements Initializable {
 			try {
 				CurrentHistoryEvent.getInstance().
 				setHead(DataHandler.getInstance().
-				loadData(file.getAbsolutePath(), canvas).clone());
+				loadData(file.getAbsolutePath()).clone());
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
 			}

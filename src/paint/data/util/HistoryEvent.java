@@ -9,13 +9,28 @@ import paint.geom.ShapePaint;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.ShapeProperties;
 
+/**
+ * The Class that represents the current
+ * state of the application.
+ */
 public class HistoryEvent implements Cloneable {
+
+	/** A list of all the shapes in this state. */
 	private ArrayList<ShapePaint> shapes;
 
+	/**
+	 * Instantiates a new history event.
+	 */
 	public HistoryEvent() {
 		shapes = new ArrayList<>();
 	}
 
+	/**
+	 * Instantiates a new history event.
+	 * @param shapesProperties a collection of
+	 * shape properties representing the state
+	 * of every shape
+	 */
 	public HistoryEvent(Collection<ShapeProperties> shapesProperties) {
 		shapes = new ArrayList<>();
 		for (ShapeProperties prop : shapesProperties) {
@@ -26,6 +41,11 @@ public class HistoryEvent implements Cloneable {
 		}
 	}
 
+	/**
+	 * Shows this state on the canvas.
+	 * @param canvas the canvas on which
+	 * the state will be drawn
+	 */
 	public void showEvent(Canvas canvas) {
 		Pane pane = (Pane) canvas.getParent();
 		pane.getChildren().clear();
@@ -37,14 +57,27 @@ public class HistoryEvent implements Cloneable {
 		}
 	}
 
+	/**
+	 * Gets a collection of all
+	 * the shapes in this state.
+	 * @return the shapes collection
+	 */
 	public Collection<ShapePaint> getShapes() {
 		return shapes;
 	}
 
+	/**
+	 * Adds the current state to the history.
+	 */
 	public void updateHistory() {
 		History.getHistory().storeShapeChanges(this);
 	}
 
+	/**
+	 * Gets a collection of the properties
+	 * of every shape in the current state.
+	 * @return the shapes properties collection
+	 */
 	public Collection<ShapeProperties> getShapesProperties() {
 		ArrayList<ShapeProperties> prop = new ArrayList<>();
 		for (ShapePaint shape : shapes) {
@@ -53,11 +86,11 @@ public class HistoryEvent implements Cloneable {
 		return prop;
 	}
 
-	public void addShape(ShapePaint shape) {
-		shapes.add(shape);
-		updateHistory();
-	}
-
+	/**
+	 * Removes the shape identified
+	 * by this id from the state.
+	 * @param id the shape's id
+	 */
 	public void removeShape(String id) {
 		for (int i = 0 ; i < shapes.size() ; i++) {
 			if (shapes.get(i).getId().equals(id)) {
@@ -67,6 +100,9 @@ public class HistoryEvent implements Cloneable {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#clone()
+	 */
 	@Override
 	public HistoryEvent clone() throws CloneNotSupportedException {
 		HistoryEvent clone = new HistoryEvent();
