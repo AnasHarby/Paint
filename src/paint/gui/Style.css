@@ -22,8 +22,8 @@
 	-fx-background-repeat: no-repeat;
 }
 
-#mover {
-	-fx-background-image: url("File:src/paint/gui/assets/move.png");
+#rotator {
+	-fx-background-image: url("File:src/paint/gui/assets/rotate.png");
 	-fx-background-position: center;
 	-fx-background-repeat: no-repeat;
 }

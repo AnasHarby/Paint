@@ -45,7 +45,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		right = new Point();
 		setVertices();
 		setResizers();
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		ellipse.setId(KEY + new Random().nextInt());
@@ -72,6 +72,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 				Math.abs(properties[TOPMOST_Y] - properties[RIGHTMOST_Y]));
 	}
 
+	@Override
 	public void rotate(double angle) {
 		ellipse.setRotate(angle);
 	}
@@ -90,8 +91,13 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public void fill(Color col) {
+	public void setFill(Color col) {
 		ellipse.setFill(col);
+	}
+
+	@Override
+	public Color getFill() {
+		return (Color) ellipse.getFill();
 	}
 
 	@Override

@@ -3,6 +3,7 @@ package paint.gui;
 import java.awt.MenuItem;
 import java.io.File;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -19,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
@@ -37,9 +39,8 @@ import paint.plugins.PluginLoader;
 
 public class FXMLController implements Initializable {
 	private enum State {
-		EDITING, ERASING, FREE_DRAWING,
-		SHAPING, BIASING, TRIANGLE_BIASING, TRIANGLE_SHAPING,
-		TRIANGLE_DRAWING, REMOVING
+		EDITING, SHAPING, BIASING, TRIANGLE_BIASING, TRIANGLE_SHAPING,
+		TRIANGLE_DRAWING, REMOVING, FILLING, COLOR_PICKING, ROTATING
 	}
 	private static final ObservableList<String> BORDERS =
 			FXCollections.observableArrayList( "1px",
@@ -47,30 +48,19 @@ public class FXMLController implements Initializable {
 					"8px", "10px", "12px");
 	private static final String PENCIL_BUTTON = "pencilButton";
 	private static final String ERASER_BUTTON = "eraserButton";
-	private static final String MOVE_BUTTON = "moveButton";
-	private static final String FILL_BUTTON = "fillButton";
-	private static final String PICK_BUTTON = "pickButton";
+	private static final String ROTATE_BUTTON = "rotator";
+	private static final String FILL_BUTTON = "bucket";
+	private static final String PICK_BUTTON = "dropper";
 	private static final String REMOVE_BUTTON = "remover";
 	private static final String TRIANGLE_BUTTON = "triangle";
 	private static final String LINE_KEY = "line";
 	private static final String TRIANGLE_KEY = "triangle";
+	private static final String ROTATION_REGEX = "^([+-]?\\d*\\.?\\d*)$";
 	@FXML private Canvas canvas;
 	@FXML private Button newButton;
 	@FXML private ColorPicker picker;
 	@FXML private ButtonBar buttonBar;
 	@FXML private ToggleGroup toggleGroup;
-	@FXML private ToggleButton pencilButton;
-	@FXML private ToggleButton eraserButton;
-	@FXML private ToggleButton moveButton;
-	@FXML private ToggleButton fillButton;
-	@FXML private ToggleButton pickButton;
-	@FXML private ToggleButton removeButton;
-	@FXML private ToggleButton lineButton;
-	@FXML private ToggleButton rectangleButton;
-	@FXML private ToggleButton squareButton;
-	@FXML private ToggleButton triangleButton;
-	@FXML private ToggleButton ellipseButton;
-	@FXML private ToggleButton circleButton;
 	@FXML private ChoiceBox<String> borderWidthPicker;
 	private State state;
 	private double borderWidth;
@@ -87,6 +77,15 @@ public class FXMLController implements Initializable {
 		buildBorderChooser();
 		CurrentHistoryEvent.getInstance().
 		getHead().updateHistory();
+		for (String key : ShapeFactory.getInstance()
+				.getRegisteredShapes().keySet()) {
+			for (Node shape : buttonBar.getButtons()) {
+				if (shape.getId().equals(key)) {
+					shape.setDisable(false);
+					break;
+				}
+			}
+		}
 	}
 
 	private void buildBorderChooser() {
@@ -123,11 +122,17 @@ public class FXMLController implements Initializable {
 			break;
 		case ERASER_BUTTON:
 			break;
-		case MOVE_BUTTON:
+		case ROTATE_BUTTON:
+			state = State.ROTATING;
+			canvas.toBack();
 			break;
 		case FILL_BUTTON:
+			state = State.FILLING;
+			canvas.toBack();
 			break;
 		case PICK_BUTTON:
+			state = State.COLOR_PICKING;
+			canvas.toBack();
 			break;
 		case REMOVE_BUTTON:
 			state = State.REMOVING;
@@ -152,7 +157,7 @@ public class FXMLController implements Initializable {
 			currentShape = ShapeFactory.getInstance().
 			createShape(currShapeID, event.getX(),
 					event.getY(), event.getX(), event.getY());
-			currentShape.fill(picker.getValue());
+			currentShape.setFill(picker.getValue());
 			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			biasingPoint = new Point(event.getX(),
@@ -166,11 +171,11 @@ public class FXMLController implements Initializable {
 					.createShape(currShapeID, biasingPoint.getX(),
 							biasingPoint.getY(), event.getX(),
 							event.getY());
-			currentShape.fill(picker.getValue());
+			currentShape.setFill(picker.getValue());
 			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
-					removeHandler);
+					toolsHandler);
 			canvas.toFront();
 			break;
 		case TRIANGLE_DRAWING:
@@ -180,11 +185,11 @@ public class FXMLController implements Initializable {
 							biasingPoint.getY(), triangleSecondPoint.getX(),
 							triangleSecondPoint.getY(), event.getX(),
 							event.getY());
-			currentShape.fill(picker.getValue());
+			currentShape.setFill(picker.getValue());
 			currentShape.setBorderWidth(borderWidth);
 			currentShape.draw(pane);
 			currentShape.setOnMouseClicked(
-					removeHandler);
+					toolsHandler);
 			canvas.toFront();
 			break;
 		default:
@@ -270,17 +275,16 @@ public class FXMLController implements Initializable {
 		chooser.setTitle("Import");
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
-		String key = PluginLoader.loadClass(file);//may return null
+		PluginLoader.loadClass(file);
 	}
-	private EventHandler<MouseEvent> removeHandler =
+	private EventHandler<MouseEvent> toolsHandler =
 			new EventHandler<MouseEvent>() {
 
 		@Override
 		public void handle(MouseEvent event) {
+			Node source = (Node) event.getSource();
 			if (state ==
 					State.REMOVING) {
-				Node source = (Node)
-						event.getSource();
 				CurrentHistoryEvent.getInstance().
 				getHead().removeShape(source.getId());
 				CurrentHistoryEvent.getInstance().
@@ -288,6 +292,25 @@ public class FXMLController implements Initializable {
 				CurrentHistoryEvent.getInstance().
 				getHead().showEvent(canvas);
 				canvas.toBack();
+			} else if (state ==
+					State.FILLING) {
+				CurrentHistoryEvent.getInstance()
+				.getHead().getShape(source.getId())
+				.setFill(picker.getValue());
+			} else if (state ==
+					State.COLOR_PICKING) {
+				picker.setValue(CurrentHistoryEvent
+						.getInstance().getHead()
+						.getShape(source.getId())
+						.getFill());
+			} else if (state ==
+					State.ROTATING) {
+				double angle = getRotationValue();
+				if (!Double.isNaN(angle)) {
+//					CurrentHistoryEvent.getInstance()
+//					.getHead().getShape(source.getId())
+//					.rotate(angle);
+				}
 			}
 		}
 	};
@@ -329,7 +352,7 @@ public class FXMLController implements Initializable {
 			//Sorry, couldn't think of a better way.
 			for (ShapePaint shape :
 				CurrentHistoryEvent.getInstance().getHead().getShapes()) {
-				shape.setOnMouseClicked(removeHandler);
+				shape.setOnMouseClicked(toolsHandler);
 			}
 			CurrentHistoryEvent.getInstance().getHead().updateHistory();
 			CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
@@ -364,5 +387,32 @@ public class FXMLController implements Initializable {
 		MenuItem width = (MenuItem)
 				event.getSource();
 		System.out.print(width.getName());
+	}
+
+	private double getRotationValue() {
+		TextInputDialog dialog = new TextInputDialog("0");
+		dialog.setHeaderText("Set Rotation Angle");
+		dialog.setTitle("Set Rotation Angle");
+		dialog.setGraphic(null);
+		dialog.getEditor().textProperty().addListener(
+				new ChangeListener<String>() {
+
+			@Override
+			public void changed(ObservableValue
+					<? extends String> observable, String oldValue,
+					String newValue) {
+				if (newValue.matches(ROTATION_REGEX)) {
+					dialog.getEditor().setText(newValue);
+				} else {
+					dialog.getEditor().setText(oldValue);
+				}
+			}
+		});
+		dialog.setContentText("Please enter the required angle");
+		Optional<String> result = dialog.showAndWait();
+		if (result.isPresent()) {
+			return Double.parseDouble(result.get());
+		}
+		return Double.NaN;
 	}
 }

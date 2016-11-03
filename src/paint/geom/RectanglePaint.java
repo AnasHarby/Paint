@@ -32,7 +32,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 						upperLeft.getY()));
 		setUpperLeftPoint(upperLeft);
 		super.setBorderColor(Color.BLACK);
-		super.fill(Color.TRANSPARENT);
+		super.setFill(Color.TRANSPARENT);
 		this.width = width;
 		this.height = height;
 		polygon.setId(KEY + new Random().nextInt());

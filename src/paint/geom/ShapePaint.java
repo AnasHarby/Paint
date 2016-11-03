@@ -22,15 +22,19 @@ public interface ShapePaint {
 	public void remove(Pane contentPane);
 	/**
 	 * Sets border color for shape.
-	 * @param col {@link javafx.scene.paint.Color} color
+	 * @param col {@link javafx.scene.paint.Color} Color.
 	 */
 	public void setBorderColor(Color col);
 	/**
 	 * Fills shape area with a color.
-	 * @param col {@link javafx.scene.paint.Color} color
+	 * @param col {@link javafx.scene.paint.Color} Color.
 	 */
-	public void fill(Color col);
-
+	public void setFill(Color col);
+	/**
+	 * Gets filling color of a shape.
+	 * @return {@link javafx.scene.paint.Color} Color.
+	 */
+	public Color getFill();
 	public String getIconUrl();
 	/**
 	 * Sets border width for shape.
@@ -47,6 +51,7 @@ public interface ShapePaint {
 	/**
 	 * Pushes shape to back of the pane.
 	 */
+	public void rotate(double angle);
 	public void toBack();
 	/**
 	 * Pulls shape to front of the pane.

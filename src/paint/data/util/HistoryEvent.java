@@ -67,6 +67,23 @@ public class HistoryEvent implements Cloneable {
 	}
 
 	/**
+	 * Finds a shape in the
+	 * current history state by ID.
+	 * @param id Shape ID.
+	 * @return Shape with the same ID.
+	 */
+	public ShapePaint getShape(String id)  {
+		for (ShapePaint shape : shapes) {
+			
+			if (shape.getId() != null
+					&& shape.getId().equals(id)) {
+				return shape;
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Adds the current state to the history.
 	 */
 	public void updateHistory() {

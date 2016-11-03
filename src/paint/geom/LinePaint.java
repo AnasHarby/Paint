@@ -35,7 +35,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 		resizers = new ArrayList<Resizer>();
 		this.start = point1;
 		this.end = point2;
-		fill(Color.TRANSPARENT);
+		setFill(Color.TRANSPARENT);
 		setBorderColor(Color.BLACK);
 		setActionHandlers();
 		setResizers();
@@ -81,8 +81,13 @@ public class LinePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
-	public void fill(Color col) {
+	public void setFill(Color col) {
 		line.setFill(col);
+	}
+
+	@Override
+	public Color getFill() {
+		return (Color) line.getFill();
 	}
 
 	@Override
@@ -94,6 +99,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 	public void move(double x, double y) {
 		line.setTranslateX(x);
 		line.setTranslateY(y);
+	}
+
+	@Override
+	public void rotate(double angle) {
+		line.setRotate(angle);
 	}
 
 	@Override

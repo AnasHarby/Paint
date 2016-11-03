@@ -68,8 +68,8 @@ public class DataHandler {
 	}
 
 	/**
-	 * Load the data from either json
-	 * or xml files.
+	 * Load the data from either JSON
+	 * or XML files.
 	 * @param path the file path
 	 * @return the loaded history event
 	 */
