@@ -61,6 +61,16 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	}
 
 	@Override
+	public void setTranslateX(double translateX) {
+		polygon.setTranslateX(translateX);
+	}
+
+	@Override
+	public void setTranslateY(double translateY) {
+		polygon.setTranslateY(translateY);
+	}
+
+	@Override
 	public TrianglePaint clone() throws CloneNotSupportedException {
 		TrianglePaint newObject = new TrianglePaint(point1.clone(),
 				point2.clone(), point3.clone());

@@ -72,6 +72,16 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 	}
 
 	@Override
+	public void setTranslateX(double translateX) {
+		polygon.setTranslateX(translateX);
+	}
+
+	@Override
+	public void setTranslateY(double translateY) {
+		polygon.setTranslateY(translateY);
+	}
+
+	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		int i = 0;
 		double minX = Double.MAX_VALUE;

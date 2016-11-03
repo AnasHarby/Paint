@@ -192,6 +192,16 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
+	public void setTranslateX(double translateX) {
+		ellipse.setTranslateX(translateX);
+	}
+
+	@Override
+	public void setTranslateY(double translateY) {
+		ellipse.setTranslateY(translateY);
+	}
+
+	@Override
 	public EllipsePaint clone() throws CloneNotSupportedException {
 		double radX = ellipse.getCenterX();
 		double radY = ellipse.getCenterY();
@@ -239,6 +249,4 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 	public void setOnMouseClicked(EventHandler<MouseEvent> handler) {
 		ellipse.setOnMouseClicked(handler);
 	}
-
-
 }

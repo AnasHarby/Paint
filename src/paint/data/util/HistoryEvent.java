@@ -10,7 +10,6 @@ import paint.geom.util.ShapeFactory;
 import paint.shapes.util.ShapeProperties;
 
 public class HistoryEvent implements Cloneable {
-	private static final String TRIANGLE_KEY = "triangle";
 	private ArrayList<ShapePaint> shapes;
 
 	public HistoryEvent() {
@@ -20,17 +19,9 @@ public class HistoryEvent implements Cloneable {
 	public HistoryEvent(Collection<ShapeProperties> shapesProperties) {
 		shapes = new ArrayList<>();
 		for (ShapeProperties prop : shapesProperties) {
-			ShapePaint shape;
-			if (prop.getKey().equals(TRIANGLE_KEY)) {
-				shape = ShapeFactory.getInstance().createShape(prop.getKey(),
-						prop.getPoint1().getX(), prop.getPoint1().getY(),
-						prop.getPoint2().getX(), prop.getPoint2().getY(),
-						prop.getPoint3().getX(), prop.getPoint3().getY());
-			} else {
-				shape = ShapeFactory.getInstance().createShape(prop.getKey(),
-						prop.getPoint1().getX(), prop.getPoint1().getY(),
-						prop.getPoint2().getX(), prop.getPoint2().getY());
-			}
+			ShapePaint shape
+			= ShapeFactory.getInstance().
+			createShape(prop.getKey(), prop);
 			shapes.add(shape);
 		}
 	}
@@ -60,6 +51,11 @@ public class HistoryEvent implements Cloneable {
 			prop.add(shape.getShapeProperties());
 		}
 		return prop;
+	}
+
+	public void addShape(ShapePaint shape) {
+		shapes.add(shape);
+		updateHistory();
 	}
 
 	public void removeShape(String id) {

@@ -86,7 +86,8 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		prop.setStrokeColor(ellipse.getStroke());
 		try {
 			prop.setPoint1(centerCircle.clone());
-			prop.setPoint2(new Point(centerCircle.getX() + radiusCircle, centerCircle.getY()));
+			prop.setPoint2(new Point(centerCircle.getX()
+					+ radiusCircle, centerCircle.getY()));
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}

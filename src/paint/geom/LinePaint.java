@@ -119,6 +119,16 @@ public class LinePaint implements ShapePaint, Cloneable {
 	}
 
 	@Override
+	public void setTranslateX(double translateX) {
+		line.setTranslateX(translateX);
+	}
+
+	@Override
+	public void setTranslateY(double translateY) {
+		line.setTranslateY(translateY);
+	}
+
+	@Override
 	public void resize(double x1, double y1, double x2, double y2) {
 		double m = (start.getY() - end.getY())
 				/ (start.getX() - end.getX());

@@ -93,19 +93,17 @@ public class FXMLController implements Initializable {
 		borderWidthPicker.setItems(BORDERS);
 		borderWidthPicker.setValue(BORDERS.get(0));
 		borderWidthPicker.getSelectionModel()
-			.selectedIndexProperty().addListener(
-					new ChangeListener<Number>() {
-						@Override
-						public void changed(
-							ObservableValue<? extends Number> observable,
-								Number oldValue, Number newValue) {
-									borderWidth = Integer.
-										parseInt(BORDERS.get(
-											newValue.intValue()).split("px")[0]);
+		.selectedIndexProperty().addListener(
+				new ChangeListener<Number>() {
+					@Override
+					public void changed(
+						ObservableValue<? extends Number> observable,
+						Number oldValue, Number newValue) {
+							borderWidth = Integer.
+							parseInt(BORDERS.get(
+							newValue.intValue()).split("px")[0]);
 						}
-					}
-		);
-
+		});
 	}
 
 	@FXML

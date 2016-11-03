@@ -13,6 +13,7 @@ public class History {
 	private History() {
 		undoStack = new Stack<>();
 		redoStack = new Stack<>();
+		currentEvent = null;
 	}
 
 	public static History getHistory() {
@@ -27,7 +28,6 @@ public class History {
 		System.out.println("UNDO: " + undoStack.size());
 
 		if (undoStack.isEmpty()) {
-			System.out.println("" + undoStack.size());
 			return null;
 		} else {
 			System.out.println("VALID UNDO");
