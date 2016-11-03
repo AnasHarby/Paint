@@ -31,14 +31,9 @@ public class History {
 			return null;
 		} else {
 			System.out.println("VALID UNDO");
-			undoStack.peek().showEvent(canvas);
 			redoStack.push(currentEvent);
 			currentEvent = undoStack.pop();
-			try {
-				return currentEvent.clone();
-			} catch (CloneNotSupportedException e1) {
-				return null;
-			}
+			return currentEvent;
 		}
 	}
 
@@ -47,14 +42,9 @@ public class History {
 		if (redoStack.isEmpty()) {
 			return null;
 		} else {
-			redoStack.peek().showEvent(canvas);
 			undoStack.push(currentEvent);
 			currentEvent = redoStack.pop();
-			try {
-				return currentEvent.clone();
-			} catch (CloneNotSupportedException e1) {
-				return null;
-			}
+			return currentEvent;
 		}
 	}
 
@@ -74,5 +64,4 @@ public class History {
 		redoStack.clear();
 		System.out.println("STORING SHAPE: " + undoStack.size());
 	}
-
 }

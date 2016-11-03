@@ -254,6 +254,11 @@ public class FXMLController implements Initializable {
 		if (active != null) {
 			active.selectedProperty().set(false);
 		}
+		History.clearHistory();
+		CurrentHistoryEvent.getInstance().
+		setHead(new HistoryEvent());
+		CurrentHistoryEvent.getInstance().
+		getHead().updateHistory();
 		state = State.EDITING;
 	}
 
@@ -314,11 +319,20 @@ public class FXMLController implements Initializable {
 				canvas.getScene().getWindow());
 		if (file != null) {
 			History.clearHistory();
-			CurrentHistoryEvent.getInstance().
-			setHead(DataHandler.getInstance().
-			loadData(file.getAbsolutePath(), canvas));
-			History.getHistory().storeShapeChanges(CurrentHistoryEvent.
-					getInstance().getHead());
+			try {
+				CurrentHistoryEvent.getInstance().
+				setHead(DataHandler.getInstance().
+				loadData(file.getAbsolutePath(), canvas).clone());
+			} catch (CloneNotSupportedException e) {
+				e.printStackTrace();
+			}
+			//Sorry, couldn't think of a better way.
+			for (ShapePaint shape :
+				CurrentHistoryEvent.getInstance().getHead().getShapes()) {
+				shape.setOnMouseClicked(removeHandler);
+			}
+			CurrentHistoryEvent.getInstance().getHead().updateHistory();
+			CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
 		}
 	}
 
@@ -328,6 +342,7 @@ public class FXMLController implements Initializable {
 		if (temp != null) {
 			CurrentHistoryEvent.getInstance().setHead(temp);
 		}
+		CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
 	}
 
 	@FXML
@@ -336,6 +351,7 @@ public class FXMLController implements Initializable {
 		if (temp != null) {
 			CurrentHistoryEvent.getInstance().setHead(temp);
 		}
+		CurrentHistoryEvent.getInstance().getHead().showEvent(canvas);
 	}
 
 	@FXML

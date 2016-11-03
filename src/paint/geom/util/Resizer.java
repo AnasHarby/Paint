@@ -3,59 +3,59 @@ package paint.geom.util;
 import java.util.Random;
 
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 
 public class Resizer {
-	private static final double SIZE = 10;
-	private Rectangle rect;
+	private static final double SIZE = 4;
+	private Circle circ;
 
 	public Resizer(Shape shape, ShapePaint shapePaint, Point point) {
-		rect = new Rectangle(point.getX(),
-				point.getY(), SIZE, SIZE);
-		rect.translateXProperty().bind(
+		circ = new Circle(point.getX(),
+				point.getY(), SIZE);
+		circ.translateXProperty().bind(
 				shape.translateXProperty());
-		rect.translateYProperty().bind(
+		circ.translateYProperty().bind(
 				shape.translateYProperty());
-		rect.xProperty().bind(point.xProperty());
-		rect.yProperty().bind(point.yProperty());
+		circ.centerXProperty().bind(point.xProperty());
+		circ.centerYProperty().bind(point.yProperty());
 		setActionHandlers();
-		rect.setUserData(shapePaint);
-		rect.setId("Resizer" + new Random().nextInt());
-		rect.toFront();
+		circ.setUserData(shapePaint);
+		circ.setId("Resizer" + new Random().nextInt());
+		circ.toFront();
 	}
 
 	public void draw(Pane contentPane) {
-		contentPane.getChildren().add(rect);
+		contentPane.getChildren().add(circ);
 		hide();
 	}
 
 	public void show() {
-		rect.setVisible(true);
+		circ.setVisible(true);
 	}
 
 	public void hide() {
-		rect.setVisible(false);
+		circ.setVisible(false);
 	}
 
 	private void setActionHandlers() {
 		ShapeController controller =
 				new ShapeController();
-		controller.addHandlers(rect);
+		controller.addHandlers(circ);
 	}
 
 	public double getX() {
-		return rect.xProperty().doubleValue();
+		return circ.centerXProperty().doubleValue();
 	}
 
 	public double getY() {
-		return rect.yProperty().doubleValue();
+		return circ.centerYProperty().doubleValue();
 	}
 
 	public void remove(Pane contentPane) {
 		contentPane.getChildren()
-			.remove(rect);
+			.remove(circ);
 	}
 }

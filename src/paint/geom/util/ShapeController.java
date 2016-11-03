@@ -4,8 +4,9 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Circle;
 import paint.data.util.CurrentHistoryEvent;
+import paint.data.util.History;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 
@@ -13,6 +14,7 @@ public class ShapeController {
 	private static final String RESIZER_ID = "Resizer";
 	private Point originalTranslate = null;
 	private Point draggingStartPoint = null;
+	double EPSILON = 5;
 
 	EventHandler<MouseEvent> mousePressedHandler =
 			new EventHandler<MouseEvent>() {
@@ -43,12 +45,12 @@ public class ShapeController {
 			} else if (source.getId().startsWith(RESIZER_ID)) {
 				ShapePaint parent =
 						(ShapePaint) source.getUserData();
-				Rectangle resizer = (Rectangle) source;
-				parent.resize(resizer.xProperty().doubleValue(),
-						resizer.yProperty().doubleValue(), event.getX(),
+				Circle resizer = (Circle) source;
+				parent.resize(resizer.centerXProperty().doubleValue(),
+						resizer.centerYProperty().doubleValue(), event.getX(),
 						event.getY());
-				System.out.println(resizer.xProperty().doubleValue());
-				System.out.println(resizer.yProperty().doubleValue());
+				System.out.println(resizer.centerXProperty().doubleValue());
+				System.out.println(resizer.centerYProperty().doubleValue());
 				System.out.println(event.getSceneX());
 				System.out.println(event.getSceneY());
 				System.out.println("");
@@ -67,8 +69,17 @@ public class ShapeController {
 		@Override
 		public void handle(MouseEvent event) {
 			Node source = (Node) event.getSource();
+			if (source.getId() == null) {
+				return;
+			}
 			source.setCursor(Cursor.DEFAULT);
-			CurrentHistoryEvent.getInstance().getHead().updateHistory();
+			if ((Math.abs(event.getSceneX()
+			- draggingStartPoint.getX()) > EPSILON)
+			|| (Math.abs(event.getSceneY()
+			- draggingStartPoint.getY()) > EPSILON)) {
+				//CurrentHistoryEvent.getInstance().getHead().updateHistory();
+				History.getHistory().storeShapeChanges(CurrentHistoryEvent.getInstance().getHead());
+			}
 		}
 	};
 

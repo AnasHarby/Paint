@@ -31,7 +31,6 @@ public class JsonDataHandler {
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(json);
 		HistoryEvent head = new HistoryEvent(props);
-		head.showEvent(canvas);
 		return head;
 	}
 }

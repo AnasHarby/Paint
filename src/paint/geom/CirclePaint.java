@@ -44,6 +44,7 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		ellipse.setRotate(properties.getRotation());
 		ellipse.setTranslateX(properties.getTranslateX());
 		ellipse.setTranslateY(properties.getTranslateY());
+		ellipse.setId(properties.getId());
 	}
 	@Override
 	public String getIconUrl() {
@@ -95,6 +96,7 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		prop.setRotation(ellipse.getRotate());
 		prop.setTranslateX(ellipse.getTranslateX());
 		prop.setTranslateY(ellipse.getTranslateY());
+		prop.setId(ellipse.getId());
 		return prop;
 	}
 }

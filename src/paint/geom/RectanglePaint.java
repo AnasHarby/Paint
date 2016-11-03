@@ -56,6 +56,8 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		polygon.setRotate(properties.getRotation());
 		polygon.setTranslateX(properties.getTranslateX());
 		polygon.setTranslateY(properties.getTranslateY());
+		System.out.println(properties.getId());
+		polygon.setId(properties.getId());
 	}
 
 	@Override
@@ -140,7 +142,7 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-
+		prop.setId(polygon.getId());
 		prop.setStrokeWidth(polygon.getStrokeWidth());
 		prop.setRotation(polygon.getRotate());
 		prop.setTranslateX(polygon.getTranslateX());

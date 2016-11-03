@@ -30,7 +30,6 @@ public class XmlDataHandler {
 		ArrayList<ShapeProperties> props
 		= (ArrayList<ShapeProperties>) xstream.fromXML(xml);
 		HistoryEvent head = new HistoryEvent(props);
-		head.showEvent(canvas);
 		return head;
 	}
 }

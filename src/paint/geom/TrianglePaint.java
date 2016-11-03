@@ -53,6 +53,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		polygon.setRotate(properties.getRotation());
 		polygon.setTranslateX(properties.getTranslateX());
 		polygon.setTranslateY(properties.getTranslateY());
+		polygon.setId(properties.getId());
 	}
 
 	@Override
@@ -103,6 +104,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		prop.setRotation(polygon.getRotate());
 		prop.setTranslateX(polygon.getTranslateX());
 		prop.setTranslateY(polygon.getTranslateY());
+		prop.setId(polygon.getId());
 		return prop;
 	}
 	@Override

@@ -14,6 +14,7 @@ public abstract class ShapeProperties {
 	protected Paint strokeColor;
 	protected Paint fillColor;
 	protected String key;
+	protected String id;
 
 	public Point getPoint1() {
 		return point1;
@@ -69,5 +70,11 @@ public abstract class ShapeProperties {
 	}
 	public String getKey() {
 		return key;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 }

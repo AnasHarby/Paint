@@ -63,6 +63,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		ellipse.setRotate(properties.getRotation());
 		ellipse.setTranslateX(properties.getTranslateX());
 		ellipse.setTranslateY(properties.getTranslateY());
+		ellipse.setId(properties.getId());
 	}
 
 	public EllipsePaint(double... properties) {
@@ -237,7 +238,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-
+		prop.setId(ellipse.getId());
 		prop.setStrokeWidth(ellipse.getStrokeWidth());
 		prop.setRotation(ellipse.getRotate());
 		prop.setTranslateX(ellipse.getTranslateX());

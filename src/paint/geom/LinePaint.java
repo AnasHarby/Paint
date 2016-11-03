@@ -59,6 +59,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 		line.setRotate(properties.getRotation());
 		line.setTranslateX(properties.getTranslateX());
 		line.setTranslateY(properties.getTranslateY());
+		line.setId(properties.getId());
 	}
 
 	@Override
@@ -204,11 +205,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		} catch (CloneNotSupportedException e) {
 			e.printStackTrace();
 		}
-
 		prop.setStrokeWidth(line.getStrokeWidth());
 		prop.setRotation(line.getRotate());
 		prop.setTranslateX(line.getTranslateX());
 		prop.setTranslateY(line.getTranslateY());
+		prop.setId(line.getId());
 		return prop;
 	}
 }
