@@ -6,7 +6,7 @@
 			<accessrule kind="accessible" pattern="javafx/**"/>
 		</accessrules>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/salem.harby/Desktop/jettison-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/salem.harby/Desktop/xstream-1.4.9.jar"/>
+	<classpathentry kind="lib" path="D:/Whatever/Java Libraries/jettison-1.2.jar"/>
+	<classpathentry kind="lib" path="D:/Whatever/Java Libraries/xstream-1.4.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
