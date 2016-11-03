@@ -124,7 +124,18 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		newObject.rotate(rotation);
 		return newObject;
 	}
-
+	/**
+	 * Gets the radius of the circle.
+	 * @param centerX The x coordinate of
+	 * the center of the circle
+	 * @param centerY The y coordinate of
+	 * the center of the circle
+	 * @param x The x coordinate of a point
+	 * on the circumference of the circle
+	 * @param y The y coordinate of a point
+	 * on the circumference of the circle
+	 * @return The calculated radius of the circle
+	 */
 	private static double getRadius(double centerX, double centerY, double x, double y) {
 		double dX = Math.abs(centerX - x);
 		double dY = Math.abs(centerY - y);

@@ -8,8 +8,18 @@ import paint.geom.util.Resizer;
 import paint.geom.util.ShapeFactory;
 import paint.shapes.util.ShapeProperties;
 import paint.shapes.util.TriangleProperties;
-
+/**
+ * The Square class creates a new square
+ * with the coordinates of the specified vertices in pixels.
+ * <br>
+ * extends {@link paint.geom.PolygonPaint} class
+ * and implements {@link Cloneable} interface.
+ */
 public class TrianglePaint  extends PolygonPaint implements Cloneable {
+	/**
+	 * The key of the triangle class, used for getting
+	 * {@link ShapePaint} instances from {@link ShapeFactory}.
+	 */
 	public static final String KEY = "triangle";
 	private static final int FIRST_X = 0;
 	private static final int FIRST_Y = 1;
@@ -25,7 +35,13 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	static {
 		ShapeFactory.getInstance().registerShape(KEY, TrianglePaint.class);
 	}
-
+	/**
+	 * Default constructor for construction of {@link TrianglePaint}.
+	 * using its vertices.
+	 * @param point1 The first vertex of the triangle
+	 * @param point2 The second vertex of the triangle
+	 * @param point3 The third vertex of the triangle
+	 */
 	public TrianglePaint(Point point1,
 			Point point2, Point point3) {
 		super(point1, point2, point3);
@@ -35,7 +51,12 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		setResizerRotation();
 		polygon.setId(KEY + new Random().nextInt());
 	}
-
+	/**
+	 * Default constructor for construction of {@link TrianglePaint}.
+	 * using its vertices.
+	 * @param properties The vertices of the triangle in
+	 * order x1, y1, x2, y2, x3, y3
+	 */
 	public TrianglePaint(double... properties) {
 		super(properties);
 		point1 = new Point(properties[FIRST_X], properties[FIRST_Y]);
@@ -44,7 +65,14 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		setResizerRotation();
 		polygon.setId(KEY + new Random().nextInt());
 	}
-
+	/**
+	 * The constructor for construction of {@link TrianglePaint}
+	 * by using an equivalent
+	 * <br>
+	 * {@link ShapeProperties} object
+	 * containing all specifications of the triangle.
+	 * @param properties {@link ShapeProperties} object.
+	 */
 	public TrianglePaint(ShapeProperties properties) {
 		this(properties.getPoint1().getX(),
 				properties.getPoint1().getY(),
@@ -130,7 +158,10 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 			resizer.rotate(angle);
 		}
 	}
-
+	/**
+	 * Gets the center of the triangle.
+	 * @return the center of the triangle
+	 */
 	private Point getCenter() {
 		double x = 0;
 		double y = 0;
@@ -142,7 +173,9 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		y /= 3;
 		return new Point(x, y);
 	}
-
+	/**
+	 * Sets the axis for rotating a resizer
+	 */
 	private void setResizerRotation() {
 		for (Resizer resizer : super.resizers) {
 			resizer.setRotationPivot(getCenter());
