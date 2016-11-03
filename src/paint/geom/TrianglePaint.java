@@ -85,6 +85,7 @@ public class TrianglePaint  extends PolygonPaint implements Cloneable {
 		newObject.polygon.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.polygon.setStrokeWidth(polygon.getStrokeWidth());
+		newObject.polygon.setOnMouseClicked(polygon.getOnMouseClicked());
 		return newObject;
 	}
 

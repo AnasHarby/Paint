@@ -271,6 +271,7 @@ public class FXMLController implements Initializable {
 		File file = chooser.showOpenDialog(
 				canvas.getScene().getWindow());
 		String key = PluginLoader.loadClass(file);//may return null
+		System.out.println(key);
 	}
 	private EventHandler<MouseEvent> removeHandler =
 			new EventHandler<MouseEvent>() {

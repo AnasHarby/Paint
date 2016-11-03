@@ -186,6 +186,7 @@ public class LinePaint implements ShapePaint, Cloneable {
 		newObject.line.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.line.setStrokeWidth(line.getStrokeWidth());
+		newObject.line.setOnMouseClicked(line.getOnMouseClicked());
 		return newObject;
 	}
 

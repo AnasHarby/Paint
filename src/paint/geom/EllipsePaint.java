@@ -219,6 +219,7 @@ public class EllipsePaint implements ShapePaint, Cloneable {
 		newObject.ellipse.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.ellipse.setStrokeWidth(ellipse.getStrokeWidth());
+		newObject.ellipse.setOnMouseClicked(ellipse.getOnMouseClicked());
 		return newObject;
 	}
 

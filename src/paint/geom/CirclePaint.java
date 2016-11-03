@@ -77,6 +77,7 @@ public class CirclePaint extends EllipsePaint implements Cloneable {
 		newObject.ellipse.setStroke(new Color(col.getRed(), col.getGreen(),
 				col.getBlue(), col.getOpacity()));
 		newObject.ellipse.setStrokeWidth(super.ellipse.getStrokeWidth());
+		newObject.ellipse.setOnMouseClicked(ellipse.getOnMouseClicked());
 		return newObject;
 	}
 
