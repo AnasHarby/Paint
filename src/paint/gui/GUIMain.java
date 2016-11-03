@@ -15,7 +15,6 @@ public class GUIMain extends Application {
 			Class.forName("paint.geom.EllipsePaint");
 			Class.forName("paint.geom.LinePaint");
 			Class.forName("paint.geom.CirclePaint");
-			Class.forName("paint.geom.SquarePaint");
 			Class.forName("paint.geom.RectanglePaint");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
