@@ -19,9 +19,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import paint.data.util.CurrentHistoryEvent;
-import paint.data.util.JsonDataHandler;
-import paint.data.util.XmlDataHandler;
+import paint.data.util.JsonDataParser;
+import paint.data.util.XmlDataParser;
+import paint.data.util.history.CurrentHistoryEvent;
 import paint.geom.CirclePaint;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
@@ -45,8 +45,8 @@ public class FXMLControllerTest implements Initializable {
 	private boolean started = false;
 	private Point init = new Point();
 	private Shape drawingShape = null;
-	JsonDataHandler jsonData = new JsonDataHandler();
-	XmlDataHandler xmlData = new XmlDataHandler();
+	JsonDataParser jsonData = new JsonDataParser();
+	XmlDataParser xmlData = new XmlDataParser();
 	WritableImage x;
 
 	private double getRadius(double x1, double y1, double x2, double y2) {

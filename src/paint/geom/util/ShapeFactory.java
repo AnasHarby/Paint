@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 
 import paint.geom.ShapePaint;
-import paint.shapes.util.ShapeProperties;
+import paint.geom.prop.ShapeProperties;
 
 public class ShapeFactory {
 	private HashMap<String, Class<? extends ShapePaint>> registeredShapes = null;

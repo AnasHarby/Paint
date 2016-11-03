@@ -9,11 +9,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.transform.Rotate;
+import paint.geom.prop.LineProperties;
+import paint.geom.prop.ShapeProperties;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.LineProperties;
-import paint.shapes.util.ShapeProperties;
 
 /**
  * The Line class creates a new line

@@ -4,10 +4,10 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import paint.geom.prop.RectangleProperties;
+import paint.geom.prop.ShapeProperties;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.RectangleProperties;
-import paint.shapes.util.ShapeProperties;
 
 
 public class RectanglePaint extends PolygonPaint implements Cloneable {

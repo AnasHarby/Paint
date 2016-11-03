@@ -4,9 +4,9 @@ import java.util.Random;
 
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import paint.geom.prop.CircleProperties;
+import paint.geom.prop.ShapeProperties;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.CircleProperties;
-import paint.shapes.util.ShapeProperties;
 
 /**
  * The Ellipse class creates a new circle

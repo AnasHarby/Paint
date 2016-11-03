@@ -4,7 +4,7 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import paint.shapes.util.ShapeProperties;
+import paint.geom.prop.ShapeProperties;
 
 /**
  * The ShapePaint interface provides definitions

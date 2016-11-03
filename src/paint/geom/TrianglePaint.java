@@ -4,10 +4,10 @@ import java.util.Random;
 
 import javafx.scene.paint.Color;
 import javafx.scene.transform.Rotate;
+import paint.geom.prop.ShapeProperties;
+import paint.geom.prop.TriangleProperties;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.ShapeProperties;
-import paint.shapes.util.TriangleProperties;
 
 public class TrianglePaint  extends PolygonPaint implements Cloneable {
 	public static final String KEY = "triangle";

@@ -9,11 +9,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
 import javafx.scene.transform.Rotate;
+import paint.geom.prop.EllipseProperties;
+import paint.geom.prop.ShapeProperties;
 import paint.geom.util.Resizer;
 import paint.geom.util.ShapeController;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.EllipseProperties;
-import paint.shapes.util.ShapeProperties;
 
 /**
  * The Ellipse class creates a new ellipse

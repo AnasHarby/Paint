@@ -3,9 +3,9 @@ package paint.geom;
 import java.util.Random;
 
 import javafx.scene.paint.Color;
+import paint.geom.prop.ShapeProperties;
+import paint.geom.prop.SquareProperties;
 import paint.geom.util.ShapeFactory;
-import paint.shapes.util.ShapeProperties;
-import paint.shapes.util.SquareProperties;
 
 public class SquarePaint extends RectanglePaint implements Cloneable {
 	public static final String KEY = "square";

@@ -5,8 +5,8 @@ import javafx.scene.Cursor;
 import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
-import paint.data.util.CurrentHistoryEvent;
-import paint.data.util.History;
+import paint.data.util.history.CurrentHistoryEvent;
+import paint.data.util.history.History;
 import paint.geom.Point;
 import paint.geom.ShapePaint;
 

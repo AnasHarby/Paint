@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+import paint.data.util.history.HistoryEvent;
+
 /**
  * The Class DataHandler.
  */
@@ -17,11 +19,11 @@ public class DataHandler {
 
 	/** The object that saves
 	 * and loads the json data. */
-	private JsonDataHandler jsonHandler;
+	private JsonDataParser jsonHandler;
 
 	/** The object that saves
 	 * and loads the json data. */
-	private XmlDataHandler xmlHandler;
+	private XmlDataParser xmlHandler;
 
 	/** The singleton instance. */
 	private static DataHandler instance = new DataHandler();
@@ -30,8 +32,8 @@ public class DataHandler {
 	 * Instantiates the data handler singleton.
 	 */
 	private DataHandler() {
-		jsonHandler = new JsonDataHandler();
-		xmlHandler = new XmlDataHandler();
+		jsonHandler = new JsonDataParser();
+		xmlHandler = new XmlDataParser();
 	}
 
 	/**
