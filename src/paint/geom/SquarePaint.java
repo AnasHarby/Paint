@@ -96,6 +96,7 @@ public class SquarePaint extends RectanglePaint implements Cloneable {
 		super.setUpperLeftPoint(new Point(minX, minY));
 		super.setWidth(maxX - minX);
 		super.setHeight(maxX - minX);
+		sideLength = maxX - minX;
 	}
 
 	@Override

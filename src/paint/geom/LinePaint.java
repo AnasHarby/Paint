@@ -140,11 +140,6 @@ public class LinePaint implements ShapePaint, Cloneable {
 	public void toFront() {
 		line.toFront();
 	}
-	private void setActionHandlers() {
-		ShapeController shapeMovement
-		= new ShapeController();
-		shapeMovement.addHandlers(line);
-	}
 
 	@Override
 	public void remove(Pane contentPane) {
@@ -288,5 +283,11 @@ public class LinePaint implements ShapePaint, Cloneable {
 		for (Resizer resizer : resizers) {
 			resizer.setRotationPivot(getCenter());
 		}
+	}
+
+	private void setActionHandlers() {
+		ShapeController shapeMovement
+		= new ShapeController();
+		shapeMovement.addHandlers(line);
 	}
 }

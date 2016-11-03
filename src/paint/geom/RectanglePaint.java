@@ -163,20 +163,6 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 		}
 	}
 
-	private void setResizerRotation() {
-		for (Resizer resizer : super.resizers) {
-			resizer.setRotationPivot(getCenter());
-		}
-	}
-
-	private Point getCenter() {
-		double x = upperLeftPoint.getX()
-				+ width / 2;
-		double y = upperLeftPoint.getY()
-				+ height / 2;
-		return new Point(x, y);
-	}
-
 	public double getWidth() {
 		return width;
 	}
@@ -191,5 +177,19 @@ public class RectanglePaint extends PolygonPaint implements Cloneable {
 
 	public void setHeight(double height) {
 		this.height = height;
+	}
+
+	private void setResizerRotation() {
+		for (Resizer resizer : super.resizers) {
+			resizer.setRotationPivot(getCenter());
+		}
+	}
+
+	private Point getCenter() {
+		double x = upperLeftPoint.getX()
+				+ width / 2;
+		double y = upperLeftPoint.getY()
+				+ height / 2;
+		return new Point(x, y);
 	}
 }
